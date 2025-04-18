@@ -5,11 +5,14 @@
  Description  : A GUI numeric bases converter
  Author       : Alcaïno Jean-Marc                                                                          
  Modification : 2025/04/16                                                                            
- Version      : V 3.51
+ Version      : V 3.6
 
  GitHub       :     https://github.com/JMAlcaino/Useful_Scripts
  Author GitHub :    https://github.com/JMAlcaino
 
+ 
+ Notes de versions :
+ V 3.6 : Ajout des menus et affichage de l'aide et du contexte du logiciel.
 ############################################################################################################
  
 """
@@ -233,6 +236,7 @@ menu_principal.add_cascade(label="Fichier", menu=menu_fichier)
 # -> Menu 'Aide'
 menu_aide = tk.Menu(menu_principal, tearoff=0)
 menu_aide.add_command(label="Aide", command=afficher_aide)
+menu_aide.add_command(label='Contexte', command=afficher_contexte)
 menu_aide.add_command(label="À propos", command=afficher_a_propos)
 menu_principal.add_cascade(label="Aide", menu=menu_aide)
 

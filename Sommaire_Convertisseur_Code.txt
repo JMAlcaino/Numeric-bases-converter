@@ -1,0 +1,52 @@
+# ================================
+# 📘 SOMMAIRE DU SCRIPT - CONVERTISSEUR DE BASES
+# ================================
+
+# ▸ Configuration
+#   - Création des frames principales (conteneur_global, contenu_principal)
+#   - Variables Tkinter pour les données (StringVar, etc.)
+
+# ▸ Saisie utilisateur
+#   - Entry de saisie + menu de base
+#   - Bouton Convertir / Effacer
+#   - Gestion du collage depuis le presse-papiers
+
+# ▸ Affichage des résultats
+#   - Labels pour chaque base
+#   - Formatage dynamique avec grouper_par_blocs()
+#   - OptionMenu pour sélectionner 2, 4, 8 ou brut
+#   - Boutons de copie individuels
+
+# ▸ Aide & Informations
+#   - Menu “À propos” avec Toplevel centré
+#   - Menu “Aide” pour afficher un panneau latéral
+#   - Aide chargée depuis un fichier externe texte
+#   - Scrollbar + molette souris
+#   - Bouton pour fermer l’aide
+
+# ▸ Fonctions principales
+#   - grouper_par_blocs() : formate les chaînes
+#   - appliquer_format_*() : met à jour les labels
+#   - copier_widget() : copie un label
+#   - convertir() : traite toutes les bases
+#   - ajuster_label() : redimensionne les labels selon le contenu
+#   - afficher_a_propos() : fenêtre popup “À propos”
+#   - afficher_aide() / fermer_aide() : panneau d’aide latéral
+
+# ▸ Fonction détaillée : charger_aide()
+#   Permet de lire le fichier 'aide.txt' et de l’afficher dans la zone de texte
+
+def charger_aide(zone_texte):
+    try:
+        # Ouvre le fichier d'aide en lecture avec encodage UTF-8
+        with open("aide.txt", "r", encoding="utf-8") as f:
+            contenu = f.read()  # Lit tout le contenu du fichier
+            zone_texte.delete("1.0", tk.END)  # Efface le texte existant
+            zone_texte.insert(tk.END, contenu)  # Insère le texte lu
+    except FileNotFoundError:
+        # En cas de fichier manquant, affiche un message dans la zone
+        zone_texte.insert(tk.END, "⚠️ Fichier d'aide introuvable.")
+
+# ▸ Divers
+#   - Gestion d'erreurs (champ vide, valeur invalide)
+#   - Adaptation automatique de la fenêtre principale

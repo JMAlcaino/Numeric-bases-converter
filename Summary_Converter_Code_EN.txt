@@ -1,0 +1,49 @@
+# ================================
+# 📘 SCRIPT SUMMARY - BASE CONVERTER
+# ================================
+
+# ▸ Configuration
+#   - Creating main frames (conteneur_global, contenu_principal)
+#   - Tkinter variables (StringVar, etc.)
+
+# ▸ User Input
+#   - Entry for input + base selection
+#   - Convert / Clear buttons
+#   - Paste input from clipboard
+
+# ▸ Display of Results
+#   - Labels for each base
+#   - Formatted output using grouper_par_blocs()
+#   - OptionMenu for block selection: 2, 4, 8 or raw
+#   - Individual copy buttons
+
+# ▸ Help & Information
+#   - “About” menu with centered Toplevel popup
+#   - “Help” menu to show a side panel
+#   - Help loaded from external file
+#   - Scrollbar + mouse wheel scroll
+#   - Close button for help panel
+
+# ▸ Key Functions
+#   - grouper_par_blocs(): format strings in blocks
+#   - appliquer_format_*(): update the labels
+#   - copier_widget(): copy label content
+#   - convertir(): handle conversion logic
+#   - ajuster_label(): resize label to fit content
+#   - afficher_a_propos(): About window
+#   - afficher_aide() / fermer_aide(): toggle help panel
+
+# ▸ Function Highlight: charger_aide()
+
+def charger_aide(zone_texte):
+    try:
+        with open("aide.txt", "r", encoding="utf-8") as f:
+            content = f.read()
+            zone_texte.delete("1.0", tk.END)
+            zone_texte.insert(tk.END, content)
+    except FileNotFoundError:
+        zone_texte.insert(tk.END, "⚠️ Help file not found.")
+
+# ▸ Miscellaneous
+#   - Error handling (empty input, invalid values)
+#   - Dynamic resizing of main window

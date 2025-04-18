@@ -46,17 +46,36 @@ def afficher_a_propos():  # Ouvre une petite fenêtre indépendante appelée par
 
 def afficher_aide():
     erreur_label.config(text="Choisissez une base à l'aide des boutons radio, entrez une valeur valide pour cette base\n et cliquez sur 'Convertir'", font=('arial', 9), fg='black')
-    panneau_aide = tk.LabelFrame(conteneur_global, text="Aide et fonctionnalités", font=('arial', 9), fg='blue')  # Placé dans le 'conteneur_global pour qu'il s'affiche à droite du programme principal.
-    zone_texte_aide = tk.Text(panneau_aide, wrap='word', height=25, width=40)
-    scroll = tk.Scrollbar(panneau_aide, command=zone_texte_aide.yview)
+
+    # Conteneur principal de l’aide
+    panneau_aide = tk.LabelFrame(conteneur_global, text="Aide et fonctionnalités", font=('arial', 9), fg='blue')
+
+    # Conteneur vertical interne
+    contenu_aide = tk.Frame(panneau_aide)
+    contenu_aide.pack(fill='both', expand=True)
+
+    # Conteneur horizontal pour le texte et la scrollbar
+    bloc_texte = tk.Frame(contenu_aide)
+    bloc_texte.pack(fill='both', expand=True)
+
+    zone_texte_aide = tk.Text(bloc_texte, wrap='word', height=25, width=40)
+    scroll = tk.Scrollbar(bloc_texte, command=zone_texte_aide.yview)
     zone_texte_aide.config(yscrollcommand=scroll.set)
-    scroll.pack(side='right', fill='y')
-    zone_boutons = tk.Frame(conteneur_global)
-    bouton_fermer = tk.Button(zone_boutons, text='Fermer', font=('arial', 9), fg='green', command=panneau_aide.destroy)
-    zone_boutons.pack(side='bottom', pady=5)
+
     zone_texte_aide.pack(side='left', fill='both', expand=True)
+    scroll.pack(side='right', fill='y')
+
+    zone_texte_aide.bind("<MouseWheel>", lambda e: zone_texte_aide.yview_scroll(int(-1*(e.delta/120)), "units"))
+
+    # Bouton de fermeture bien en dessous
+    btn_fermer = tk.Button(contenu_aide, text="Fermer", font=('arial', 9), fg='green', command=panneau_aide.destroy)
+    btn_fermer.pack(pady=10)
+
+
+    # Charger le texte d'aide
     charger_fichier_aide(zone_texte_aide)
-    bouton_fermer.pack(side='bottom', pady=15)
+
+    # Affichage
     panneau_aide.pack(side='right', fill='y', padx=10, pady=10)
 
 

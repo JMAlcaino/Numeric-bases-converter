@@ -57,7 +57,9 @@ def mettre_a_jour_interface():
     bouton_convertir.config(text=textes_langues["btn_convertir"])
     bouton_effacer.config(text=textes_langues["btn_effacer"])
     bouton_quitter.config(text=textes_langues["btn_quitter"])
+    erreur_labelframe.config(text=textes_langues["titre_message"])
 
+    # Mise à jour du menu déroulant Binaire
     options_binaire = [
         textes_langues["brut"],
         textes_langues["blocs_4"],
@@ -66,9 +68,13 @@ def mettre_a_jour_interface():
     menu_binaire = menu_format_binaire["menu"]
     menu_binaire.delete(0, "end")
     for option in options_binaire:
-        menu_binaire.add_command(label=option, command=lambda val=option: format_binaire_var.set(val))
+        menu_binaire.add_command(
+            label=option,
+            command=lambda val=option: (format_binaire_var.set(val), appliquer_format_binaire())
+        )
     format_binaire_var.set(textes_langues["brut"])
 
+    # Mise à jour du menu déroulant Hexadécimal
     options_hexa = [
         textes_langues["brut"],
         textes_langues["blocs_2"],
@@ -78,7 +84,10 @@ def mettre_a_jour_interface():
     menu_hexa = menu_format_hexadecimal["menu"]
     menu_hexa.delete(0, "end")
     for option in options_hexa:
-        menu_hexa.add_command(label=option, command=lambda val=option: format_hexadecimal_var.set(val))
+     menu_hexa.add_command(
+            label=option,
+            command=lambda val=option: (format_hexadecimal_var.set(val), appliquer_format_hexadecimal())
+        )
     format_hexadecimal_var.set(textes_langues["brut"])
 
 
@@ -134,14 +143,39 @@ def mettre_a_jour_boutons_radio():
             font=("arial", 9),
             anchor="w"
         )
+        if index == 0:
+            bouton.config(fg="#326565")
+        elif index == 1:
+            bouton.config(fg="#A83600")
+        elif index == 2:
+            bouton.config(fg="#5900B3")
+        elif index == 3:
+            bouton.config(fg="#C80430")
         bouton.grid(row=index, column=0, sticky="w", padx=5, pady=2)
+    
+    # Sélection par défaut "Décimal" dans la langue active
+    base_var.set(textes_langues["texte_decimal"])
 
 
 def changer_langue(nouvelle_langue):  # Fonction qui change la la langue de l'interface en appelant la fonction 'mettre_a_jour_interface'
     global langue_actuelle, textes_langues
+
+    # ⚠️ Sauvegarder d'abord la langue actuelle avant de la modifier
+    ancienne_langue = langue_actuelle
     langue_actuelle = nouvelle_langue
-    nom_fichier = f"lang_{nouvelle_langue}.json"  # Change le nom du fichier à charger en fonction du bouton (ou menu) sur lequel on a appuyé.
-    textes_langues = charger_traductions(nom_fichier)  # Déclenche la fonction 'charger_traductions' qui va charger le fichier .json dont le nom a été modifié la ligne au dessus.
+
+    # Charger la nouvelle langue
+    textes_langues = charger_traductions(f"lang_{langue_actuelle}.json")
+
+    # ✅ Re-traduction du message affiché dans erreur_label
+    texte_actuel = erreur_label.cget("text")
+    anciennes_traductions = charger_traductions(f"lang_{ancienne_langue}.json")
+
+    for cle, texte in anciennes_traductions.items():
+        if texte_actuel == texte and cle in textes_langues:
+            erreur_label.config(text=textes_langues[cle])
+            break
+        
     mettre_a_jour_interface()  # Appelle la fonction qui va modifier tous les labels et autres textes_langues de l'interface dans la langue choisie.
     mettre_a_jour_boutons_radio() #Appelle la fonction de construction des boutons radio pour les mettre à jour selon la langue choisie.
     construire_menus()  # Appelle la fonction de construction des boutons pour les mettre dasn la langue choisie.
@@ -184,7 +218,7 @@ def afficher_aide():
         return
     
     # Affichage d'instructions dans le la bel des messages importants
-    erreur_label.config(text=textes_langues["texte_message_aide"], font=('arial', 9), fg='black')
+    erreur_label.config(text=textes_langues["message_effacer"], font=('arial', 9), fg='black')
 
     # Conteneur principal de l’aide
     panneau_aide = tk.LabelFrame(conteneur_global, text=textes_langues["titre_aide"], font=('arial', 9), fg='blue')
@@ -338,8 +372,8 @@ def effacer():  # Fonction qui efface tous les chmaps des résultats et la case 
     resultat_hexadecimal.config(text="", width=50)
 
 
-def bouton_copier():
-    texte = entree.get()
+def bouton_copier(label):
+    texte = label.cget("text")
     if texte:
         message = textes_langues["copie_effectuee"].format(texte)
         erreur_label.config(text=message, fg="blue")
@@ -372,10 +406,13 @@ def appliquer_format_binaire(*args):   # Fonction qui met à jour le label 'resu
     texte = binaire_brut_var.get()
     if val == textes_langues["brut"]:
         resultat_binaire.config(text=texte)
-    else:
-        resultat_binaire.config(text=grouper_par_blocs(texte, int(val)))
-        ajuster_label(resultat_binaire, texte)
-    #ajuster_label(resultat_binaire, texte)  # Ajuste le label de résultat en fonction du nombre de caractères qu'il contient. Appelle la fonction 'ajuster_label'.
+    elif val == textes_langues["blocs_4"]:
+        resultat_binaire.config(text=grouper_par_blocs(texte, 4))
+    elif val == textes_langues["blocs_8"]:
+        resultat_binaire.config(text=grouper_par_blocs(texte, 8))
+       
+    ajuster_label(resultat_binaire, texte)
+  
 
 
 def appliquer_format_hexadecimal(*args):  # Fonction qui met à jour le label 'resultat_hexadecimal' en fonction du choix dans le menu déroulant - *args sert à ignorer les arguments demandés par le widget 'optionMenu'
@@ -383,9 +420,14 @@ def appliquer_format_hexadecimal(*args):  # Fonction qui met à jour le label 'r
     texte = hexadecimal_brut_var.get()
     if val == textes_langues["brut"]:
         resultat_hexadecimal.config(text=texte)
-    else:
-        resultat_hexadecimal.config(text=grouper_par_blocs(texte, int(val)))
-        ajuster_label(resultat_hexadecimal, texte)  # Ajuste le label de résultat en fonction du nombre de caractères qu'il contient. Appelle la fonction 'ajuster_label'.
+    elif val == textes_langues["blocs_2"]:
+        resultat_hexadecimal.config(text=grouper_par_blocs(texte, 2))
+    elif val == textes_langues["blocs_4"]:
+        resultat_hexadecimal.config(text=grouper_par_blocs(texte, 4))
+    elif val == textes_langues["blocs_8"]:
+        resultat_hexadecimal.config(text=grouper_par_blocs(texte, 8))
+        
+    ajuster_label(resultat_hexadecimal, texte)  # Ajuste le label de résultat en fonction du nombre de caractères qu'il contient. Appelle la fonction 'ajuster_label'.
 
 
 def ajuster_label(label, texte):  # ajuste le label du résultat en fonction de la longueur de la chaîne qu'il contient.
@@ -413,24 +455,29 @@ conteneur_global = tk.Frame(fenetre)  # Crée le Frame principal conteneur des d
 conteneur_global.pack(fill='both', expand=True)  # Le .pack() doit être sur une ligne en dessous sinon il retourne un 'non' dans le placement.
 
 # Boutons de changement de langue.
-zone_drapeaux = tk.Frame(conteneur_global)
+zone_drapeaux = tk.Frame(conteneur_global, width=100)
 bouton_francais = tk.Button(zone_drapeaux, image=img_fr, command=lambda: changer_langue("fr"))  # Affiche le bouton et exécute la fonction 'changer_langue' avec 'fr' en argument.
 bouton_anglais = tk.Button(zone_drapeaux, image=img_en, command=lambda: changer_langue("en"))  # Drapeau pour changer l'interface en anglais.
-bouton_francais.pack(side='left', pady=5, padx=2)
-bouton_anglais.pack(side='left', pady= 5, padx=2)
-zone_drapeaux.pack()
+bouton_francais.grid(row=0, column=0, padx=5, pady=2, sticky=tk.E)
+bouton_anglais.grid(row=0, column=1,padx=5, pady=2, sticky=tk.E)
+zone_drapeaux.pack(pady=5)
 
 # Conteneur principal qui va contenir tous les éléments du programme principal (entrée, résultats...)
 contenu_principal = tk.Frame(conteneur_global)  # Crée une frame dans le conteneur global qui affichera tous les éléments principaux du programme.
 contenu_principal.pack(side='left', fill='both', expand=True)
 
 # Variables en StringVar pour le choix du format d'affichage des label 'Binaire' et 'Hexadécimal'.
-format_binaire_var = tk.StringVar(value=4)  # Valeur par défaut pour un affichage par bloc de 4 bits.
-binaire_brut_var = tk.StringVar()  # Création d'une valeur brute qui servira de base au choix de l'affichage du résultat Binaire via le menu déroulant.
-format_hexadecimal_var = tk.StringVar(value=4)  # Valeur par défaut pour un affichage par bloc de 4 digits héxadécimaux.
-hexadecimal_brut_var = tk.StringVar()  # Création d'une valeur brute qui servira de base au choix de l'affichage du résultat Binaire via le menu déroulant.
+## entree_var = tk.StringVar() #  Utilisable dans une logique dynamique. Inutile ici puisqu'il n'y a pas de .get() ou de .insert() sur l'entrée de la valeur.
+binaire_brut_var = tk.StringVar()
+hexadecimal_brut_var = tk.StringVar()
 
-# Appel initial des Menus
+format_binaire_var = tk.StringVar()
+format_binaire_var.set(textes_langues["brut"])
+
+format_hexadecimal_var = tk.StringVar()
+format_hexadecimal_var.set(textes_langues["brut"])
+
+# Appel initial des Menus de la fenêtre principale.
 construire_menus()
 
 # Zone du champ de saisie et du choix de la base numérique

@@ -400,7 +400,7 @@ def grouper_par_blocs(texte, taille_bloc):  # Fonction qui gère la mise en bloc
     reste = len(texte) % taille_bloc
     if reste != 0:
         texte = '0' * (taille_bloc - reste) + texte  # Ajoute un ou plusieurs '0' en fonction du nombre de caractères restants à gauche (lecture logique  de bas niveau)
-    return ' '.join(texte[i:i+taille_bloc] for i in range(0, len(texte), taille_bloc))  # Retourne une chaîne de caractères séparés par un espace tous les 4 caractères de droite à gauche
+    return ' '.join(texte[i:i+taille_bloc] for i in range(0, len(texte), taille_bloc))  # Retourne une chaîne de caractères séparés par un espace tous les 'x' caractères de droite à gauche. Le 'x' étant donné par la variable 'taille_bloc' en focntion du choix du menu déroulant contextuel.
 
 
 def appliquer_format_binaire(*args):   # Fonction qui met à jour le label 'resultat_binaire' en fonction du choix dans le menu déroulant - *args sert à ignorer les arguments demandés par le widget 'optionMenu'

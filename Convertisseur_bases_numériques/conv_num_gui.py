@@ -5,7 +5,7 @@
  Description  : A GUI numeric bases converter
  Author       : Alcaïno Jean-Marc                                                                          
  Modification : 2025/05/12                                                                            
- Version      : V 4.1
+ Version      : V 4.1.1
 
  GitHub       :     https://github.com/JMAlcaino/Numeric-bases-converter
  Author GitHub :    https://github.com/JMAlcaino
@@ -14,11 +14,12 @@ Ce petit logiciel a été conçu dans un but pédagogique, afin de mieux compren
 la représentation des nombres dans différents systèmes de base utilisés en informatique.
  
  Notes de versions :
- V 3.6 : Ajout des menus et affichage de l'aide et du contexte du logiciel.
- V 4.0 : Internationalisation du logiciel avec l'ajout de boutons et d'un menu pour changer la langue de l'interface.
-         Utilisation de fichiers de références linguistiques en .json afin de pouvoir modifier la langue de l'interface.
- V 4.1 : Mise en place de l'interface en allemand et en espagnol et des fichiers 'aide' et 'contexte'.
-         Traduction des fichiers .json en allemand et en espagnol également.
+ V 3.6   : Ajout des menus et affichage de l'aide et du contexte du logiciel.
+ V 4.0   : Internationalisation du logiciel avec l'ajout de boutons et d'un menu pour changer la langue de l'interface.
+           Utilisation de fichiers de références linguistiques en .json afin de pouvoir modifier la langue de l'interface.
+ V 4.1   : Mise en place de l'interface en allemand et en espagnol et des fichiers 'aide' et 'contexte'.
+           Traduction des fichiers .json en allemand et en espagnol également.
+ V 4.1.1 : Corrections de différents bugs. Affichage de l'à propos corrigé.
 
 ############################################################################################################
  
@@ -104,6 +105,7 @@ def construire_menus():
 
     # Menu Fichier
     menu_fichier = tk.Menu(menu_principal, tearoff=0)
+    menu_fichier.add_command(label=textes_langues["a_propos_titre"], command=afficher_a_propos)
     menu_fichier.add_command(label=textes_langues["btn_quitter"], command=fenetre.destroy)
     menu_principal.add_cascade(label=textes_langues["menu_fichier"], menu=menu_fichier)
 
@@ -117,6 +119,8 @@ def construire_menus():
     menu_langue = tk.Menu(menu_principal, tearoff=0)
     menu_langue.add_command(label="Français", command=lambda: changer_langue("fr"))
     menu_langue.add_command(label="English", command=lambda: changer_langue("en"))
+    menu_langue.add_command(label="Deutsch", command=lambda: changer_langue("de"))
+    menu_langue.add_command(label="Espanol", command=lambda: changer_langue("es"))
     menu_principal.add_cascade(label=textes_langues["menu_langue"], menu=menu_langue)
 
     # Appliquer le menu à la fenêtre
@@ -159,7 +163,7 @@ def mettre_a_jour_boutons_radio():
     base_var.set(textes_langues["texte_decimal"])
 
 
-def changer_langue(nouvelle_langue):  # Fonction qui change la la langue de l'interface en appelant la fonction 'mettre_a_jour_interface'
+def changer_langue(nouvelle_langue):  # Fonction qui change la langue de l'interface en appelant la fonction 'mettre_a_jour_interface'. L'argument 'nouvelle_langue' est donné par appui sur le bouton du drapeau correspondant.
     global langue_actuelle, textes_langues
 
     # ⚠️ Sauvegarder d'abord la langue actuelle avant de la modifier
@@ -167,7 +171,7 @@ def changer_langue(nouvelle_langue):  # Fonction qui change la la langue de l'in
     langue_actuelle = nouvelle_langue
 
     # Charger la nouvelle langue
-    textes_langues = charger_traductions(f"lang_{langue_actuelle}.json")
+    textes_langues = charger_traductions(f"lang_{langue_actuelle}.json")  # Appelle la fonction 'charger_traduction' pour ouvrir le fichier .json de la langue correspondante.
 
     # ✅ Re-traduction du message affiché dans erreur_label
     texte_actuel = erreur_label.cget("text")
@@ -190,22 +194,27 @@ def afficher_a_propos():  # Ouvre une petite fenêtre indépendante appelée par
     bg_couleurs = ['#99CCCC', '#FFC5A8', '#D3A8FF', '#FDACBE']
     couleur = random.choice(bg_couleurs)
     popup_a_propos = tk.Toplevel(bg=couleur)
-    popup_a_propos.title(label=textes_langues["a_propos_titre"])
+    popup_a_propos.title(textes_langues["a_propos_titre"])
+
     # Taille de la fenêtre popup
     largeur = 300
-    hauteur = 180
+    hauteur = 200
+
     # Récupérer les dimensions de la fenêtre principale
     x_principal = fenetre.winfo_rootx()  # Position x de la fenêtre principale  .winfo... donne l'information d'une fenêtre (dimension, position...).
     y_principal = fenetre.winfo_rooty()  # Position y de la fenêtre principale.
     w_principal = fenetre.winfo_width()  # Largeur de la fenêtre principale.
     h_principal = fenetre.winfo_height()  # Hauteur de la fenêtre principale.
+
     # Calcul des coordonnées pour centrer la fentêtre 'popup'.
     x = x_principal + (w_principal // 2) - (largeur // 2)
     y = y_principal +(h_principal //2) - (hauteur //2)
+
     # Positionne la fenêtre popup
     popup_a_propos.geometry(f"{largeur}x{hauteur}+{x}+{y}")
+
     # Contenu de la fenêtre popup
-    a_propos_label1 = tk.Label(popup_a_propos, text=textes_langues["titre"], font=('arial', 12, 'bold'), fg='blue', bg=couleur)
+    a_propos_label1 = tk.Label(popup_a_propos, text=textes_langues["a_propos_texte"], font=('arial', 10, 'bold'), fg='blue', bg=couleur)
     a_propos_label2 = tk.Label(popup_a_propos, text=textes_langues["a_propos_copyright"], font=('arial', 10), bg=couleur, justify='center')
     a_propos_bouton = tk.Button(popup_a_propos, text=textes_langues["fermer"], fg='green', command=popup_a_propos.destroy)
     a_propos_label1.pack(pady=10)
@@ -451,6 +460,8 @@ fenetre.title(textes_langues["titre"])
 # Charge les images des boutons de langue.
 img_fr = PhotoImage(file="fr.png")
 img_en = PhotoImage(file="gb.png")
+img_de = PhotoImage(file="de.png")
+img_es = PhotoImage(file="es.png")
 
 # Conteneur Global pour pouvoir placer les programme principal d'un côté et les affichages d'aides et autres sur le côté droit. Encapsulage obligatoire sino on ne peut pas mettre une frame latérale.
 conteneur_global = tk.Frame(fenetre)  # Crée le Frame principal conteneur des deux frames : un pour le programme principal et l'autre pour le latéral (aide).
@@ -459,9 +470,13 @@ conteneur_global.pack(fill='both', expand=True)  # Le .pack() doit être sur une
 # Boutons de changement de langue.
 zone_drapeaux = tk.Frame(conteneur_global, width=100)
 bouton_francais = tk.Button(zone_drapeaux, image=img_fr, command=lambda: changer_langue("fr"))  # Affiche le bouton et exécute la fonction 'changer_langue' avec 'fr' en argument.
-bouton_anglais = tk.Button(zone_drapeaux, image=img_en, command=lambda: changer_langue("en"))  # Drapeau pour changer l'interface en anglais.
+bouton_anglais = tk.Button(zone_drapeaux, image=img_en, command=lambda: changer_langue("en"))   # Drapeau pour changer l'interface en anglais.
+bouton_allemand = tk.Button(zone_drapeaux, image=img_de, command=lambda: changer_langue("de"))  # Drapeau pour changer l'interface en allemand.
+bouton_espagnol = tk.Button(zone_drapeaux, image=img_es, command=lambda: changer_langue("es"))  # Drapeau pour changer l'interface en espagnol.
 bouton_francais.grid(row=0, column=0, padx=5, pady=2, sticky=tk.E)
-bouton_anglais.grid(row=0, column=1,padx=5, pady=2, sticky=tk.E)
+bouton_anglais.grid(row=0, column=1, padx=5, pady=2, sticky=tk.E)
+bouton_allemand.grid(row=0, column=2, padx=5, pady=2, sticky=tk.E)
+bouton_espagnol.grid(row=0, column=3, padx=5, pady=2, sticky=tk.E)
 zone_drapeaux.pack(pady=5)
 
 # Conteneur principal qui va contenir tous les éléments du programme principal (entrée, résultats...)
@@ -469,7 +484,6 @@ contenu_principal = tk.Frame(conteneur_global)  # Crée une frame dans le conten
 contenu_principal.pack(side='left', fill='both', expand=True)
 
 # Variables en StringVar pour le choix du format d'affichage des label 'Binaire' et 'Hexadécimal'.
-## entree_var = tk.StringVar() #  Utilisable dans une logique dynamique. Inutile ici puisqu'il n'y a pas de .get() ou de .insert() sur l'entrée de la valeur.
 binaire_brut_var = tk.StringVar()
 hexadecimal_brut_var = tk.StringVar()
 
@@ -485,9 +499,9 @@ construire_menus()
 # Zone du champ de saisie et du choix de la base numérique
 entree_labelframe = tk.LabelFrame(fenetre, text=textes_langues["label_saisie"], font=('arial', 9), height=20, width=250, fg='#690F96')
 entree = tk.Entry(entree_labelframe, width=80)
-entree.grid(row=0, column=1, pady=10, sticky=tk.W)
 coller_valeur = tk.Button(entree_labelframe, text="\U0001F4E5", command=lambda: bouton_coller())
 coller_valeur.grid(row=0, column=0, padx=5, sticky=tk.E)
+entree.grid(row=0, column=1, pady=10, sticky=tk.W)
 
 # -> Création des boutons radio de choix des Base numériques de départ
 # -> Déclaration de la variable pour les boutons radio

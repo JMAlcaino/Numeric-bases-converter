@@ -15,7 +15,7 @@
     "blocs_4": "4",
     "blocs_8": "8",
     "a_propos_titre": "Acerca de",
-    "a_propos_texte": "Este software ha sido desarrollado para facilitar la conversión entre diferentes bases numéricas.",
+    "a_propos_texte": "Este software ha sido desarrollado\npara facilitar la conversión\nentre diferentes bases numéricas.",
     "a_propos_copyright": "Versión 4.1\n Jean-Marc Alcaïno\n© 2025",
     "message_erreur": "Entrada no válida. Corrija, por favor.",
     "aucune_valeur": "¡Ningún valor para convertir!",

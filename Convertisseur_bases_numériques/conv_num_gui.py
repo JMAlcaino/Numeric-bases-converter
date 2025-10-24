@@ -105,8 +105,8 @@ def construire_menus():
 
     # Menu Fichier
     menu_fichier = tk.Menu(menu_principal, tearoff=0)
-    menu_fichier.add_command(label=textes_langues["a_propos_titre"], accelerator="CTRL+Q", command=afficher_a_propos)
-    menu_fichier.add_command(label=textes_langues["btn_quitter"], command=fenetre.destroy)
+    menu_fichier.add_command(label=textes_langues["a_propos_titre"], command=afficher_a_propos)  # Ajout de l'affichage d'un raccourci clavier. Attention ce n'est que l'affichage voir la méthode plus bas pour l'activer.
+    menu_fichier.add_command(label=textes_langues["btn_quitter"], accelerator="CTRL+Q", command=fenetre.destroy)
     menu_principal.add_cascade(label=textes_langues["menu_fichier"], menu=menu_fichier)
 
     # Menu Aide

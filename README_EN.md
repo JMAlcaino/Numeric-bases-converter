@@ -1,69 +1,99 @@
-# Project: Numeric Base Converter with Interactive Help
+# 🧮 Numeric Base Converter — Tkinter GUI Application
 
-**Author:** Jean-Marc (Jean)  
+**Author:** Jean‑Marc (Jean)  
 **Assistant:** Pylo 🧙‍♂️  
-**Last updated:** 2025-04-18  
-**Language:** Python 3 + Tkinter
+**Last updated:** 2025‑04‑18  
+**Language:** Python 3 + Tkinter  
+**License:** Open source – for personal and educational use
+
+---
+
+## 📖 Table of Contents
+- [🎯 Goals](#-goals)
+- [✅ Current Features](#-current-features)
+- [⚙️ Installation & Execution](#️-installation--execution)
+- [📘 Documentation](#-documentation)
+- [🔜 Planned Improvements](#-planned-improvements)
+- [👤 Author](#-author)
+- [📜 License](#-license)
 
 ---
 
 ## 🎯 Goals
-- Build a complete graphical tool to convert numbers between different bases.
-- Offer a user-friendly, educational, and extensible interface.
-- Include an integrated help panel and useful formatting options.
-- Serve as a reference base for future Tkinter projects.
+- Build a complete graphical tool to convert numbers between different bases.  
+- Provide a user‑friendly, educational, and extensible interface.  
+- Integrate a contextual help panel and output formatting options.  
+- Serve as a learning base and template for future Tkinter projects.
 
 ---
 
 ## ✅ Current Features
-
-- GUI using Tkinter: `LabelFrame`, `Entry`, `Label`, `Button`
-- Choose input base (decimal, binary, octal, hexadecimal)
-- Full conversion to binary, octal, decimal, hexadecimal
-- Dropdown menus to format output into blocks of 2, 4, 8 characters or raw
-- Dynamic label resizing based on output
-- Copy results via 📋 button or right-click
-- Paste into input field using right-click
-- Basic support for negative integers with warning message
-- “About” popup using a centered `Toplevel` window
-- Help panel (LabelFrame) with:
-  - Text loaded from external file `aide.txt`
-  - Scrollable `Text` widget with scrollbar and mouse wheel support
-  - Close button
-- Clean and well-commented code
+- Graphical interface built with **Tkinter** (`LabelFrame`, `Entry`, `Label`, `Button`…)  
+- Select input base: decimal (10), binary (2), octal (8), hexadecimal (16)  
+- Automatic conversion to all four bases  
+- Dropdown menus to format output in blocks of 2, 4, 8 characters or raw  
+- Dynamic label resizing depending on content length  
+- Copy results via 📋 button or right‑click  
+- Paste into the input field via right‑click  
+- Basic handling of negative integers with warning message  
+- “About” popup (`Toplevel`) automatically centered  
+- Lateral help panel (`LabelFrame`) with:  
+  - Text loaded from `aide.txt` external file  
+  - Scrollable `Text` widget with scrollbar and mouse‑wheel support  
+  - Close button  
+- Clean, structured, and well‑commented code
 
 ---
 
-## 🛠️ Example function: `charger_aide()`
+## ⚙️ Installation & Execution
 
-```python
-def charger_aide(zone_texte):
-    try:
-        with open("aide.txt", "r", encoding="utf-8") as f:
-            content = f.read()
-            zone_texte.delete("1.0", tk.END)
-            zone_texte.insert(tk.END, content)
-    except FileNotFoundError:
-        zone_texte.insert(tk.END, "⚠️ Help file not found.")
+### 🧩 Requirements
+- **Python 3.10+**
+- Standard module : `tkinter` (included by default)
+
+### ▶️ Run the Application
+```bash
+python conv_num_gui.py
+```
+
+### 💡 Tip
+To create an executable file :
+```bash
+pyinstaller --onefile conv_num_gui.py
 ```
 
 ---
 
-## 🔜 Planned Features
-- Animated sliding help panel
-- Export results to text file
-- Create a multi-platform executable version
-- GitHub release with full documentation
+## 📘 Documentation
+
+### 🇫🇷 French Memos
+- [🧭 Fiche 1 – Raccourcis clavier & gestion des événements](./Documentation/Fiche_memo_Tkinter_raccourcis.md)  
+- [🧭 Fiche 2 – Menus & événements souris](./Documentation/Fiche_memo_Tkinter_menus_souris.md)  
+- [🧭 Fiche 3 – Widgets essentiels & Internationalisation (i18n)](./Documentation/Fiche_memo_Tkinter_widgets_i18n.md)
+
+### 🇬🇧 English Memos
+- [🧭 Memo 1 – Tkinter Keyboard Shortcuts](./Documentation/Tkinter_shortcuts_memo_EN.md)  
+- [🧭 Memo 2 – Tkinter Menus & Mouse Events](./Documentation/Tkinter_menus_mouse_memo_EN.md)  
+- [🧭 Memo 3 – Tkinter Widgets & Internationalization (i18n)](./Documentation/Tkinter_widgets_i18n_memo_EN.md)
+
+---
+
+## 🔜 Planned Improvements
+- Sliding help‑panel animation  
+- Binary / hexadecimal calculation module  
+- Logic operation module (AND, OR, XOR, NOT…)  
+- Export results to a text file  
+- Multi‑platform executable version  
+- GitHub release with examples and extended documentation
 
 ---
 
 ## 👤 Author
-
-Developed by **Jean-Marc (Jean)**  
-With the magical guidance of **Pylo**, code companion 🧙‍♂️
+Developed by **Jean‑Marc (Jean)**  
+With the loyal guidance of **Pylo**, the magical code companion 🧙‍♂️
 
 ---
 
 ## 📜 License
-
-Open source – for personal and educational use.
+**Open source** project for personal and educational use.  
+Reuse and redistribution are allowed with proper credit.

@@ -105,7 +105,7 @@ def construire_menus():
 
     # Menu Fichier
     menu_fichier = tk.Menu(menu_principal, tearoff=0)
-    menu_fichier.add_command(label=textes_langues["a_propos_titre"], command=afficher_a_propos)
+    menu_fichier.add_command(label=textes_langues["a_propos_titre"], accelerator="CTRL+Q", command=afficher_a_propos)
     menu_fichier.add_command(label=textes_langues["btn_quitter"], command=fenetre.destroy)
     menu_principal.add_cascade(label=textes_langues["menu_fichier"], menu=menu_fichier)
 

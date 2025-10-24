@@ -165,6 +165,7 @@ def main():
         ]
         pop = PopupMenu(root, entries)
         pop.popup_at_widget_bottom(item_fichier)
+        root.after(100, lambda: pop.focus_force())
 
     # click pour ouvrir le sous-menu
     for w in (item_fichier, item_fichier.lbl_text):

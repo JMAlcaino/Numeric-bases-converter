@@ -166,14 +166,14 @@ def mettre_a_jour_boutons_radio():
 def changer_langue(nouvelle_langue):  # Fonction qui change la langue de l'interface en appelant la fonction 'mettre_a_jour_interface'. L'argument 'nouvelle_langue' est donné par appui sur le bouton du drapeau correspondant.
     global langue_actuelle, textes_langues
 
-    # ⚠️ Sauvegarder d'abord la langue actuelle avant de la modifier
+    # Sauvegarder d'abord la langue actuelle avant de la modifier
     ancienne_langue = langue_actuelle
     langue_actuelle = nouvelle_langue
 
     # Charger la nouvelle langue
     textes_langues = charger_traductions(f"lang_{langue_actuelle}.json")  # Appelle la fonction 'charger_traduction' pour ouvrir le fichier .json de la langue correspondante.
 
-    # ✅ Re-traduction du message affiché dans erreur_label
+    # Re-traduction du message affiché dans erreur_label
     texte_actuel = erreur_label.cget("text")
     anciennes_traductions = charger_traductions(f"lang_{ancienne_langue}.json")
 

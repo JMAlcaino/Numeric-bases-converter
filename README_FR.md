@@ -1,13 +1,13 @@
 # 🧮 Convertisseur de Bases Numériques — Interface Tkinter
 
-**Auteur :** Jean‑Marc (Jean)
+**Auteur :** Jean‑Marc (Jean) ALCAÏNO
 
 **Assistant :** Pylo 🧙‍♂️
 
 **Dernière mise à jour :** 2025‑10‑25
 
 **Langage :** Python 3 + Tkinter
-  
+
 **Licence :** Open source – usage personnel et éducatif
 
 **Version :** 4.1.1

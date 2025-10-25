@@ -5,6 +5,7 @@
 **Dernière mise à jour :** 2025‑04‑18  
 **Langage :** Python 3 + Tkinter  
 **Licence :** Open source – usage personnel et éducatif
+**Version :** 4.1.1
 
 ---
 

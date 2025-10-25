@@ -2,7 +2,7 @@
 
 **Author:** Jean‑Marc (Jean)  
 **Assistant:** Pylo 🧙‍♂️  
-**Last updated:** 2025‑04‑18  
+**Last updated:** 2025‑10‑25 
 **Language:** Python 3 + Tkinter  
 **License:** Open source – for personal and educational use
 

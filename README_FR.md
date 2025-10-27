@@ -4,7 +4,7 @@
 
 **Assistant :** Pylo 🧙‍♂️
 
-**Dernière mise à jour :** 2025‑10‑25
+**Dernière mise à jour :** 2025‑10‑27
 
 **Langage :** Python 3 + Tkinter
 
@@ -43,8 +43,8 @@
 - Collage dans le champ d’entrée via clic droit  
 - Gestion des entiers négatifs avec message d’avertissement  
 - Fenêtre « À propos » (`Toplevel`) centrée automatiquement  
-- Panneau d’aide latéral (`LabelFrame`) :  
-  - Texte issu du fichier externe `aide.txt`  
+- Panneaux d’aide et de contexte latéraux (`LabelFrame`) :  
+  - Textes issu de fichiers externes 
   - Zone `Text` défilable avec barre de défilement et molette souris  
   - Bouton de fermeture dédié  
 - Code structuré, commenté et orienté apprentissage
@@ -84,19 +84,19 @@ pyinstaller --onefile conv_num_gui.py
 
 ---
 
-## 🔜 Évolutions prévues
-- Animation latérale du panneau d’aide  
+## 🔜 Évolutions prévues  
 - Module de calculs binaires / hexadécimaux  
 - Module de logique booléenne (AND, OR, XOR, NOT…)  
 - Export des résultats dans un fichier texte  
 - Version exécutable multi‑plateforme  
-- Publication GitHub complète avec exemples et captures
+- Publication GitHub complète avec exemples et captures d'écran
+- Intégration dans un projet pédagogique plus large de découverte et pratique de cryptographie.
 
 ---
 
 ## 👤 Auteur
-Développé par **Jean‑Marc (Jean)**  
-Avec l’assistance fidèle de **Pylo**, compagnon magique du code 🧙‍♂️
+Développé par **Jean‑Marc (Jean) Alcaïno**  
+Avec l’assistance fidèle de **Pylo**
 
 ---
 

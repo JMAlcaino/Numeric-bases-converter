@@ -20,6 +20,7 @@ la représentation des nombres dans différents systèmes de base utilisés en i
  V 4.1   : Mise en place de l'interface en allemand et en espagnol et des fichiers 'aide' et 'contexte'.
            Traduction des fichiers .json en allemand et en espagnol également.
  V 4.1.1 : Corrections de différents bugs. Affichage de l'à propos corrigé.
+ V 4.2   : Ajout des langues : ialien et néerlandais pour les menus et aides.
 
 ############################################################################################################
  
@@ -120,7 +121,9 @@ def construire_menus():
     menu_langue.add_command(label="Français", command=lambda: changer_langue("fr"))
     menu_langue.add_command(label="English", command=lambda: changer_langue("en"))
     menu_langue.add_command(label="Deutsch", command=lambda: changer_langue("de"))
-    menu_langue.add_command(label="Espanol", command=lambda: changer_langue("es"))
+    menu_langue.add_command(label="Español", command=lambda: changer_langue("es"))
+    menu_langue.add_command(label="Italiano", command=lambda: changer_langue("it"))
+    menu_langue.add_command(label="Nederlands", command=lambda: changer_langue("nl"))
     menu_principal.add_cascade(label=textes_langues["menu_langue"], menu=menu_langue)
 
     # Appliquer le menu à la fenêtre
@@ -462,22 +465,30 @@ img_fr = PhotoImage(file="fr.png")
 img_en = PhotoImage(file="gb.png")
 img_de = PhotoImage(file="de.png")
 img_es = PhotoImage(file="es.png")
+img_it = PhotoImage(file="it.png")
+img_nl = PhotoImage(file="nl.png")
 
-# Conteneur Global pour pouvoir placer les programme principal d'un côté et les affichages d'aides et autres sur le côté droit. Encapsulage obligatoire sino on ne peut pas mettre une frame latérale.
+# Conteneur Global pour pouvoir placer le programme principal d'un côté et les affichages d'aides et autres sur le côté droit. Encapsulage obligatoire sino on ne peut pas mettre une frame latérale.
 conteneur_global = tk.Frame(fenetre)  # Crée le Frame principal conteneur des deux frames : un pour le programme principal et l'autre pour le latéral (aide).
 conteneur_global.pack(fill='both', expand=True)  # Le .pack() doit être sur une ligne en dessous sinon il retourne un 'non' dans le placement.
 
 # Boutons de changement de langue.
-zone_drapeaux = tk.Frame(conteneur_global, width=100)
+zone_drapeaux = tk.Frame(conteneur_global, width=100)  # Création de l'emplacement des boutons des drapeaux.
+# -> Création des boutons et des commandes de changement de langue en fonction duquel est appuyé par l'utilisateur.
 bouton_francais = tk.Button(zone_drapeaux, image=img_fr, command=lambda: changer_langue("fr"))  # Affiche le bouton et exécute la fonction 'changer_langue' avec 'fr' en argument.
 bouton_anglais = tk.Button(zone_drapeaux, image=img_en, command=lambda: changer_langue("en"))   # Drapeau pour changer l'interface en anglais.
 bouton_allemand = tk.Button(zone_drapeaux, image=img_de, command=lambda: changer_langue("de"))  # Drapeau pour changer l'interface en allemand.
 bouton_espagnol = tk.Button(zone_drapeaux, image=img_es, command=lambda: changer_langue("es"))  # Drapeau pour changer l'interface en espagnol.
+bouton_italien = tk.Button(zone_drapeaux, image=img_it, command=lambda: changer_langue("it"))   # Drapeau pour changer l'interface en italien.
+bouton_hollandais = tk.Button(zone_drapeaux, image=img_nl, command=lambda: changer_langue("nl"))  # Drapeau pour changer l'interface en néerlandais.
+# -> Affichage des boutons drapeaux à l'intérieiur de la zone définie.
 bouton_francais.grid(row=0, column=0, padx=5, pady=2, sticky=tk.E)
 bouton_anglais.grid(row=0, column=1, padx=5, pady=2, sticky=tk.E)
 bouton_allemand.grid(row=0, column=2, padx=5, pady=2, sticky=tk.E)
 bouton_espagnol.grid(row=0, column=3, padx=5, pady=2, sticky=tk.E)
-zone_drapeaux.pack(pady=5)
+bouton_italien.grid(row=0, column=4, padx=5, pady=2, sticky=tk.E)
+bouton_hollandais.grid(row=0, column=5, padx=5, pady=2, sticky=tk.E)
+zone_drapeaux.pack(pady=5)  # Affichage de la zone des drapeaux dans la fenêtr.
 
 # Conteneur principal qui va contenir tous les éléments du programme principal (entrée, résultats...)
 contenu_principal = tk.Frame(conteneur_global)  # Crée une frame dans le conteneur global qui affichera tous les éléments principaux du programme.

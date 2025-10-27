@@ -10,7 +10,7 @@
 
 **Licence :** Open source – usage personnel et éducatif
 
-**Version :** 4.1.1
+**Version :** 4.2
 
 ---
 

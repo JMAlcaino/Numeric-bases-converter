@@ -33,6 +33,6 @@
 
 ---
 
-**Version : V4.1.1**
+**Version : V4.2**
 
 **© Jean-Marc Alcaïno  -  2025**

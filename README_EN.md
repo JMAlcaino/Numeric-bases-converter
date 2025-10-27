@@ -6,7 +6,7 @@
 **Language:** Python 3 + Tkinter  
 **License:** Open source – for personal and educational use
 
-**Version:** 4.1.1
+**Version:** 4.2
 
 
 ---

@@ -243,7 +243,7 @@ def afficher_aide():
     bloc_texte = tk.Frame(contenu_aide)
     bloc_texte.pack(fill='both', expand=True)
 
-    zone_texte_aide = tk.Text(bloc_texte, wrap='word', height=25, width=45)
+    zone_texte_aide = tk.Text(bloc_texte, wrap='word', height=25, width=45, font=('Arial', 10))
     scroll = tk.Scrollbar(bloc_texte, command=zone_texte_aide.yview)
     zone_texte_aide.config(yscrollcommand=scroll.set)
 
@@ -282,7 +282,7 @@ def afficher_contexte():
     bloc_texte = tk.Frame(contenu_contexte)
     bloc_texte.pack(fill='both', expand=True)
 
-    zone_texte_contexte = tk.Text(bloc_texte, wrap='word', height=25, width=45)
+    zone_texte_contexte = tk.Text(bloc_texte, wrap='word', height=25, width=45, font=('Arial', 10))
     scroll = tk.Scrollbar(bloc_texte, command=zone_texte_contexte.yview)
     zone_texte_contexte.config(yscrollcommand=scroll.set)
 

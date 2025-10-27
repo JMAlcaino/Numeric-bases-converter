@@ -1,0 +1,23 @@
+Welkom bij de converter voor numerieke stelsels!
+
+Met dit programma kun je een getal converteren vanuit:
+- Het decimale systeem (basis 10)
+- Het binaire systeem (basis 2)
+- Het octale systeem (basis 8)
+- Het hexadecimale systeem (basis 16)
+
+Functies:
+------------------
+- Kies de begisbasis met de keuzerondjes.
+- Voer je waarde in en klik op 'Converteren'.
+- Je kunt elk resultaat kopiëren met de knop 📋.
+- De vervolgmenu’s laten je het formaat aanpassen (2, 4, 8 bits).
+- Een hulppaneel kan rechts worden weergegeven of verborgen.
+- Fout- of bevestigingsberichten verschijnen onderaan.
+
+Opmerking:
+------
+- Negatieve gehele getallen worden nog niet volledig ondersteund.
+- Om een probleem te melden of een verbetering voor te stellen, neem contact op met Jean-Marc :)
+
+Veel plezier met dit leerzame en praktische hulpmiddel!

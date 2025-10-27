@@ -1,0 +1,23 @@
+Benvenuto nello strumento di conversione delle basi numeriche!
+
+Puoi utilizzare questo programma per convertire un numero da:
+- Il sistema decimale (base 10)
+- Il sistema binario (base 2)
+- Il sistema ottale (base 8)
+- Il sistema esadecimale (base 16)
+
+Funzionalità:
+------------------
+- Scegli la base di partenza con i pulsanti radio.
+- Inserisci il valore e clicca su 'Converti'.
+- Puoi copiare ogni risultato con il pulsante 📋.
+- I menu a discesa ti permettono di formattare la visualizzazione (2, 4, 8 bit).
+- Un pannello di aiuto può essere mostrato o nascosto a destra.
+- I messaggi di errore o di conferma vengono visualizzati in basso.
+
+Nota:
+------
+- I numeri interi negativi non sono ancora pienamente supportati.
+- Per segnalare un problema o proporre un miglioramento, contatta Jean-Marc :)
+
+Buon utilizzo di questo strumento didattico e pratico!

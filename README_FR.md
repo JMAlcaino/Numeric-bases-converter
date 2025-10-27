@@ -2,7 +2,7 @@
 
 **Auteur :** Jean‑Marc (Jean) ALCAÏNO
 
-**Assistant :** Pylo 🧙‍♂️
+**Assistant :** Pylo 
 
 **Dernière mise à jour :** 2025‑10‑27
 

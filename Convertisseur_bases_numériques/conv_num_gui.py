@@ -4,7 +4,7 @@
  Filename     : conv_num_gui.py                                                                              
  Description  : A GUI numeric bases converter
  Author       : Alcaïno Jean-Marc                                                                          
- Modification : 2025/05/12                                                                            
+ Modification : 2025/10/27                                                                            
  Version      : V 4.1.1
 
  GitHub       :     https://github.com/JMAlcaino/Numeric-bases-converter
@@ -228,7 +228,7 @@ def afficher_aide():
     if panneau_aide_actif and panneau_aide_actif.winfo_exists():
         return
     
-    # Affichage d'instructions dans le la bel des messages importants
+    # Affichage d'instructions dans le label des messages importants
     erreur_label.config(text=textes_langues["message_effacer"], font=('arial', 9), fg='black')
 
     # Conteneur principal de l’aide
@@ -305,8 +305,8 @@ def afficher_contexte():
 
 def charger_fichier_aide(zone_texte_aide):  # La référence est obligatoirment passée en argument pour que cela fonctionne normalement.
     try:
-        aide = "aide.txt"  # Définit le nom ou le chemin du fichier 'Aide'
-        with open(aide, "r", encoding="utf-8") as f:  # Le fichier est ouvert en mode 'r' -> read et encodé en UTF-8 (UNICODE) pour tenir compte des accents en français
+        aide = (f"aide_{langue_actuelle}.txt")  # Définit le nom ou le chemin du fichier 'Aide' en fonction de la langue actuelle.
+        with open(aide, "r", encoding="utf-8") as f:  # Le fichier est ouvert en mode 'r' -> read et encodé en UTF-8 (UNICODE) pour tenir compte des accents en français.
             contenu = f.read()  # Le contenu du fichier est lu et placé dans une variable afin d'être utilisé.
             zone_texte_aide.delete("1.0", tk.END)  # La zone de texte d'aide est d'abord effacée de la 1ère à la dernière ligne.
             zone_texte_aide.insert(tk.END, contenu)  # Le contenu est inséré dans la zone de texte.
@@ -316,7 +316,7 @@ def charger_fichier_aide(zone_texte_aide):  # La référence est obligatoirment 
 
 def charger_fichier_contexte(zone_texte_contexte):  # La référence est obligatoirment passée en argument pour que cela fonctionne normalement.
     try:
-        contexte = "contexte.txt"  # Définit le nom ou le chemin du fichier 'Contexte'
+        contexte = (f"contexte_{langue_actuelle}.txt")  # Définit le nom ou le chemin du fichier 'Contexte' en focntion de la langue actuelle.
         with open(contexte, "r", encoding="utf-8") as f:
             contenu = f.read()
             zone_texte_contexte.delete("1.0", tk.END)

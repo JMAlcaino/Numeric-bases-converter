@@ -1,8 +1,8 @@
 # 🧮 Numeric Base Converter — Tkinter GUI Application
 
 **Author:** Jean‑Marc (Jean)  
-**Assistant:** Pylo 🧙‍♂️  
-**Last updated:** 2025‑10‑25 
+**Assistant:** Pylo  
+**Last updated:** 2025‑10‑27 
 **Language:** Python 3 + Tkinter  
 **License:** Open source – for personal and educational use
 
@@ -88,12 +88,13 @@ pyinstaller --onefile conv_num_gui.py
 - Export results to a text file  
 - Multi‑platform executable version  
 - GitHub release with examples and extended documentation
+- Integration into a broader educational project on cryptography exploration and practice
 
 ---
 
 ## 👤 Author
-Developed by **Jean‑Marc (Jean)**  
-With the loyal guidance of **Pylo**, the magical code companion 🧙‍♂️
+Developed by **Jean‑Marc (Jean) Alcaïno**  
+With the loyal guidance of **Pylo**
 
 ---
 

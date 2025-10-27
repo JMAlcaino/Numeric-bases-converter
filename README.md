@@ -30,3 +30,9 @@
 ---
 
 🔗 **Plus d'informations et exemples de code  -  More informations and code's examples** : [./Documentation/](./Documentation/)
+
+---
+
+**Version : V4.1.1**
+
+**© Jean-Marc Alcaïno  -  2025**

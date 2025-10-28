@@ -47,24 +47,25 @@
 
 ##  Quick Start / Démarrage rapide
 
-### Run directly
+### Run directly / Exécution directe
 ```bash
 python conv_num_gui.py
 ```
 
-### Optional – Build an executable
+### Optional – Build an executable / Optionnel - Réalisation d'un éxécutable
 ```bash
 pyinstaller --onefile conv_num_gui.py
 ```
 
-> Requires [PyInstaller](https://pyinstaller.org/en/stable/).  
-> To install: `pip install pyinstaller`
+> Requires / Requis [PyInstaller](https://pyinstaller.org/en/stable/).  
+> To install / Installation : `pip install pyinstaller`
 
 ---
 
 ## Screenshots / Vues d’écran
 
 | Interface principale | Conversion & Résultats | Panneau d’aide | Panneau de contexte |
+|    Main interface    |  Conversion & Résults  |   Help Pannel  |   Context Pannel    |
 |----------------------|------------------------|----------------|---------------------|
 | ![Interface principale](./Documentation/Screenshots/Interface_principale.png) | ![Conversion et Résultats](./Documentation/Screenshots/Conversion_Résultats.png) | ![Panneau d’aide](./Documentation/Screenshots/Interface_Help.png) | ![Panneau de contexte](./Documentation/Screenshots/Interface_Context.png) |
 

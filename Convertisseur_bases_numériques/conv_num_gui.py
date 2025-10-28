@@ -5,7 +5,7 @@
  Description  : A GUI numeric bases converter
  Author       : Alcaïno Jean-Marc                                                                          
  Modification : 2025/10/27                                                                            
- Version      : V 4.1.1
+ Version      : V 4.2
 
  GitHub       :     https://github.com/JMAlcaino/Numeric-bases-converter
  Author GitHub :    https://github.com/JMAlcaino

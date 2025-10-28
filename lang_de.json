@@ -16,7 +16,7 @@
     "blocs_8": "8",
     "a_propos_titre": "Über",
     "a_propos_texte": "Diese Software wurde entwickelt\num die Umrechnung zwischen verschiedenen\nnumerischen Basen zu erleichtern.",
-    "a_propos_copyright": "Version 4.1\n Jean-Marc Alcaïno\n© 2025",
+    "a_propos_copyright": "Version 4.2\n Jean-Marc Alcaïno\n© 2025",
     "message_erreur": "Ungültige Eingabe. Bitte korrigieren.",
     "aucune_valeur": "Kein Wert zum Konvertieren!",
     "erreur_base": "Achtung! Ihre Eingabe ist für die gewählte Basis ungültig!\n Klicken Sie auf 'Löschen', um neu zu starten!",

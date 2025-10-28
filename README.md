@@ -21,15 +21,15 @@
 
 ## Points forts / Highlights
 
-- GUI développée avec **Tkinter**  -  **Tkinter**'s GUI
-- Conversions instantannée entre les bases nulmériques  -  Instant conversion between bases (2, 8, 10, 16)
+- GUI développée avec **Tkinter**  -  **Tkinter** GUI
+- Conversions instantanée entre les bases numériques  -  Instant conversion between bases (2, 8, 10, 16)
 - Résultats et options des formats dynamiques  -   Dynamic layout & formatting options
 - Support multilingue  -  Multi-language support (FR / EN / DE / ES)
-- Code commenté et pédagocique  -  Commented and educational code
+- Code commenté et pédagogique  -  Commented and educational code
 
 ---
 
-🔗 **Plus d'informations et exemples de code  -  More informations and code's examples** : [./Documentation/](./Documentation/)
+🔗 **Plus d'informations et exemples de code  -  More informations and code examples** : [./Documentation/](./Documentation/)
 
 ---
 

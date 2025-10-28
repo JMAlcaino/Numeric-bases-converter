@@ -1,11 +1,11 @@
-# 🧭 Memo Sheet — Tkinter: Menus & Mouse Events
+#  Memo Sheet — Tkinter: Menus & Mouse Events
 
 This memo complements the one on keyboard shortcuts.  
 It explains how to create menus, context menus, and manage mouse events in Tkinter — all while keeping your French variable names.
 
 ---
 
-## 🍔 1) Application Menus (Menu Bar)
+##  1) Application Menus (Menu Bar)
 
 ```python
 menu_principal = tk.Menu(fenetre)
@@ -38,7 +38,7 @@ fenetre.config(menu=menu_principal)
 
 ---
 
-## 🔘 2) Special Menu Elements
+##  2) Special Menu Elements
 
 ```python
 etat_son = tk.BooleanVar(value=True)
@@ -60,7 +60,7 @@ menu_options.entryconfig(0, state="normal")
 
 ---
 
-## 📜 3) Context Menu (Right-click)
+##  3) Context Menu (Right-click)
 
 ```python
 class MenuContextuel:
@@ -93,7 +93,7 @@ fenetre.bind("<Button-3>", ctx.afficher)
 
 ---
 
-## 🖱️ 4) Common Mouse Events
+##  4) Common Mouse Events
 
 | Pattern | Meaning |
 |:--|:--|
@@ -117,7 +117,7 @@ zone.bind("<B1-Motion>", on_drag)
 
 ---
 
-## 🔄 5) Mouse Wheel — Platform Differences
+##  5) Mouse Wheel — Platform Differences
 
 ### Windows / Linux
 ```python
@@ -143,7 +143,7 @@ fenetre.bind_all("<Button-5>", on_wheel_down)
 
 ---
 
-## 🎯 6) Event Coordinates and Information
+##  6) Event Coordinates and Information
 
 ```python
 def on_double_click(e):
@@ -160,7 +160,7 @@ liste.bind("<Double-Button-1>", on_double_click)
 
 ---
 
-## 🧼 7) Binding Scope: Widget vs Global
+##  7) Binding Scope: Widget vs Global
 
 - `widget.bind("<Button-1>", cb)` → only applies to that widget  
 - `fenetre.bind_all("<Button-1>", cb)` → applies globally
@@ -171,7 +171,7 @@ liste.bind("<Double-Button-1>", on_double_click)
 
 ---
 
-## 🧪 8) Example: Entry + Context Menu
+##  8) Example: Entry + Context Menu
 
 ```python
 def copier_selection(entry):
@@ -210,7 +210,7 @@ build_context_menu(entree)
 
 ---
 
-## ✅ 9) Quick Checklist (Menus & Mouse)
+##  9) Quick Checklist (Menus & Mouse)
 
 - [ ] `tearoff=0` on all menus  
 - [ ] Use `postcommand=` for dynamic item activation  

@@ -1,11 +1,11 @@
-# 🧭 Memo Sheet — Tkinter: Essential Widgets & Internationalization (i18n)
+#  Memo Sheet — Tkinter: Essential Widgets & Internationalization (i18n)
 
 This sheet combines the fundamentals for creating modern, multilingual Tkinter interfaces:  
-🎨 **Essential widgets** and 🌍 **language management (i18n)**.
+ **Essential widgets** and 🌍 **language management (i18n)**.
 
 ---
 
-## 🎨 1) Essential Tkinter Widgets
+##  1) Essential Tkinter Widgets
 
 Tkinter provides simple and lightweight widgets for building user interfaces.
 
@@ -24,7 +24,7 @@ Tkinter provides simple and lightweight widgets for building user interfaces.
 
 ---
 
-### 🧩 2) Widget Layout Systems
+###  2) Widget Layout Systems
 
 | Method | Description | Example |
 |:--|:--|:--|
@@ -32,14 +32,14 @@ Tkinter provides simple and lightweight widgets for building user interfaces.
 | `.grid()` | Grid layout (rows and columns). | `bouton.grid(row=0, column=1)` |
 | `.place()` | Absolute positioning (in pixels). | `widget.place(x=50, y=20)` |
 
-💡 **Tips:**
+ **Tips:**
 - Never mix `pack()` and `grid()` in the same container.
 - Use `Frame` and `LabelFrame` to structure the layout.
 - Use `expand=True` and `fill='both'` for responsive resizing.
 
 ---
 
-### 🪟 3) Dynamic Window Resizing
+###  3) Dynamic Window Resizing
 
 ```python
 fenetre.update_idletasks()
@@ -51,9 +51,9 @@ Ideal when resizing after a language change or text update.
 
 ---
 
-## 🌍 4) Internationalization (i18n)
+##  4) Internationalization (i18n)
 
-### 📁 Recommended Folder Structure
+###  Recommended Folder Structure
 ```
 /lang/
  ├── lang_fr.json
@@ -91,7 +91,7 @@ Each file contains interface translations for a given language.
 
 ---
 
-### 🔄 Loading Language Files
+###  Loading Language Files
 
 ```python
 import json
@@ -106,7 +106,7 @@ def charger_traductions(fichier):
 
 ---
 
-### 🗣️ Updating the Interface
+###  Updating the Interface
 
 ```python
 def mettre_a_jour_interface():
@@ -118,7 +118,7 @@ def mettre_a_jour_interface():
 
 ---
 
-### 🚩 Switching Language Dynamically
+###  Switching Language Dynamically
 
 ```python
 def changer_langue(nouvelle_langue):
@@ -131,21 +131,21 @@ def changer_langue(nouvelle_langue):
     fenetre.geometry("")
 ```
 
-💡 Place this function in the `command=` of your language flag buttons.
+ -> Place this function in the `command=` of your language flag buttons.
 
 ---
 
-### 🧠 Best Practices for i18n
+###  Best Practices for i18n
 
-✅ Store each language in separate `.json` files.  
-✅ Encode files in **UTF-8** (for accented characters).  
-✅ Always call `update_idletasks()` after switching languages.  
-✅ Avoid hard-coded strings — always use `textes_langues["key"]`.  
-✅ Use clear, consistent key names (`btn_*`, `menu_*`, `titre_*`).
+- Store each language in separate `.json` files.  
+- Encode files in **UTF-8** (for accented characters).  
+- Always call `update_idletasks()` after switching languages.  
+- Avoid hard-coded strings — always use `textes_langues["key"]`.  
+- Use clear, consistent key names (`btn_*`, `menu_*`, `titre_*`).
 
 ---
 
-### ✨ Minimal Example
+###  Minimal Example
 
 ```python
 import tkinter as tk, json
@@ -184,7 +184,7 @@ fenetre.mainloop()
 
 ---
 
-### 📚 Final Checklist
+###  Final Checklist
 - [x] Create a `lang/` folder with `.json` files  
 - [x] Load language at startup using `charger_traductions()`  
 - [x] Update text dynamically with `mettre_a_jour_interface()`  
@@ -194,4 +194,4 @@ fenetre.mainloop()
 
 ---
 
-✨ *Happy coding, Commandant Jean! You now have a solid base to build elegant, educational, multilingual Tkinter interfaces.* 🇫🇷🇬🇧🇪🇸
+What about a beer ? Let's go !! 🍺😉

@@ -1,10 +1,10 @@
-# 🧭 Memo Sheet — Tkinter: Keyboard Shortcuts & Key Event Management
+#  Memo Sheet — Tkinter: Keyboard Shortcuts & Key Event Management
 
 This memo summarizes how to create and manage keyboard shortcuts in Tkinter, making your interface more fluid and professional while keeping your code clear.
 
 ---
 
-## 🎹 1. Adding a Keyboard Shortcut (menu display only)
+##  1. Adding a Keyboard Shortcut (menu display only)
 
 > This option only *displays the shortcut text in the menu*  
 > It does **not** make the shortcut functional on its own.
@@ -24,7 +24,7 @@ Quitter       Ctrl+Q
 
 ---
 
-## ⌨️ 2. Making the Shortcut Functional (bind_all / bind)
+##  2. Making the Shortcut Functional (bind_all / bind)
 
 > Associates a key combination with a Python action  
 > `bind_all` → active in the entire application  
@@ -37,7 +37,7 @@ fenetre.bind_all("<F1>", lambda e: afficher_aide())           # Open help
 
 ---
 
-## 🧩 3. Common Key Syntaxes
+##  3. Common Key Syntaxes
 
 | Syntax | Action |
 |:--|:--|
@@ -57,7 +57,7 @@ fenetre.bind_all("<F1>", lambda e: afficher_aide())           # Open help
 
 ---
 
-## 🧠 4. The “event” Object (e)
+##  4. The “event” Object (e)
 
 When a shortcut is bound, the called function receives an **`event` object** containing information about the pressed key.
 
@@ -68,21 +68,21 @@ def touche_appuyee(e):
 fenetre.bind_all("<Key>", touche_appuyee)
 ```
 
-💬 Example output:
+ Example output:
 ```
 Touche : a  |  Code : 65
 ```
 
 ---
 
-## 🧰 5. Useful Tips and Tricks
+##  5. Useful Tips and Tricks
 
 - **Combine display + action:**
   ```python
   menu_fichier.add_command(label="Quitter", accelerator="Ctrl+Q", command=fenetre.destroy)
   fenetre.bind_all("<Control-q>", lambda e: fenetre.destroy())
   ```
-  👉 perfect consistency between menu and shortcut.
+  -> perfect consistency between menu and shortcut.
 
 - **Restrict a shortcut to a specific widget:**
   ```python
@@ -97,16 +97,16 @@ Touche : a  |  Code : 65
 
 ---
 
-## 💡 6. Best Practices
+##  6. Best Practices
 
-✅ Always show keyboard shortcuts in menus (`accelerator=`).  
-✅ Group your `bind_all` commands in a dedicated section after window creation.  
-✅ Use `lambda e:` when the `event` parameter isn’t needed.  
-✅ For complex actions, define a proper function with `(event)` as an argument.  
+- Always show keyboard shortcuts in menus (`accelerator=`).  
+- Group your `bind_all` commands in a dedicated section after window creation.  
+- Use `lambda e:` when the `event` parameter isn’t needed.  
+- For complex actions, define a proper function with `(event)` as an argument.  
 
 ---
 
-## ✨ Complete Example
+##  Complete Example
 
 ```python
 # Menu
@@ -126,5 +126,5 @@ fenetre.bind_all("<Control-r>", lambda e: convertir())
 You could display a small message such as:  
 > “Tip: Use **Ctrl+R** to convert quickly or **F1** to open help.”
 
-…in your message zone or side panel, for a more educational and friendly feel 😉
+
 

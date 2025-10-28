@@ -1,10 +1,10 @@
-# 🧭 Fiche mémo — Tkinter : Menus & événements souris
+# Fiche mémo — Tkinter : Menus & événements souris
 
-Cette fiche complète la fiche « Raccourcis clavier ». Idéale pour ton projet (menus, context menus, interactions souris).
+Cette fiche complète la fiche « Raccourcis clavier ». Idéale pour le projet (menus, context menus, interactions souris).
 
 ---
 
-## 🍔 1) Menus d’application (barre de menus)
+##  1) Menus d’application (barre de menus)
 
 ```python
 menu_principal = tk.Menu(fenetre)
@@ -37,7 +37,7 @@ fenetre.config(menu=menu_principal)
 
 ---
 
-## 🔘 2) Éléments spéciaux de menu
+##  2) Éléments spéciaux de menu
 
 ```python
 etat_son = tk.BooleanVar(value=True)
@@ -56,11 +56,11 @@ menu_options.entryconfig(0, state="normal")     # réactive
 **À retenir :**
 - `add_checkbutton` / `add_radiobutton` lient directement une variable Tk.
 - `entryconfig(index, state=...)` pour (dé)bloquer un item à la volée.
-- Indice `index` commence à 0 (ou utilise le label exact).
+- Indice `index` commencer à 0 (ou utiliser le label exact).
 
 ---
 
-## 📜 3) Menu contextuel (clic droit)
+##  3) Menu contextuel (clic droit)
 
 ```python
 class MenuContextuel:
@@ -94,7 +94,7 @@ fenetre.bind("<Button-3>", ctx.afficher)  # clic droit Windows/Linux
 
 ---
 
-## 🖱️ 4) Événements souris courants
+##  4) Événements souris courants
 
 | Pattern | Signification |
 |:--|:--|
@@ -118,7 +118,7 @@ zone.bind("<B1-Motion>", on_drag)
 
 ---
 
-## 🔄 5) Molette : différences plateformes
+##  5) Molette : différences plateformes
 
 ### Windows / Linux (souvent)
 ```python
@@ -145,9 +145,9 @@ fenetre.bind_all("<Button-5>", on_wheel_down)
 
 ---
 
-## 🎯 6) Coordonnées & infos utiles de l’event
+##  6) Coordonnées & infos utiles de l’event
 
-Dans tes callbacks (ex: `def on_click(e):`), l’objet `event` expose :
+Dans les callbacks (ex: `def on_click(e):`), l’objet `event` exposer :
 
 - `e.x`, `e.y` : coords relatives au widget
 - `e.x_root`, `e.y_root` : coords écran (utiles pour `tk_popup`)
@@ -164,14 +164,14 @@ liste.bind("<Double-Button-1>", on_double_click)
 
 ---
 
-## 🧼 7) Bind sur un seul widget vs global
+##  7) Bind sur un seul widget vs global
 
 - `widget.bind("<Button-1>", cb)` → le callback ne s’applique **qu’à ce widget**.
 - `fenetre.bind_all("<Button-1>", cb)` → écoute **partout** (toute l’app).
 
 **Bonnes pratiques :**
-- Préfère `bind` pour des comportements locaux et précis.
-- Garde `bind_all` pour des raccourcis globaux (ex: molette globale, F1, Ctrl+Q).
+- Préférer `bind` pour des comportements locaux et précis.
+- Garder `bind_all` pour des raccourcis globaux (ex: molette globale, F1, Ctrl+Q).
 
 ---
 
@@ -214,7 +214,7 @@ build_context_menu(entree)
 
 ---
 
-## ✅ 9) Checklist rapide (menus & souris)
+##  9) Checklist rapide (menus & souris)
 
 - [ ] `tearoff=0` sur tous les menus
 - [ ] `postcommand=` pour (dés)activer des items juste avant ouverture
@@ -226,4 +226,5 @@ build_context_menu(entree)
 
 ---
 
-Bon code, et santé à la Chimay rouge du développeur éclairé ! 🍺😄
+Une Chimay rouge pour tout le monde ! 🍺😄
+

@@ -1,11 +1,11 @@
 # 🧭 Fiche mémo — Tkinter : Widgets essentiels & Internationalisation (i18n)
 
 Cette fiche regroupe les deux aspects fondamentaux pour construire des interfaces Tkinter modernes et multilingues :  
-🎨 **les widgets essentiels** et 🌍 **la gestion des langues (i18n)**.
+ **les widgets essentiels** et 🌍 **la gestion des langues (i18n)**.
 
 ---
 
-## 🎨 1) Widgets essentiels de Tkinter
+##  1) Widgets essentiels de Tkinter
 
 Tkinter fournit de nombreux widgets simples et légers permettant de composer une interface graphique.
 
@@ -26,7 +26,7 @@ Tkinter fournit de nombreux widgets simples et légers permettant de composer un
 
 ---
 
-### 🧩 2) Positionnement des widgets
+###  2) Positionnement des widgets
 
 Trois systèmes principaux permettent de disposer les widgets dans une fenêtre :
 
@@ -36,27 +36,27 @@ Trois systèmes principaux permettent de disposer les widgets dans une fenêtre�
 | `.grid()` | Disposition en lignes et colonnes (tableau). | `bouton.grid(row=0, column=1)` |
 | `.place()` | Position absolue en pixels (rarement recommandé). | `widget.place(x=50, y=20)` |
 
-💡 **Bonnes pratiques :**
-- Ne mélange jamais `pack()` et `grid()` dans le même conteneur.
-- Utilise `Frame` ou `LabelFrame` pour structurer visuellement les zones.
-- Utilise `expand=True` et `fill='both'` pour un redimensionnement fluide.
+ **Bonnes pratiques :**
+- Ne jamais mélanger `pack()` et `grid()` dans le même conteneur.
+- Utiliser `Frame` ou `LabelFrame` pour structurer visuellement les zones.
+- Utiliser `expand=True` et `fill='both'` pour un redimensionnement fluide.
 
 ---
 
-### 🪟 3) Gestion dynamique de la taille
+###  3) Gestion dynamique de la taille
 ```python
 fenetre.update_idletasks()
 fenetre.geometry("")              # Ajuste automatiquement la taille
 fenetre.minsize(width, height)    # Fixe une taille minimale
 ```
 
-💬 *Parfait pour adapter la fenêtre après un changement de langue ou de texte.*
+ *Parfait pour adapter la fenêtre après un changement de langue ou de texte.*
 
 ---
 
-## 🌍 4) Internationalisation (i18n)
+##  4) Internationalisation (i18n)
 
-### 📁 Structure conseillée
+###  Structure conseillée
 ```
 /lang/
  ├── lang_fr.json
@@ -93,7 +93,7 @@ Chaque fichier contient les traductions pour une langue spécifique.
 
 ---
 
-### 🔄 Chargement des fichiers de langue
+###  Chargement des fichiers de langue
 
 ```python
 import json
@@ -120,7 +120,7 @@ def mettre_a_jour_interface():
 
 ---
 
-### 🚩 Changement de langue à la volée
+###  Changement de langue à la volée
 
 ```python
 def changer_langue(nouvelle_langue):
@@ -133,20 +133,20 @@ def changer_langue(nouvelle_langue):
     fenetre.geometry("")
 ```
 
-💡 **Astuce :** pour un affichage immédiat, place cette fonction dans le `command=` des boutons drapeaux.
+ **Astuce :** pour un affichage immédiat, placer cette fonction dans le `command=` des boutons drapeaux.
 
 ---
 
-### 🧠 Bonnes pratiques i18n
-✅ Stocker les traductions dans des fichiers `.json` séparés.  
-✅ Encoder les fichiers en **UTF-8** (gestion des accents).  
-✅ Toujours appeler `update_idletasks()` après un changement de langue.  
-✅ Éviter les chaînes “en dur” dans le code — passer systématiquement par `textes_langues["clé"]`.  
-✅ Créer des clés explicites et homogènes (`btn_*`, `menu_*`, `titre_*`).
+###  Bonnes pratiques i18n
+- Stocker les traductions dans des fichiers `.json` séparés.  
+- Encoder les fichiers en **UTF-8** (gestion des accents).  
+- Toujours appeler `update_idletasks()` après un changement de langue.  
+- Éviter les chaînes “en dur” dans le code — passer systématiquement par `textes_langues["clé"]`.  
+- Créer des clés explicites et homogènes (`btn_*`, `menu_*`, `titre_*`).
 
 ---
 
-### ✨ Exemple minimal complet
+###  Exemple minimal complet
 
 ```python
 import tkinter as tk, json
@@ -185,14 +185,14 @@ fenetre.mainloop()
 
 ---
 
-### 📚 Checklist finale
-- [x] Crée un dossier `lang/` pour tes fichiers `.json`  
-- [x] Charge la langue au lancement via `charger_traductions()`  
-- [x] Mets à jour les textes via `mettre_a_jour_interface()`  
-- [x] Ajoute des boutons ou un menu pour changer la langue dynamiquement  
-- [x] Vérifie la compatibilité des caractères accentués (UTF-8)  
-- [x] Ne laisse aucun texte codé en dur dans l’interface  
+###  Checklist finale
+- [x] Créer un dossier `lang/` pour tes fichiers `.json`  
+- [x] Charger la langue au lancement via `charger_traductions()`  
+- [x] Mettre à jour les textes via `mettre_a_jour_interface()`  
+- [x] Ajouter des boutons ou un menu pour changer la langue dynamiquement  
+- [x] Vérifier la compatibilité des caractères accentués (UTF-8)  
+- [x] Ne laisser aucun texte codé en dur dans l’interface  
 
 ---
 
-✨ *Bon code, Commandant Jean ! Tu as maintenant sous la main une base solide pour concevoir des interfaces Tkinter multilingues, élégantes et pédagogiques.* 🇫🇷🇬🇧🇪🇸
+Qui veut une Chimay rouge ? 🍺😋

@@ -1,13 +1,11 @@
 # Projet : Convertisseur de bases numériques & Aide interactive
 
-**Auteur :** Jean-Marc (Jean)  
-**Assistant :** Pylo 🧙‍♂️  
-**Dernière mise à jour :** 2025-04-18  
+**Auteur :** Jean-Marc Alcaïno    
 **Langage :** Python 3 + Tkinter
 
 ---
 
-## 🎯 Objectifs
+##  Objectifs
 - Créer un outil graphique complet pour convertir des valeurs numériques entre bases.
 - Offrir une interface ergonomique, pédagogique et extensible.
 - Ajouter un panneau d’aide intégré et des fonctionnalités pratiques de visualisation.
@@ -15,7 +13,7 @@
 
 ---
 
-## ✅ Fonctionnalités actuelles
+##  Fonctionnalités actuelles
 
 - Interface Tkinter avec `LabelFrame`, `Entry`, `Label`, `Button`
 - Choix de la base d’entrée (10, 2, 8, 16)
@@ -34,7 +32,7 @@
 
 ---
 
-## 🛠️ Exemple de fonction utilisée : `charger_aide()`
+##  Exemple de fonction utilisée : `charger_aide()`
 
 ```python
 def charger_aide(zone_texte):
@@ -51,7 +49,7 @@ def charger_aide(zone_texte):
 
 ---
 
-## 🔜 À venir
+##  À venir
 - Animation de panneau d’aide (déroulement latéral)
 - Export des résultats dans un fichier texte
 - Préparation de version exécutable multi-plateforme
@@ -59,13 +57,13 @@ def charger_aide(zone_texte):
 
 ---
 
-## 👤 Auteur
+##  Auteur
 
-Développé par **Jean-Marc (Jean)**  
-Avec l’assistance fidèle de **Pylo**, compagnon magique du code 🧙‍♂️
+Développé par **Jean-Marc Alcaïno**  
+Assistant **Pylo**
 
 ---
 
-## 📜 Licence
+##  Licence
 
 Open source – usage personnel et éducatif.

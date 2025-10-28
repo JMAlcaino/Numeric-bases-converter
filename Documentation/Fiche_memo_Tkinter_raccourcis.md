@@ -1,6 +1,6 @@
-# 🧭 Fiche mémo — Tkinter : Raccourcis clavier & gestion des événements clavier
+#  Fiche mémo — Tkinter : Raccourcis clavier & gestion des événements clavier
 
-## 🎹 1. Ajouter un raccourci clavier (affichage dans le menu)
+##  1. Ajouter un raccourci clavier (affichage dans le menu)
 > Sert uniquement à *afficher le texte du raccourci dans le menu*  
 > Il ne rend pas le raccourci fonctionnel à lui seul
 
@@ -19,7 +19,7 @@ Quitter       Ctrl+Q
 
 ---
 
-## ⌨️ 2. Activer réellement le raccourci (bind_all / bind)
+##  2. Activer réellement le raccourci (bind_all / bind)
 
 > Associe une combinaison de touches à une action Python  
 > `bind_all` → actif dans toute l’application  
@@ -32,7 +32,7 @@ fenetre.bind_all("<F1>", lambda e: afficher_aide())           # Ouvrir l’aide
 
 ---
 
-## 🧩 3. Principales syntaxes de touches
+##  3. Principales syntaxes de touches
 
 | Syntaxe | Action |
 |:--|:--|
@@ -52,8 +52,8 @@ fenetre.bind_all("<F1>", lambda e: afficher_aide())           # Ouvrir l’aide
 
 ---
 
-## 🧠 4. L’objet “event” (e)
-Quand tu lies un raccourci, la fonction appelée reçoit un **objet `event`** contenant des infos sur la touche pressée.
+##  4. L’objet “event” (e)
+Quand on lie un raccourci, la fonction appelée reçoit un **objet `event`** contenant des infos sur la touche pressée.
 
 ```python
 def touche_appuyee(e):
@@ -62,21 +62,21 @@ def touche_appuyee(e):
 fenetre.bind_all("<Key>", touche_appuyee)
 ```
 
-💬 Exemple de sortie :
+ Exemple de sortie :
 ```
 Touche : a  |  Code : 65
 ```
 
 ---
 
-## 🧰 5. Liens utiles et astuces
+##  5. Liens utiles et astuces
 
 - **Combiner affichage + action :**
   ```python
   menu_fichier.add_command(label="Quitter", accelerator="Ctrl+Q", command=fenetre.destroy)
   fenetre.bind_all("<Control-q>", lambda e: fenetre.destroy())
   ```
-  👉 cohérence parfaite entre menu et raccourci.
+  -> cohérence parfaite entre menu et raccourci.
 
 - **Bloquer un raccourci sur un widget précis :**
   ```python
@@ -91,16 +91,16 @@ Touche : a  |  Code : 65
 
 ---
 
-## 💡 6. Bonnes pratiques
+##  6. Bonnes pratiques
 
-✅ Toujours afficher les raccourcis clavier dans les menus (`accelerator=`).  
-✅ Grouper les `bind_all` dans une section dédiée, après la création de la fenêtre.  
-✅ Utiliser `lambda e:` quand on n’a pas besoin du paramètre `event`.  
-✅ Pour les fonctions complexes → écrire une vraie fonction avec `(event)` en argument.
+- Toujours afficher les raccourcis clavier dans les menus (`accelerator=`).  
+- Grouper les `bind_all` dans une section dédiée, après la création de la fenêtre.  
+- Utiliser `lambda e:` quand on n’a pas besoin du paramètre `event`.  
+- Pour les fonctions complexes → écrire une vraie fonction avec `(event)` en argument.
 
 ---
 
-## ✨ Exemple complet
+##  Exemple complet
 
 ```python
 # Menu
@@ -116,8 +116,8 @@ fenetre.bind_all("<Control-r>", lambda e: convertir())
 
 ---
 
-💾 **Astuce bonus pour ton convertisseur :**
-Tu pourrais même afficher un petit texte d’aide du type :  
+ **Astuce bonus pour le convertisseur :**
+on pourrait afficher un petit texte d’aide du type :  
 > “Astuce : utilisez **Ctrl+R** pour convertir rapidement ou **F1** pour afficher l’aide.”
 
-…dans ta zone de messages ou dans le panneau de contexte, pour un rendu encore plus pédagogique 😉
+…dans la zone de messages ou dans le panneau de contexte, pour un rendu encore plus pédagogique

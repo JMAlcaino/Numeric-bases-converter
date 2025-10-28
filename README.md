@@ -66,7 +66,7 @@ pyinstaller --onefile conv_num_gui.py
 
 | Interface principale | Conversion & Résultats | Panneau d’aide | Panneau de contexte |
 |----------------------|------------------------|----------------|---------------------|
-| ![Interface principale](./Documentation/screenshots/Interface_principale.png) | ![Conversion et Résultats](./Documentation/screenshots/Conversion_Résultats.png) | ![Panneau d’aide](./Documentation/screenshots/Interface_Help.png) | ![Panneau de contexte](./Documentation/screenshots/Interface_Context.png) |
+| ![Interface principale](./Documentation/Screenshots/Interface_principale.png) | ![Conversion et Résultats](./Documentation/Screenshots/Conversion_Résultats.png) | ![Panneau d’aide](./Documentation/Screenshots/Interface_Help.png) | ![Panneau de contexte](./Documentation/Screenshots/Interface_Context.png) |
 
 ---
 

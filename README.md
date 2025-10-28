@@ -7,39 +7,45 @@
 
 # 🧮 Numeric Bases Converter / Convertisseur de Bases Numériques — V4.2
 
-> 🇫🇷 **Version française**
+> 🇫🇷
 >
 > Outil pédagogique en **Python / Tkinter** permettant de convertir des valeurs
 > entre différentes bases numériques (**binaire**, **octale**, **décimale**, **hexadécimale**).  
 > Interface claire, **multilingue** et évolutive.
 >
+> **Points forts :**
+> - Interface graphique (GUI) réalisée avec **Tkinter**
+> - Conversion instantannée des bases **2 • 8 • 10 • 16**
+> - Options de résultats formatés (blocs de **2**, **4**, ou **8** caractères)
+> - **Multilingue** (FR / EN / DE / ES / IT / NL)
+> - Aide et contexte dans les différentes langues
+> - Code documenté et pédagogiquement explicité.
+> - Prêt pour une évolution et un usage de modules liés à la crytographie
+>
 > 📘 Plus d’informations : [README_FR.md](./README_FR.md)
 
 ---
 
-> 🇬🇧 **English version**
+> 🇬🇧
 >
 > Educational tool built in **Python / Tkinter** for converting numeric values
 > between **binary**, **octal**, **decimal**, and **hexadecimal** systems.  
 > Clear, **multilingual**, and extensible interface.
 >
+> **Highlights :**
+> - Graphical interface made with **Tkinter**
+> - Instant conversion between **2 • 8 • 10 • 16** bases
+> - Output formatting options (blocks of **2**, **4**, or **8** characters)
+> - **Multilingual support** (FR / EN / DE / ES / IT / NL)
+> - Help and Context panels in multiple languages
+> - Clean, well-commented, educational codebase
+> - Future-ready for cryptography-related modules
+>
 > 📘 More information: [README_EN.md](./README_EN.md)
 
 ---
 
-## ✨ Highlights / Points forts
-
-- Graphical interface made with **Tkinter**
-- Instant conversion between **2 • 8 • 10 • 16**
-- Output formatting options (blocks of **2**, **4**, or **8** characters)
-- **Multilingual support** (FR / EN / ES / IT / NL)
-- Help and Context panels in multiple languages
-- Clean, well-commented, educational codebase
-- Future-ready for cryptography-related modules
-
----
-
-## ▶️ Quick Start / Démarrage rapide
+##  Quick Start / Démarrage rapide
 
 ### Run directly
 ```bash
@@ -51,12 +57,12 @@ python conv_num_gui.py
 pyinstaller --onefile conv_num_gui.py
 ```
 
-> 💡 Requires [PyInstaller](https://pyinstaller.org/en/stable/).  
+> Requires [PyInstaller](https://pyinstaller.org/en/stable/).  
 > To install: `pip install pyinstaller`
 
 ---
 
-## 📸 Screenshots / Vues d’écran
+## Screenshots / Vues d’écran
 
 | Vue principale | Panneau d’aide (FR) | Help panel (EN) |
 |----------------|---------------------|-----------------|

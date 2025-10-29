@@ -31,36 +31,16 @@ import tkinter as tk
 import random
 import json  # Importe la librairie de gestion des fichiers .json qui contiennent les différentes traductions des langues de l'interface.
 from tkinter import PhotoImage  # Librairie qui gère les graphisme dans Tkinter utilisée pour afficher les petits drapeaux sur les boutons.
-import os  # La librairie se charge des relations programme/OS 
-
-
+ 
 
 # Définitions des variables
 panneau_aide_actif = None  # Variable globale servant à vérifier si un panneau d'aide est déjà ouvert afin d'éviter d'en ouvrir un autre à côté -> problèmes d'affichage.
 panneau_contexte_actif = None  # Idem pour le panneau d'affichage du contexte.
 langue_actuelle = "fr"  #  Variable de choix de langue (par défaut : français ).
 
-# Gestion des chemins du projet
-#   -> Détermine automatiquement le dossier où se trouve ce script.
-#   -> (__file__ = chemin du fichier courant)
-#   -> os.path.abspath(__file__) → chemin complet (absolu)
-#   -> os.path.dirname(...) → on retire le nom du fichier pour ne garder que le dossier
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 # Définition des fonctions
-
-def chemin_fichier(sous_dossier: str, nom_fichier: str) -> str:
-    """
-    Renvoie le chemin complet vers un fichier interne au projet,
-    en fonction de son sous-dossier et de son nom.
-
-    Exemple :
-        chemin_fichier("Langues", "lang_fr.json")
-        ➜ C:/Users/Jean/Projets/Numeric-bases-converter/Langues/lang_fr.json
-    """
-    return os.path.join(BASE_DIR, sous_dossier, nom_fichier)
-
 
 def charger_traductions(fichier):  # Fonction qui charge le fichier contenant les différents textes_langues dans la langue sélectionnée.
     try:
@@ -195,11 +175,11 @@ def changer_langue(nouvelle_langue):  # Fonction qui change la langue de l'inter
     langue_actuelle = nouvelle_langue
 
     # Charger la nouvelle langue
-    textes_langues = charger_traductions(f"lang_{langue_actuelle}.json")  # Appelle la fonction 'charger_traduction' pour ouvrir le fichier .json de la langue correspondante.
-
+    textes_langues = charger_traductions(f"./Langues/lang_{langue_actuelle}.json")
+ 
     # Re-traduction du message affiché dans erreur_label
     texte_actuel = erreur_label.cget("text")
-    anciennes_traductions = charger_traductions(f"lang_{ancienne_langue}.json")
+    anciennes_traductions = charger_traductions(f"./Langues/lang_{ancienne_langue}.json")
 
     for cle, texte in anciennes_traductions.items():
         if texte_actuel == texte and cle in textes_langues:
@@ -329,7 +309,7 @@ def afficher_contexte():
 
 def charger_fichier_aide(zone_texte_aide):  # La référence est obligatoirment passée en argument pour que cela fonctionne normalement.
     try:
-        aide = (f"aide_{langue_actuelle}.txt")  # Définit le nom ou le chemin du fichier 'Aide' en fonction de la langue actuelle.
+        aide = (f"./Aides/aide_{langue_actuelle}.txt")  # Définit le nom ou le chemin du fichier 'Aide' en fonction de la langue actuelle.
         with open(aide, "r", encoding="utf-8") as f:  # Le fichier est ouvert en mode 'r' -> read et encodé en UTF-8 (UNICODE) pour tenir compte des accents en français.
             contenu = f.read()  # Le contenu du fichier est lu et placé dans une variable afin d'être utilisé.
             zone_texte_aide.delete("1.0", tk.END)  # La zone de texte d'aide est d'abord effacée de la 1ère à la dernière ligne.
@@ -340,7 +320,7 @@ def charger_fichier_aide(zone_texte_aide):  # La référence est obligatoirment 
 
 def charger_fichier_contexte(zone_texte_contexte):  # La référence est obligatoirment passée en argument pour que cela fonctionne normalement.
     try:
-        contexte = (f"contexte_{langue_actuelle}.txt")  # Définit le nom ou le chemin du fichier 'Contexte' en focntion de la langue actuelle.
+        contexte = (f"./Contextes/contexte_{langue_actuelle}.txt")  # Définit le nom ou le chemin du fichier 'Contexte' en focntion de la langue actuelle.
         with open(contexte, "r", encoding="utf-8") as f:
             contenu = f.read()
             zone_texte_contexte.delete("1.0", tk.END)
@@ -482,12 +462,12 @@ fenetre = tk.Tk()
 fenetre.title(textes_langues["titre"])
 
 # Charge les images des boutons de langue.
-img_fr = PhotoImage(file="fr.png")
-img_en = PhotoImage(file="gb.png")
-img_de = PhotoImage(file="de.png")
-img_es = PhotoImage(file="es.png")
-img_it = PhotoImage(file="it.png")
-img_nl = PhotoImage(file="nl.png")
+img_fr = PhotoImage(file="./Drapeaux/fr.png")
+img_en = PhotoImage(file="./Drapeaux/gb.png")
+img_de = PhotoImage(file="./Drapeaux/de.png")
+img_es = PhotoImage(file="./Drapeaux/es.png")
+img_it = PhotoImage(file="./Drapeaux/it.png")
+img_nl = PhotoImage(file="./Drapeaux/nl.png")
 
 # Conteneur Global pour pouvoir placer le programme principal d'un côté et les affichages d'aides et autres sur le côté droit. Encapsulage obligatoire sino on ne peut pas mettre une frame latérale.
 conteneur_global = tk.Frame(fenetre)  # Crée le Frame principal conteneur des deux frames : un pour le programme principal et l'autre pour le latéral (aide).
@@ -495,6 +475,7 @@ conteneur_global.pack(fill='both', expand=True)  # Le .pack() doit être sur une
 
 # Boutons de changement de langue.
 zone_drapeaux = tk.Frame(conteneur_global, width=100)  # Création de l'emplacement des boutons des drapeaux.
+
 # -> Création des boutons et des commandes de changement de langue en fonction duquel est appuyé par l'utilisateur.
 bouton_francais = tk.Button(zone_drapeaux, image=img_fr, command=lambda: changer_langue("fr"))  # Affiche le bouton et exécute la fonction 'changer_langue' avec 'fr' en argument.
 bouton_anglais = tk.Button(zone_drapeaux, image=img_en, command=lambda: changer_langue("en"))   # Drapeau pour changer l'interface en anglais.
@@ -502,6 +483,7 @@ bouton_allemand = tk.Button(zone_drapeaux, image=img_de, command=lambda: changer
 bouton_espagnol = tk.Button(zone_drapeaux, image=img_es, command=lambda: changer_langue("es"))  # Drapeau pour changer l'interface en espagnol.
 bouton_italien = tk.Button(zone_drapeaux, image=img_it, command=lambda: changer_langue("it"))   # Drapeau pour changer l'interface en italien.
 bouton_hollandais = tk.Button(zone_drapeaux, image=img_nl, command=lambda: changer_langue("nl"))  # Drapeau pour changer l'interface en néerlandais.
+
 # -> Affichage des boutons drapeaux à l'intérieiur de la zone définie.
 bouton_francais.grid(row=0, column=0, padx=5, pady=2, sticky=tk.E)
 bouton_anglais.grid(row=0, column=1, padx=5, pady=2, sticky=tk.E)

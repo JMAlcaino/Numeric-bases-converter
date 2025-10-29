@@ -1,0 +1,39 @@
+CONTEXT VAN DE CONVERTER VOOR NUMERIEKE STELSELS
+
+Deze kleine software is ontworpen met een educatief doel, om beter te begrijpen
+hoe getallen worden weergegeven in verschillende talstelsels die in de informatica worden gebruikt.
+
+Waarom numerieke stelsels?
+
+In de informatica worden gegevens verwerkt in verschillende talstelsels:
+- Het decimale systeem (basis 10), gebruikt door mensen
+- Het binaire systeem (basis 2), gebruikt door machines (0 en 1)
+- Het octale systeem (basis 8), vroeger gebruikt in sommige UNIX-systemen
+- Het hexadecimale systeem (basis 16), compact en leesbaar, gebruikt voor geheugen, kleuren en codering
+
+Dit programma maakt het mogelijk om:
+- Snel een getal van het ene stelsel naar het andere om te zetten
+- Het equivalent in binair, octaal, decimaal en hexadecimaal te bekijken
+- Een weergaveformaat te kiezen (in blokken van 2, 4, 8) om binaire of hexadecimale gegevens beter te lezen
+
+Verband met cryptografie
+
+Cryptografie en moderne coderingssystemen (SHA-256, AES, RSA, historische Enigma, enz.)
+zijn allemaal gebaseerd op een grondig begrip van numerieke representaties, met name binaire en hexadecimale.
+
+Deze converter vormt een eerste stap naar begrip van:
+- binaire coderingen
+- hashfuncties
+- versleutelingssleutels
+- bit-voor-bit-bewerkingen
+
+Educatief doel
+
+Deze tool is ontworpen voor:
+- studenten informatica of elektronica
+- docenten die lessen over codering willen illustreren
+- liefhebbers van cryptografie
+- nieuwsgierigen die willen begrijpen wat machines “zien”
+
+Ontworpen en ontwikkeld met passie, dit programma is uitbreidbaar
+en kan in de toekomst extra reken- of coderingsmodules bevatten.

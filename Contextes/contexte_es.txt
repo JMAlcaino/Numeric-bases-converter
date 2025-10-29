@@ -1,0 +1,39 @@
+CONTEXTO DEL CONVERTIDOR DE BASES NUMÉRICAS
+
+Este pequeño software fue diseñado con fines educativos, para comprender mejor
+la representación de números en diferentes sistemas de bases utilizados en informática.
+
+¿Por qué las bases numéricas?
+
+En informática, los datos se manejan en varios sistemas numéricos:
+- El sistema decimal (base 10), utilizado por los humanos
+- El sistema binario (base 2), utilizado por las máquinas (0 y 1)
+- El sistema octal (base 8), anteriormente utilizado en algunos sistemas UNIX
+- El sistema hexadecimal (base 16), compacto, legible, usado para memoria, colores, codificación
+
+Este programa permite:
+- Convertir rápidamente un número de una base a otra
+- Visualizar su equivalente en binario, octal, decimal y hexadecimal
+- Elegir un formato de visualización adecuado (bloques de 2, 4, 8) para leer mejor los datos binarios o hexadecimales
+
+Relación con la criptografía
+
+La criptografía y los sistemas de cifrado modernos (SHA-256, AES, RSA, Enigma histórica, etc.)
+se basan todos en un profundo conocimiento de las representaciones numéricas, en particular binaria y hexadecimal.
+
+Este convertidor es un primer paso para comprender:
+- codificaciones binarias
+- funciones de hash
+- claves de cifrado
+- manipulaciones bit a bit
+
+Objetivo educativo
+
+Esta herramienta está destinada a:
+- estudiantes de informática o electrónica
+- profesores que deseen ilustrar lecciones de codificación
+- entusiastas de la criptografía
+- curiosos que quieran entender lo que ven las máquinas
+
+Diseñado y desarrollado con pasión, este programa es evolutivo
+y podrá incluir otros módulos de cálculo o codificación en el futuro.

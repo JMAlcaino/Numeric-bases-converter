@@ -31,6 +31,8 @@ import tkinter as tk
 import random
 import json  # Importe la librairie de gestion des fichiers .json qui contiennent les différentes traductions des langues de l'interface.
 from tkinter import PhotoImage  # Librairie qui gère les graphisme dans Tkinter utilisée pour afficher les petits drapeaux sur les boutons.
+import os  # La librairie se charge des relations programme/OS 
+
 
 
 # Définitions des variables
@@ -38,8 +40,27 @@ panneau_aide_actif = None  # Variable globale servant à vérifier si un panneau
 panneau_contexte_actif = None  # Idem pour le panneau d'affichage du contexte.
 langue_actuelle = "fr"  #  Variable de choix de langue (par défaut : français ).
 
+# Gestion des chemins du projet
+#   -> Détermine automatiquement le dossier où se trouve ce script.
+#   -> (__file__ = chemin du fichier courant)
+#   -> os.path.abspath(__file__) → chemin complet (absolu)
+#   -> os.path.dirname(...) → on retire le nom du fichier pour ne garder que le dossier
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 
 # Définition des fonctions
+
+def chemin_fichier(sous_dossier: str, nom_fichier: str) -> str:
+    """
+    Renvoie le chemin complet vers un fichier interne au projet,
+    en fonction de son sous-dossier et de son nom.
+
+    Exemple :
+        chemin_fichier("Langues", "lang_fr.json")
+        ➜ C:/Users/Jean/Projets/Numeric-bases-converter/Langues/lang_fr.json
+    """
+    return os.path.join(BASE_DIR, sous_dossier, nom_fichier)
+
 
 def charger_traductions(fichier):  # Fonction qui charge le fichier contenant les différents textes_langues dans la langue sélectionnée.
     try:

@@ -1,0 +1,39 @@
+NUMERIC BASE CONVERTER CONTEXT
+
+This small software was designed for educational purposes, to better understand
+the representation of numbers in different base systems used in computing.
+
+Why numeric bases?
+
+In computing, data is handled in various numbering systems:
+- The decimal system (base 10), used by humans
+- The binary system (base 2), used by machines (0 and 1)
+- The octal system (base 8), formerly used in some UNIX systems
+- The hexadecimal system (base 16), compact, readable, used for memory, colors, encoding
+
+This program allows you to:
+- Quickly convert a number from one base to another
+- View its equivalent in binary, octal, decimal, and hexadecimal
+- Choose a suitable display format (blocks of 2, 4, 8) to better read binary or hexadecimal data
+
+Link with cryptography
+
+Cryptography and modern encryption systems (SHA-256, AES, RSA, historical Enigma, etc.)
+all rely on a deep understanding of numerical representations, particularly binary and hexadecimal.
+
+This converter is a first step towards understanding:
+- binary encodings
+- hash functions
+- encryption keys
+- bitwise manipulations
+
+Educational objective
+
+This tool is intended for:
+- computer science or electronics students
+- teachers wishing to illustrate coding lessons
+- cryptography enthusiasts
+- curious individuals wanting to understand what machines see
+
+Designed and developed with passion, this program is evolving
+and may include other calculation or encoding modules in the future.

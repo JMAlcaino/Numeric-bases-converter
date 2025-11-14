@@ -77,7 +77,7 @@ pyinstaller --onefile conv_num_gui.py
 - [🧭 Fiche 2 – Menus et événements souris](./Documentation/Fiche_2_memo_Tkinter_menus_souris.md)  
 - [🧭 Fiche 3 – Widgets essentiels & Internationalisation (i18n)](./Documentation/Fiche_3_memo_Tkinter_widgets_i18n.md)
 - [🧭 Fiche 4 – PyInstaller](./Documentation/Fiche_4_memo_PyInstaller.md)
-- [🧭 Fiche 5 – Boutons actions Tkinter](./Documentation/Fiche_5_Mémo_bouton_actions_Tkinter_FR.md)
+- [🧭 Fiche 5 – Bouton actions Tkinter](./Documentation/Fiche_5_Mémo_bouton_actions_Tkinter_FR.md)
 
 ### 🇬🇧 Memo Sheets (English)
 - [🧭 Memo 1 – Tkinter Keyboard Shortcuts](./Documentation/Memo_1_EN_Tkinter_shortcuts.md)  

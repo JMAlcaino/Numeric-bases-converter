@@ -60,7 +60,6 @@ def charger_traductions(fichier):  # Fonction qui charge le fichier contenant le
         return {"titre": "Erreur : Fichier de langue introuvable"}
 
 
-
 def mettre_a_jour_interface():
     fenetre.title(textes_langues["titre"])
     entree_labelframe.config(text=textes_langues["label_saisie"])
@@ -140,7 +139,7 @@ def construire_menus():
     # Appliquer le menu à la fenêtre
     fenetre.config(menu=menu_principal)
 
-# Création des boutons radio.
+
 def mettre_a_jour_boutons_radio():
     # Suppression des anciens boutons s'ils existent
     for widget in boutons_base_frame.winfo_children():
@@ -388,7 +387,7 @@ def convertir():
 
 
 
-def effacer():  # Fonction qui efface tous les chmaps des résultats et la case d'entrée de la valeur à convertir.
+def effacer():  # Fonction qui efface tous les champs des résultats et la case d'entrée de la valeur à convertir.
     entree.delete(0, tk.END)
     erreur_label.config(text=textes_langues["message_effacer"], font=('arial', 10, 'bold'), fg='green', justify='center')
     resultat_entier.config(text="", width=50)
@@ -487,11 +486,11 @@ conteneur_global.pack(fill='both', expand=True)  # Le .pack() doit être sur une
 zone_drapeaux = tk.Frame(conteneur_global, width=100)  # Création de l'emplacement des boutons des drapeaux.
 
 # -> Création des boutons et des commandes de changement de langue en fonction duquel est appuyé par l'utilisateur.
-bouton_francais = tk.Button(zone_drapeaux, image=img_fr, command=lambda: changer_langue("fr"))  # Affiche le bouton et exécute la fonction 'changer_langue' avec 'fr' en argument.
-bouton_anglais = tk.Button(zone_drapeaux, image=img_en, command=lambda: changer_langue("en"))   # Drapeau pour changer l'interface en anglais.
-bouton_allemand = tk.Button(zone_drapeaux, image=img_de, command=lambda: changer_langue("de"))  # Drapeau pour changer l'interface en allemand.
-bouton_espagnol = tk.Button(zone_drapeaux, image=img_es, command=lambda: changer_langue("es"))  # Drapeau pour changer l'interface en espagnol.
-bouton_italien = tk.Button(zone_drapeaux, image=img_it, command=lambda: changer_langue("it"))   # Drapeau pour changer l'interface en italien.
+bouton_francais = tk.Button(zone_drapeaux, image=img_fr, command=lambda: changer_langue("fr"))    # Affiche le bouton et exécute la fonction 'changer_langue' avec 'fr' en argument.
+bouton_anglais = tk.Button(zone_drapeaux, image=img_en, command=lambda: (changer_langue("en"), charger_fichier_aide("en")))     # Drapeau pour changer l'interface en anglais.
+bouton_allemand = tk.Button(zone_drapeaux, image=img_de, command=lambda: changer_langue("de"))    # Drapeau pour changer l'interface en allemand.
+bouton_espagnol = tk.Button(zone_drapeaux, image=img_es, command=lambda: changer_langue("es"))    # Drapeau pour changer l'interface en espagnol.
+bouton_italien = tk.Button(zone_drapeaux, image=img_it, command=lambda: changer_langue("it"))     # Drapeau pour changer l'interface en italien.
 bouton_hollandais = tk.Button(zone_drapeaux, image=img_nl, command=lambda: changer_langue("nl"))  # Drapeau pour changer l'interface en néerlandais.
 
 # -> Affichage des boutons drapeaux à l'intérieiur de la zone définie.
@@ -501,7 +500,7 @@ bouton_allemand.grid(row=0, column=2, padx=5, pady=2, sticky=tk.E)
 bouton_espagnol.grid(row=0, column=3, padx=5, pady=2, sticky=tk.E)
 bouton_italien.grid(row=0, column=4, padx=5, pady=2, sticky=tk.E)
 bouton_hollandais.grid(row=0, column=5, padx=5, pady=2, sticky=tk.E)
-zone_drapeaux.pack(pady=5)  # Affichage de la zone des drapeaux dans la fenêtr.
+zone_drapeaux.pack(pady=5)  # Affichage de la zone des drapeaux dans la fenêtre.
 
 # Conteneur principal qui va contenir tous les éléments du programme principal (entrée, résultats...)
 contenu_principal = tk.Frame(conteneur_global)  # Crée une frame dans le conteneur global qui affichera tous les éléments principaux du programme.

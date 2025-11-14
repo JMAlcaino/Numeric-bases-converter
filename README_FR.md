@@ -84,7 +84,7 @@ pyinstaller --onefile conv_num_gui.py
 - [🧭 Memo 2 – Tkinter Menus & Mouse Events](./Documentation/Memo_2_Tkinter_menus_mouse.md)
 - [🧭 Memo 3 – Tkinter Widgets & Internationalization (i18n)](./Documentation/Memo_3_Tkinter_widgets_i18n.md)
 - [🧭 Memo 4 – PyInstaller](./Documentation/Memo_4_PyInstaller_EN.md)
-- [🧭 Memo 5 – Tkinter Buttons actions](./Documentation/Memo_5_Tkinter_Button_Actions.md)
+- [🧭 Memo 5 – Tkinter Button actions](./Documentation/Memo_5_Tkinter_Button_Actions.md)
 
 ---
 

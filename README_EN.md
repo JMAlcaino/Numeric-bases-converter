@@ -69,16 +69,19 @@ pyinstaller --onefile conv_num_gui.py
 
 ## 📘 Documentation
 
-### 🇫🇷 French Memos
-- [🧭 Fiche 1 – Raccourcis clavier & gestion des événements](./Documentation/Fiche_memo_Tkinter_raccourcis.md)  
-- [🧭 Fiche 2 – Menus & événements souris](./Documentation/Fiche_memo_Tkinter_menus_souris.md)  
-- [🧭 Fiche 3 – Widgets essentiels & Internationalisation (i18n)](./Documentation/Fiche_memo_Tkinter_widgets_i18n.md)
+### 🇫🇷 Fiches mémo (français)
+- [🧭 Fiche 1 – Raccourcis clavier et gestion des événements](./Documentation/Fiche_1_memo_Tkinter_raccourcis.md)  
+- [🧭 Fiche 2 – Menus et événements souris](./Documentation/Fiche_2_memo_Tkinter_menus_souris.md)  
+- [🧭 Fiche 3 – Widgets essentiels & Internationalisation (i18n)](./Documentation/Fiche_3_memo_Tkinter_widgets_i18n.md)
+- [🧭 Fiche 4 – PyInstaller](./Documentation/Fiche_4_memo_PyInstaller.md)
+- [🧭 Fiche 5 – Boutons actions Tkinter](./Documentation/Fiche_5_Mémo_bouton_actions_Tkinter_FR.md)
 
-### 🇬🇧 English Memos
-- [🧭 Memo 1 – Tkinter Keyboard Shortcuts](./Documentation/Tkinter_shortcuts_memo_EN.md)  
-- [🧭 Memo 2 – Tkinter Menus & Mouse Events](./Documentation/Tkinter_menus_mouse_memo_EN.md)  
-- [🧭 Memo 3 – Tkinter Widgets & Internationalization (i18n)](./Documentation/Tkinter_widgets_i18n_memo_EN.md)
-
+### 🇬🇧 Memo Sheets (English)
+- [🧭 Memo 1 – Tkinter Keyboard Shortcuts](./Documentation/Memo_1_EN_Tkinter_shortcuts.md)  
+- [🧭 Memo 2 – Tkinter Menus & Mouse Events](./Documentation/Memo_2_Tkinter_menus_mouse.md)
+- [🧭 Memo 3 – Tkinter Widgets & Internationalization (i18n)](./Documentation/Memo_3_Tkinter_widgets_i18n.md)
+- [🧭 Memo 4 – PyInstaller](./Documentation/Memo_4_PyInstaller_EN.md)
+- [🧭 Memo 5 – Tkinter Buttons actions](./Documentation/Memo_5_Tkinter_Button_Actions.md)
 ---
 
 ## 🔜 Planned Improvements

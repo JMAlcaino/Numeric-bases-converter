@@ -47,6 +47,7 @@ os.chdir(BASE_DIR)
 panneau_aide_actif = None  # Variable globale servant à vérifier si un panneau d'aide est déjà ouvert afin d'éviter d'en ouvrir un autre à côté -> problèmes d'affichage.
 panneau_contexte_actif = None  # Idem pour le panneau d'affichage du contexte.
 langue_actuelle = "fr"  #  Variable de choix de langue (par défaut : français ).
+VERSION = "4.2"  # Version actuelle du programme.
 
 
 
@@ -469,7 +470,8 @@ textes_langues = charger_traductions("./Langues/lang_fr.json")  # Charge le fich
 
 # Fenêtre principale 
 fenetre = tk.Tk()
-fenetre.title(textes_langues["titre"])
+titre_principal = (textes_langues["titre"])  # Prend la traduction dans la langue actuelle du titre de la fenêtre pour pouvoir afficher ce titre et la version courante.
+fenetre.title((f"{titre_principal} – v{VERSION}"))
 
 # Charge les images des boutons de langue.
 img_fr = PhotoImage(file="./Drapeaux/fr.png")
@@ -488,7 +490,7 @@ zone_drapeaux = tk.Frame(conteneur_global, width=100)  # Création de l'emplacem
 
 # -> Création des boutons et des commandes de changement de langue en fonction duquel est appuyé par l'utilisateur.
 bouton_francais = tk.Button(zone_drapeaux, image=img_fr, command=lambda: changer_langue("fr"))    # Affiche le bouton et exécute la fonction 'changer_langue' avec 'fr' en argument.
-bouton_anglais = tk.Button(zone_drapeaux, image=img_en, command=lambda: (changer_langue("en"), charger_fichier_aide("en")))     # Drapeau pour changer l'interface en anglais.
+bouton_anglais = tk.Button(zone_drapeaux, image=img_en, command=lambda: (changer_langue("en")))    # Drapeau pour changer l'interface en anglais.
 bouton_allemand = tk.Button(zone_drapeaux, image=img_de, command=lambda: changer_langue("de"))    # Drapeau pour changer l'interface en allemand.
 bouton_espagnol = tk.Button(zone_drapeaux, image=img_es, command=lambda: changer_langue("es"))    # Drapeau pour changer l'interface en espagnol.
 bouton_italien = tk.Button(zone_drapeaux, image=img_it, command=lambda: changer_langue("it"))     # Drapeau pour changer l'interface en italien.

@@ -462,6 +462,7 @@ def ajuster_label(label, texte):  # ajuste le label du résultat en fonction de 
     fenetre.geometry("")  # Calcule automatiquement la taille de la fenêtre pour s'ajuster aux éléments qu'elle contient.
 
 # PROGRAMME PRINCIPAL
+#if __name__=="__main__":
 
 #Variable qui va contenir tout le dictionnaire .json de la langue
 textes_langues = charger_traductions("./Langues/lang_fr.json")  # Charge le fichier .json de la langue choisie et la met dans la variable 'textes_langues_langues' (Français par défaut).

@@ -1,11 +1,11 @@
 """
 ############################################################################################################
  
- Filename     : conv_num_gui.py                                                                              
- Description  : A GUI numeric bases converter
+ Filename     : conv_num_gui copy.py                                                                              
+ Description  : A GUI numeric bases converter    -- VERSION DE TRAVAIL
  Author       : Alcaïno Jean-Marc                                                                          
- Modification : 2025/11/16                                                                            
- Version      : V 4.2
+ Modification : 2025/10/27                                                                            
+ Version      : V 4.3-dev
 
  GitHub       :     https://github.com/JMAlcaino/Numeric-bases-converter
  Author GitHub :    https://github.com/JMAlcaino
@@ -24,6 +24,26 @@ la représentation des nombres dans différents systèmes de base utilisés en i
 
 ############################################################################################################
  
+ AMELIORATIONS COURS ET RESOLUTION DES BUGS :   - à faire
+                                               / en cours
+                                               X fait ou résolu
+
+ Convertisseur :
+X Ajout de l'italien
+X Voir si les trois autres langues fonctionnent
+X Mettre les 'aide' et 'contexte' dans les langues
+X Voir les chemins des fichiers pour les ranger correctement dans GitHUb
+- Mettre un message d'erreur dans la case dédiée quand il y a une erreur d'écriture de la valeur à convertir : si en binaire il y a d'écrit 120011 -> Attention valeur non valide car non binaire. Seulement '1' ou '0' SVP. Si un '8' apparaît dans octal -> erreur seulement des chiffres de '0' à '7'....
+
+BUGS :
+
+- 'Aide' et 'Contexte' restent dans la langue d'avant si on change de langue à la volée.
+- La fenêtre ne retrouve pas sa dimension d'origine quand a fermé la fenêtre 'Aide' ou 'contexte' après avoir changé de langue à la volée.
+- Quand on passe d'une langue à l'autre, les boutons des formats des résultats restent dans l'état où ils étaient dans l'autre langue. Ils devraient revenir à Brut/Raw... ou alors le ou les boutons de format devraient avoir ce format écrit sur eux.
+- Quand on copie une valeur binaire ou héxadécimale d'un label de résultat formaté pour la mettre dans l'entrée de la valeur à convertir, celle-ci garde son format ce qui provoque une erreur de conversion car il y a des espaces.
+
+
+ 
 """
 
 # Importation des librairies
@@ -32,20 +52,13 @@ import random
 import json  # Importe la librairie de gestion des fichiers .json qui contiennent les différentes traductions des langues de l'interface.
 from tkinter import PhotoImage  # Librairie qui gère les graphisme dans Tkinter utilisée pour afficher les petits drapeaux sur les boutons.
 from pathlib import Path
-#import sys, os
 
-# --- Détermine le dossier du programme ---
-#if getattr(sys, 'frozen', False):
-#    BASE_DIR = Path(sys._MEIPASS)  # exécutable PyInstaller
-#else:
-#    BASE_DIR = Path(__file__).resolve().parent
-
-# --- Fixe le dossier de travail ---
-#os.chdir(BASE_DIR)
 
 # Définitions des variables
 panneau_aide_actif = None  # Variable globale servant à vérifier si un panneau d'aide est déjà ouvert afin d'éviter d'en ouvrir un autre à côté -> problèmes d'affichage.
+zone_texte_aide = None  # Variable globale servant à vérifier si la zone de texte de l'aide affiche déjà le texte de l'aide dans la langue choisie. Cela permettra de changer la langue du texte de l'aide lors d'un appui sur le drapeau de changement.
 panneau_contexte_actif = None  # Idem pour le panneau d'affichage du contexte.
+zone_texte_contexte = None  # Idem pour la zone de texte du contexte.
 langue_actuelle = "fr"  #  Variable de choix de langue (par défaut : français ).
 
 

@@ -16,7 +16,7 @@
     "blocs_8": "8",
     "a_propos_titre": "À propos",
     "a_propos_texte": "Ce logiciel a été développé\npour faciliter la conversion\nentre différentes bases numériques.",
-    "a_propos_copyright": "Version 4.2\n Jean-Marc Alcaïno\n© 2025",
+    "a_propos_copyright": "\n Jean-Marc Alcaïno\n© 2025",
     "message_erreur": "Entrée invalide. Veuillez corriger.",
     "aucune_valeur": "Aucune valeur à convertir !",
     "erreur_base": "Attention ! Votre entrée est invalide pour la base sélectionnée !\n Cliquez sur 'Effacer' pour recommencer !",

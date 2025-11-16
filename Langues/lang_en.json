@@ -16,7 +16,7 @@
     "blocs_8": "8",
     "a_propos_titre": "About",
     "a_propos_texte": "This software was developed\nto make conversion between\ndifferent number bases easier.",
-    "a_propos_copyright": "Version 4.2\n Jean-Marc Alcaïno\n© 2025",
+    "a_propos_copyright": "\n Jean-Marc Alcaïno\n© 2025",
     "message_erreur": "Invalid input. Please correct it.",
     "aucune_valeur": "No value to convert!",
     "erreur_base": "Warning! Your input is invalid for the selected base!\nClick 'Clear' to restart!",

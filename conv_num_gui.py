@@ -221,8 +221,10 @@ def afficher_a_propos():  # Ouvre une petite fenêtre indépendante appelée par
     popup_a_propos.geometry(f"{largeur}x{hauteur}+{x}+{y}")
 
     # Contenu de la fenêtre popup
+    copyright = textes_langues["a_propos_copyright"]  # Récupère le texte du 'a_propos_copyright' dans le fichier .json de la langue en cours.
+    texte_copyright = (f"Version{VERSION} {copyright}")  # Crée le texte du copyright à afficher dans le 'à propos' avec la version du programme.
     a_propos_label1 = tk.Label(popup_a_propos, text=textes_langues["a_propos_texte"], font=('arial', 10, 'bold'), fg='blue', bg=couleur)
-    a_propos_label2 = tk.Label(popup_a_propos, text=textes_langues["a_propos_copyright"], font=('arial', 10), bg=couleur, justify='center')
+    a_propos_label2 = tk.Label(popup_a_propos, text = texte_copyright, font=('arial', 10), bg=couleur, justify='center')  # Affiche le texte 'texte_copyright' précedemment définit.
     a_propos_bouton = tk.Button(popup_a_propos, text=textes_langues["fermer"], fg='green', command=popup_a_propos.destroy)
     a_propos_label1.pack(pady=10)
     a_propos_label2.pack(pady=5)
@@ -464,7 +466,7 @@ textes_langues = charger_traductions("./Langues/lang_fr.json")  # Charge le fich
 # Fenêtre principale 
 fenetre = tk.Tk()
 titre_principal = (textes_langues["titre"])  # Prend la traduction dans la langue actuelle du titre de la fenêtre pour pouvoir afficher ce titre et la version courante.
-fenetre.title((f"{titre_principal} – v{VERSION}"))
+fenetre.title((f"{titre_principal} – {VERSION}"))
 
 # Charge les images des boutons de langue.
 img_fr = PhotoImage(file="./Drapeaux/fr.png")

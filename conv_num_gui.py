@@ -5,22 +5,24 @@
  Description  : A GUI numeric bases converter
  Author       : Alcaïno Jean-Marc                                                                          
  Modification : 2025/11/16                                                                            
- Version      : V 4.2
+ Version      : V 4.3-dev
 
  GitHub       :     https://github.com/JMAlcaino/Numeric-bases-converter
+                    https://github.com/JMAlcaino/Numeric-bases-converter/tree/dev
  Author GitHub :    https://github.com/JMAlcaino
 
 Ce petit logiciel a été conçu dans un but pédagogique, afin de mieux comprendre
 la représentation des nombres dans différents systèmes de base utilisés en informatique.
  
  Notes de versions :
- V 3.6   : Ajout des menus et affichage de l'aide et du contexte du logiciel.
- V 4.0   : Internationalisation du logiciel avec l'ajout de boutons et d'un menu pour changer la langue de l'interface.
-           Utilisation de fichiers de références linguistiques en .json afin de pouvoir modifier la langue de l'interface.
- V 4.1   : Mise en place de l'interface en allemand et en espagnol et des fichiers 'aide' et 'contexte'.
-           Traduction des fichiers .json en allemand et en espagnol également.
- V 4.1.1 : Corrections de différents bugs. Affichage de l'à propos corrigé.
- V 4.2   : Ajout des langues : ialien et néerlandais pour les menus et aides.
+ V 3.6      : Ajout des menus et affichage de l'aide et du contexte du logiciel.
+ V 4.0      : Internationalisation du logiciel avec l'ajout de boutons et d'un menu pour changer la langue de l'interface.
+             Utilisation de fichiers de références linguistiques en .json afin de pouvoir modifier la langue de l'interface.
+ V 4.1      : Mise en place de l'interface en allemand et en espagnol et des fichiers 'aide' et 'contexte'.
+              Traduction des fichiers .json en allemand et en espagnol également.
+ V 4.1.1    : Corrections de différents bugs. Affichage de l'à propos corrigé.
+ V 4.2      : Ajout des langues : ialien et néerlandais pour les menus et aides.
+ V 4.3-dev  : Correction des affichage de l'aide et du contexte. Gestion des versions et de leur affichage. Mise en place de la branche /dev sur GitHUb
 
 ############################################################################################################
  
@@ -32,21 +34,13 @@ import random
 import json  # Importe la librairie de gestion des fichiers .json qui contiennent les différentes traductions des langues de l'interface.
 from tkinter import PhotoImage  # Librairie qui gère les graphisme dans Tkinter utilisée pour afficher les petits drapeaux sur les boutons.
 from pathlib import Path
-#import sys, os
 
-# --- Détermine le dossier du programme ---
-#if getattr(sys, 'frozen', False):
-#    BASE_DIR = Path(sys._MEIPASS)  # exécutable PyInstaller
-#else:
-#    BASE_DIR = Path(__file__).resolve().parent
-
-# --- Fixe le dossier de travail ---
-#os.chdir(BASE_DIR)
 
 # Définitions des variables
 panneau_aide_actif = None  # Variable globale servant à vérifier si un panneau d'aide est déjà ouvert afin d'éviter d'en ouvrir un autre à côté -> problèmes d'affichage.
 panneau_contexte_actif = None  # Idem pour le panneau d'affichage du contexte.
 langue_actuelle = "fr"  #  Variable de choix de langue (par défaut : français ).
+VERSION = "4.3-dev"
 
 
 

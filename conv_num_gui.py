@@ -38,9 +38,11 @@ from pathlib import Path
 
 # Définitions des variables
 panneau_aide_actif = None  # Variable globale servant à vérifier si un panneau d'aide est déjà ouvert afin d'éviter d'en ouvrir un autre à côté -> problèmes d'affichage.
+zone_text_aide = None  # Variable globale servant à vérifier si un texte est déjà affiché dans le panneau d'aide afin de pouvoir le traduire en cas de changement de langue.
 panneau_contexte_actif = None  # Idem pour le panneau d'affichage du contexte.
+zone_text_contexte = None  # Idem que pour l'aide mais por le contexte.
 langue_actuelle = "fr"  #  Variable de choix de langue (par défaut : français ).
-VERSION = "V4.3"
+VERSION = "V4.3-dev"  # variable qui contien la version du programme qui sera affiché à plusieurs endroits.
 
 
 
@@ -208,9 +210,9 @@ def afficher_a_propos():  # Ouvre une petite fenêtre indépendante appelée par
     hauteur = 200
 
     # Récupérer les dimensions de la fenêtre principale
-    x_principal = fenetre.winfo_rootx()  # Position x de la fenêtre principale  .winfo... donne l'information d'une fenêtre (dimension, position...).
-    y_principal = fenetre.winfo_rooty()  # Position y de la fenêtre principale.
-    w_principal = fenetre.winfo_width()  # Largeur de la fenêtre principale.
+    x_principal = fenetre.winfo_rootx()   # Position x de la fenêtre principale  .winfo... donne l'information d'une fenêtre (dimension, position...).
+    y_principal = fenetre.winfo_rooty()   # Position y de la fenêtre principale.
+    w_principal = fenetre.winfo_width()   # Largeur de la fenêtre principale.
     h_principal = fenetre.winfo_height()  # Hauteur de la fenêtre principale.
 
     # Calcul des coordonnées pour centrer la fentêtre 'popup'.
@@ -485,7 +487,7 @@ zone_drapeaux = tk.Frame(conteneur_global, width=100)  # Création de l'emplacem
 
 # -> Création des boutons et des commandes de changement de langue en fonction duquel est appuyé par l'utilisateur.
 bouton_francais = tk.Button(zone_drapeaux, image=img_fr, command=lambda: changer_langue("fr"))    # Affiche le bouton et exécute la fonction 'changer_langue' avec 'fr' en argument.
-bouton_anglais = tk.Button(zone_drapeaux, image=img_en, command=lambda: (changer_langue("en"), charger_fichier_aide("en")))     # Drapeau pour changer l'interface en anglais.
+bouton_anglais = tk.Button(zone_drapeaux, image=img_en, command=lambda: (changer_langue("en")))    # Drapeau pour changer l'interface en anglais.
 bouton_allemand = tk.Button(zone_drapeaux, image=img_de, command=lambda: changer_langue("de"))    # Drapeau pour changer l'interface en allemand.
 bouton_espagnol = tk.Button(zone_drapeaux, image=img_es, command=lambda: changer_langue("es"))    # Drapeau pour changer l'interface en espagnol.
 bouton_italien = tk.Button(zone_drapeaux, image=img_it, command=lambda: changer_langue("it"))     # Drapeau pour changer l'interface en italien.

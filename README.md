@@ -113,6 +113,13 @@ Merci de consulter [CONTRIBUTING.md](./CONTRIBUTING.md) avant toute proposition.
 
 ---
 
+## Versions
+
+/main V4.2 
+/dev V4.3-dev  (en cours / work in progres)
+
+---
+
 ## Licence
 
 Projet sous **GPL-3.0**  

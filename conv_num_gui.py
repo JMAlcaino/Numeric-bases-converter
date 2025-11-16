@@ -40,6 +40,7 @@ from pathlib import Path
 panneau_aide_actif = None  # Variable globale servant à vérifier si un panneau d'aide est déjà ouvert afin d'éviter d'en ouvrir un autre à côté -> problèmes d'affichage.
 panneau_contexte_actif = None  # Idem pour le panneau d'affichage du contexte.
 langue_actuelle = "fr"  #  Variable de choix de langue (par défaut : français ).
+VERSION = "V4.3"
 
 
 

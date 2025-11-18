@@ -265,6 +265,7 @@ def afficher_a_propos():  # Ouvre une petite fenêtre indépendante appelée par
     a_propos_label2.pack(pady=5)
     a_propos_bouton.pack(pady=10)
 
+
 def afficher_aide():
     global panneau_aide_actif  # Utilise la variable globale pour la vérification.
     global zone_texte_aide  # Cette variable globale définie précédemment sert à garantir le chargement du texte d'aide en cas de changement de langue "à la volée".
@@ -369,7 +370,6 @@ def charger_fichier_aide():  # Charge le texte (.txt) de l'aide en focntion de l
         zone_texte_aide.insert(tk.END, "⚠️ Fichier d'aide introuvable.\n⚠️ File not found.")
 
 
-
 def charger_fichier_contexte():  # La référence est obligatoirment passée en argument pour que cela fonctionne normalement.
     try:
         contexte = (f"./Contextes/contexte_{langue_actuelle}.txt")  # Définit le nom ou le chemin du fichier 'Contexte' en fonction de la langue actuelle.
@@ -431,7 +431,6 @@ def convertir():
         erreur_label.config(text=textes_langues["erreur_base"], fg="red")
 
 
-
 def effacer():  # Fonction qui efface tous les champs des résultats et la case d'entrée de la valeur à convertir.
     entree.delete(0, tk.END)
     erreur_label.config(text=textes_langues["message_effacer"], font=('arial', 10, 'bold'), fg='green', justify='center')
@@ -450,7 +449,6 @@ def bouton_copier(label):
         fenetre.clipboard_append(texte)
     else:
         erreur_label.config(text=textes_langues["copie_vide"], fg="red")
-
 
 
 def bouton_coller():  # Fonction qui traite l'appui sur le bouton 'coller' situé à gauche de la case d'entrée de la valeur afin d'y placer une valeur gardée dans le presse-papier.
@@ -483,7 +481,6 @@ def appliquer_format_binaire(*args):   # Fonction qui met à jour le label 'resu
     ajuster_label(resultat_binaire, texte)
   
 
-
 def appliquer_format_hexadecimal(*args):  # Fonction qui met à jour le label 'resultat_hexadecimal' en fonction du choix dans le menu déroulant - *args sert à ignorer les arguments demandés par le widget 'optionMenu'
     val = format_hexadecimal_var.get()
     texte = hexadecimal_brut_var.get()
@@ -505,6 +502,8 @@ def ajuster_label(label, texte):  # ajuste le label du résultat en fonction de 
     label.config(width=max(50, nb_caracteres))  # Le label garde au minimum 50 caractères et au maximum la longueur du texte.
     fenetre.update_idletasks()  # Scrute la boucle d'affichage de la fenêtre principale.
     fenetre.geometry("")  # Calcule automatiquement la taille de la fenêtre pour s'ajuster aux éléments qu'elle contient.
+
+
 
 # PROGRAMME PRINCIPAL
 #if __name__=="__main__":

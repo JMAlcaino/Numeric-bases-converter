@@ -37,10 +37,19 @@ from pathlib import Path
 
 
 # Définitions des variables
+
+  # Variables globales servant à vérifier si le panneau d'aide et ses éléments sont bien ouverts afin de pouvoir le traduire en cas de changement de langue.
 panneau_aide_actif = None  # Variable globale servant à vérifier si un panneau d'aide est déjà ouvert afin d'éviter d'en ouvrir un autre à côté -> problèmes d'affichage.
-zone_text_aide = None  # Variable globale servant à vérifier si un texte est déjà affiché dans le panneau d'aide afin de pouvoir le traduire en cas de changement de langue.
+zone_texte_aide = None  # Variable globale servant à vérifier si un texte est déjà affiché dans le panneau d'aide afin de pouvoir le traduire en cas de changement de langue.
+panneau_aide  = None
+bouton_fermer_aide = None
+
+ # Variables globales servant à vérifier si le panneau de contexte et ses éléments sont bien ouverts afin de pouvoir le traduire en cas de changement de langue.
 panneau_contexte_actif = None  # Idem pour le panneau d'affichage du contexte.
-zone_text_contexte = None  # Idem que pour l'aide mais por le contexte.
+zone_texte_contexte = None  # Idem que pour l'aide mais pour le contexte.
+panneau_contexte = None
+bouton_fermer_contexte = None
+
 langue_actuelle = "fr"  #  Variable de choix de langue (par défaut : français ).
 VERSION = "V4.3-dev"  # variable qui contien la version du programme qui sera affiché à plusieurs endroits.
 
@@ -173,7 +182,11 @@ def mettre_a_jour_boutons_radio():
 
 
 def changer_langue(nouvelle_langue):  # Fonction qui change la langue de l'interface en appelant la fonction 'mettre_a_jour_interface'. L'argument 'nouvelle_langue' est donné par appui sur le bouton du drapeau correspondant.
+
+    # Variables globales utilisée pour les changements de langue. Pour l'aide et le contexte, vérification s'ils sont ouverts pour faire le changement.
     global langue_actuelle, textes_langues
+    global zone_texte_aide, panneau_aide, bouton_fermer_aide
+    global zone_texte_contexte, panneau_contexte, bouton_fermer_contexte
 
     # Sauvegarder d'abord la langue actuelle avant de la modifier
     ancienne_langue = langue_actuelle
@@ -198,6 +211,26 @@ def changer_langue(nouvelle_langue):  # Fonction qui change la langue de l'inter
     fenetre.geometry("")  # Calcule automatiquement la taille de la fenêtre pour s'ajuster aux éléments qu'elle contient.
     fenetre.minsize(fenetre.winfo_width(), fenetre.winfo_height())
 
+    # Recharger le texte et des éléments de l'aide dans la langue nouvelle langue.
+    if zone_texte_aide is not None:
+        charger_fichier_aide()
+
+    if panneau_aide is not None:
+        panneau_aide.config(text=textes_langues["titre_aide"])
+
+    if bouton_fermer_aide is not None :
+        bouton_fermer_aide.config(text=textes_langues["fermer"])
+
+    # Recharger le texte et des éléments du contexte dans la langue nouvelle langue.
+    if zone_texte_contexte is not None:
+        charger_fichier_contexte()
+
+    if panneau_contexte is not None:
+        panneau_contexte.config(text=textes_langues["titre_aide"])
+
+    if bouton_fermer_contexte is not None :
+        bouton_fermer_contexte.config(text=textes_langues["fermer"])
+        
 
 def afficher_a_propos():  # Ouvre une petite fenêtre indépendante appelée par le menu 'aide' 'A propos' - Couleur de fond au hasard parmi 4 possibilités.
     bg_couleurs = ['#99CCCC', '#FFC5A8', '#D3A8FF', '#FDACBE']
@@ -234,8 +267,10 @@ def afficher_a_propos():  # Ouvre une petite fenêtre indépendante appelée par
 
 def afficher_aide():
     global panneau_aide_actif  # Utilise la variable globale pour la vérification.
+    global zone_texte_aide  # Cette variable globale définie précédemment sert à garantir le chargement du texte d'aide en cas de changement de langue "à la volée".
+    global panneau_aide, bouton_fermer_aide  # Idem pour le titre et le bouton fermer de la fenêtre d'aide.
 
-    # Vérifie si un panneau d'aide est déjà ouvert
+    # Vérifie si un panneau d'aide est déjà ouvert si oui, ne fait rien et retourne.
     if panneau_aide_actif and panneau_aide_actif.winfo_exists():
         return
     
@@ -264,18 +299,20 @@ def afficher_aide():
     zone_texte_aide.bind("<MouseWheel>", lambda e: zone_texte_aide.yview_scroll(int(-1*(e.delta/120)), "units"))  # Autorise le scroll avec la roulette de la souris.
 
     # Bouton de fermeture bien en dessous
-    btn_fermer = tk.Button(contenu_aide, text=textes_langues["fermer"], font=('arial', 9), fg='green', command=lambda: panneau_aide.destroy())  # Crèe le bouton qui ferme la fenêtre d'aide avec '.destroy'.
-    btn_fermer.pack(pady=10)
-
+    bouton_fermer_aide = tk.Button(contenu_aide, text=textes_langues["fermer"], font=('arial', 9), fg='green', command=lambda: panneau_aide.destroy())  # Crèe le bouton qui ferme la fenêtre d'aide avec '.destroy'.
+    bouton_fermer_aide.pack(pady=10)
 
     # Charger le texte d'aide
-    charger_fichier_aide(zone_texte_aide)  # On passe la zone en argument à la fonction pour que le chargement du texte soit bien attibué au bon endroit.
+    charger_fichier_aide()  # Exécute la fonction pour charger le fichier du texte de l'aide (fichier .txt)
 
     # Affichage
     panneau_aide.pack(side='right', fill='y', padx=10, pady=10)
 
+
 def afficher_contexte():
     global panneau_contexte_actif  # Utilise la variable globla pour la vérification.
+    global zone_texte_contexte  # Cette variable globale définie précédemment sert à garantir le chargement du texte du contexte en cas de changement de langue "à la volée".
+    global panneau_contexte, bouton_fermer_contexte  # Idem pour le titre et le bouton fermer de la fenêtre d'aide.
 
     # Vérifie si un panneau de contexte est déjà ouvert.
     if panneau_contexte_actif and panneau_contexte_actif.winfo_exists():
@@ -303,35 +340,45 @@ def afficher_contexte():
     zone_texte_contexte.bind("<MouseWheel>", lambda e: zone_texte_contexte.yview_scroll(int(-1*(e.delta/120)), "units"))
 
     # Bouton de fermeture bien en dessous
-    btn_fermer = tk.Button(contenu_contexte, text=textes_langues["fermer"], font=('arial', 9), fg='green', command=lambda: panneau_contexte.destroy())
-    btn_fermer.pack(pady=10)
+    bouton_fermer_contexte = tk.Button(contenu_contexte, text=textes_langues["fermer"], font=('arial', 9), fg='green', command=lambda: panneau_contexte.destroy())
+    bouton_fermer_contexte.pack(pady=10)
 
 
     # Charger le texte d'aide
-    charger_fichier_contexte(zone_texte_contexte)  # On passe la zone en argument à la fonction pour que le chargement du texte soit bien attibué au bon endroit.
+    charger_fichier_contexte()  # On passe la zone en argument à la fonction pour que le chargement du texte soit bien attibué au bon endroit.
 
     # Affichage
     panneau_contexte.pack(side='right', fill='y', padx=10, pady=10)
 
 
-def charger_fichier_aide(zone_texte_aide):  # La référence est obligatoirment passée en argument pour que cela fonctionne normalement.
+def charger_fichier_aide():  # Charge le texte (.txt) de l'aide en focntion de la langue en cours.
+    global zone_texte_aide  # Cette variable globale définie précédemment sert à garantir le chargement du texte d'aide en cas de changement de langue "à la volée".
+
+    if zone_texte_aide is None:  # Si la zone de texte de l'aide n'est pas active alors ce n'est pas la peinre de charger le texte.
+        return
+    
     try:
         aide = (f"./Aides/aide_{langue_actuelle}.txt")  # Définit le nom ou le chemin du fichier 'Aide' en fonction de la langue actuelle.
         with open(aide, "r", encoding="utf-8") as f:  # Le fichier est ouvert en mode 'r' -> read et encodé en UTF-8 (UNICODE) pour tenir compte des accents en français.
-            contenu = f.read()  # Le contenu du fichier est lu et placé dans une variable afin d'être utilisé.
+            contenu = f.read()  # Le fichier est lu et placé dans une variable (locale) nommée 'contenu' afin d'être utilisé.
+            zone_texte_aide.config(state="normal")  # Met la zone de texte de l'aide dans le mode "normal" ce qui permet d'y faire des manipulations (effacer, écrire...).
             zone_texte_aide.delete("1.0", tk.END)  # La zone de texte d'aide est d'abord effacée de la 1ère à la dernière ligne.
             zone_texte_aide.insert(tk.END, contenu)  # Le contenu est inséré dans la zone de texte.
-    except FileNotFoundError:  # Lève une execption en l'absence du fichier.
+            zone_texte_aide.config(state="disabled")  # Met la zone de texte en mode inaccessible pour que le texte ne puisse pas être modifié par l'utilisatuer une fois que le changement de langue a été effectué.
+    except FileNotFoundError:  # Lève une exception en l'absence du fichier.
         zone_texte_aide.insert(tk.END, "⚠️ Fichier d'aide introuvable.\n⚠️ File not found.")
 
 
-def charger_fichier_contexte(zone_texte_contexte):  # La référence est obligatoirment passée en argument pour que cela fonctionne normalement.
+
+def charger_fichier_contexte():  # La référence est obligatoirment passée en argument pour que cela fonctionne normalement.
     try:
-        contexte = (f"./Contextes/contexte_{langue_actuelle}.txt")  # Définit le nom ou le chemin du fichier 'Contexte' en focntion de la langue actuelle.
+        contexte = (f"./Contextes/contexte_{langue_actuelle}.txt")  # Définit le nom ou le chemin du fichier 'Contexte' en fonction de la langue actuelle.
         with open(contexte, "r", encoding="utf-8") as f:
-            contenu = f.read()
+            contenu = f.read()  # Le fichier est lu et placé dans une variable (locale) nommée 'contenu' afin d'être utilisé.
+            zone_texte_contexte.config(state="normal")  # Voir explications dans la fonction 'charger_fichier_aide()'
             zone_texte_contexte.delete("1.0", tk.END)
             zone_texte_contexte.insert(tk.END, contenu)
+            zone_texte_contexte.config(state="disabled")
     except FileNotFoundError:
         zone_texte_contexte.insert(tk.END, "⚠️ Fichier d'aide introuvable.\n⚠️ File not found.")
 

@@ -17,7 +17,7 @@ la représentation des nombres dans différents systèmes de base utilisés en i
  Notes de versions :
  V 3.6      : Ajout des menus et affichage de l'aide et du contexte du logiciel.
  V 4.0      : Internationalisation du logiciel avec l'ajout de boutons et d'un menu pour changer la langue de l'interface.
-             Utilisation de fichiers de références linguistiques en .json afin de pouvoir modifier la langue de l'interface.
+              Utilisation de fichiers de références linguistiques en .json afin de pouvoir modifier la langue de l'interface.
  V 4.1      : Mise en place de l'interface en allemand et en espagnol et des fichiers 'aide' et 'contexte'.
               Traduction des fichiers .json en allemand et en espagnol également.
  V 4.1.1    : Corrections de différents bugs. Affichage de l'à propos corrigé.

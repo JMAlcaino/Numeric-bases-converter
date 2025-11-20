@@ -5,7 +5,7 @@
  Description  : A GUI numeric bases converter
  Author       : Alcaïno Jean-Marc                                                                          
  Modification : 2025/11/20                                                                           
- Version      : V 4.3.1
+ Version      : V 4.3.2-dev
 
  GitHub       :     https://github.com/JMAlcaino/Numeric-bases-converter
                     https://github.com/JMAlcaino/Numeric-bases-converter/tree/dev
@@ -34,7 +34,6 @@ import tkinter as tk
 import random
 import json  # Importe la librairie de gestion des fichiers .json qui contiennent les différentes traductions des langues de l'interface.
 from tkinter import PhotoImage  # Librairie qui gère les graphisme dans Tkinter utilisée pour afficher les petits drapeaux sur les boutons.
-from pathlib import Path
 
 
 # Définitions des variables
@@ -52,7 +51,7 @@ panneau_contexte = None
 bouton_fermer_contexte = None
 
 langue_actuelle = "fr"  #  Variable de choix de langue (par défaut : français ).
-VERSION = "V4.3.1"  # variable qui contien la version du programme qui sera affiché à plusieurs endroits.
+VERSION = "V4.3.2-dev"  # variable qui contient la version du programme qui sera affiché à plusieurs endroits.
 
 
 
@@ -61,7 +60,7 @@ VERSION = "V4.3.1"  # variable qui contien la version du programme qui sera affi
 def charger_traductions(fichier):  # Fonction qui charge le fichier contenant les différents textes_langues dans la langue sélectionnée.
     try:
         with open(fichier, "r", encoding="utf-8") as f:
-                  return json.load(f)
+            return json.load(f)
     except FileNotFoundError:
         return {"titre": "Erreur : Fichier de langue introuvable"}
 
@@ -227,7 +226,7 @@ def changer_langue(nouvelle_langue):  # Fonction qui change la langue de l'inter
         charger_fichier_contexte()
 
     if panneau_contexte is not None:
-        panneau_contexte.config(text=textes_langues["titre_aide"])
+        panneau_contexte.config(text=textes_langues["titre_contexte"])
 
     if bouton_fermer_contexte is not None :
         bouton_fermer_contexte.config(text=textes_langues["fermer"])
@@ -258,7 +257,7 @@ def afficher_a_propos():  # Ouvre une petite fenêtre indépendante appelée par
 
     # Contenu de la fenêtre popup
     copyright = textes_langues["a_propos_copyright"]  # Récupère le texte du 'a_propos_copyright' dans le fichier .json de la langue en cours.
-    texte_copyright = (f"Version{VERSION} {copyright}")  # Crée le texte du copyright à afficher dans le 'à propos' avec la version du programme.
+    texte_copyright = (f"Version {VERSION} {copyright}")  # Crée le texte du copyright à afficher dans le 'à propos' avec la version du programme.
     a_propos_label1 = tk.Label(popup_a_propos, text=textes_langues["a_propos_texte"], font=('arial', 10, 'bold'), fg='blue', bg=couleur)
     a_propos_label2 = tk.Label(popup_a_propos, text = texte_copyright, font=('arial', 10), bg=couleur, justify='center')  # Affiche le texte 'texte_copyright' précedemment définit.
     a_propos_bouton = tk.Button(popup_a_propos, text=textes_langues["fermer"], fg='green', command=popup_a_propos.destroy)
@@ -479,7 +478,7 @@ def appliquer_format_binaire(*args):   # Fonction qui met à jour le label 'resu
     elif val == textes_langues["blocs_8"]:
         resultat_binaire.config(text=grouper_par_blocs(texte, 8))
        
-    ajuster_label(resultat_binaire, texte)
+    ajuster_label(resultat_binaire)  # Ajuste le label de résultat en fonction du nombre de caractères qu'il contient. Appelle la fonction 'ajuster_label'.
   
 
 def appliquer_format_hexadecimal(*args):  # Fonction qui met à jour le label 'resultat_hexadecimal' en fonction du choix dans le menu déroulant - *args sert à ignorer les arguments demandés par le widget 'optionMenu'
@@ -494,10 +493,10 @@ def appliquer_format_hexadecimal(*args):  # Fonction qui met à jour le label 'r
     elif val == textes_langues["blocs_8"]:
         resultat_hexadecimal.config(text=grouper_par_blocs(texte, 8))
         
-    ajuster_label(resultat_hexadecimal, texte)  # Ajuste le label de résultat en fonction du nombre de caractères qu'il contient. Appelle la fonction 'ajuster_label'.
+    ajuster_label(resultat_hexadecimal)  # Ajuste le label de résultat en fonction du nombre de caractères qu'il contient. Appelle la fonction 'ajuster_label'.
 
 
-def ajuster_label(label, texte):  # ajuste le label du résultat en fonction de la longueur de la chaîne qu'il contient.
+def ajuster_label(label):  # ajuste le label du résultat en fonction de la longueur de la chaîne qu'il contient.
     texte = label.cget("text").replace(" ", "")  # Récupère le texte réel qui se trouve dans le label avant l'ajustement de celui-ci et enlève les espaces inutiles qui perturbent l'affichage.
     nb_caracteres = len(texte)
     label.config(width=max(50, nb_caracteres))  # Le label garde au minimum 50 caractères et au maximum la longueur du texte.
@@ -507,6 +506,8 @@ def ajuster_label(label, texte):  # ajuste le label du résultat en fonction de 
 
 
 # PROGRAMME PRINCIPAL
+
+#Préparation pour la modularité du programme -->
 #if __name__=="__main__":
 
 #Variable qui va contenir tout le dictionnaire .json de la langue
@@ -607,7 +608,7 @@ bouton_copier_entier = tk.Button(resultats_labelframe, text="\U0001F4CB", comman
 resultat_texte_binaire = tk.Label(resultats_labelframe, text=textes_langues["texte_binaire"], fg="#A83600", anchor='w', justify='right')
 resultat_binaire = tk.Label(resultats_labelframe, fg="#A83600", bg="#FFC5A8", font=('arial', 10, 'bold'), anchor='w', justify='right', relief='groove', width=50)
 bouton_copier_binaire = tk.Button(resultats_labelframe, text="\U0001F4CB", command=lambda: bouton_copier(resultat_binaire))
-options_bin = [textes_langues["brut"], textes_langues["blocs_2"], textes_langues["blocs_4"], textes_langues["blocs_8"]]  # Options d'affichage pour le label 'resultat_binaire : format brut, en 2, 4 ou 8 bits.
+options_bin = [textes_langues["brut"], textes_langues["blocs_4"], textes_langues["blocs_8"]]  # Options d'affichage pour le label 'resultat_binaire : format brut, en 2, 4 ou 8 bits.
 menu_format_binaire = tk.OptionMenu(resultats_labelframe, format_binaire_var, *options_bin, command=appliquer_format_binaire)  # Création du menu déroulant pour le choix du format d'affichage.
 menu_format_binaire.config(font=('arial', 9))
 

@@ -66,7 +66,8 @@ def charger_traductions(fichier):  # Fonction qui charge le fichier contenant le
 
 
 def mettre_a_jour_interface():
-    fenetre.title(textes_langues["titre"])
+    titre_principal = (textes_langues["titre"])  # Prend la traduction dans la langue actuelle du titre de la fenêtre pour pouvoir afficher ce titre et la version courante.
+    fenetre.title((f"{titre_principal} – {VERSION}"))
     entree_labelframe.config(text=textes_langues["label_saisie"])
     resultats_labelframe.config(text=textes_langues["titre_resultats"])
     resultat_texte_binaire.config(text=textes_langues["texte_binaire"])
@@ -213,7 +214,6 @@ def changer_langue(nouvelle_langue):  # Fonction qui change la langue de l'inter
     construire_menus()  # Appelle la fonction de construction des boutons pour les mettre dasn la langue choisie.
     fenetre.update_idletasks()  # Scrute la boucle d'affichage de la fenêtre principale.
     fenetre.geometry("")  # Calcule automatiquement la taille de la fenêtre pour s'ajuster aux éléments qu'elle contient.
-    fenetre.minsize(fenetre.winfo_width(), fenetre.winfo_height())
 
     # Recharger le texte et des éléments de l'aide dans la langue nouvelle langue.
     if zone_texte_aide is not None:
@@ -304,7 +304,7 @@ def afficher_aide():
     zone_texte_aide.bind("<MouseWheel>", lambda e: zone_texte_aide.yview_scroll(int(-1*(e.delta/120)), "units"))  # Autorise le scroll avec la roulette de la souris.
 
     # Bouton de fermeture bien en dessous
-    bouton_fermer_aide = tk.Button(contenu_aide, text=textes_langues["fermer"], font=('arial', 9), fg='green', command=lambda: panneau_aide.destroy())  # Crèe le bouton qui ferme la fenêtre d'aide avec '.destroy'.
+    bouton_fermer_aide = tk.Button(contenu_aide, text=textes_langues["fermer"], font=('arial', 9), fg='green', command=fermer_aide)  # Crèe le bouton qui ferme la fenêtre d'aide avec '.destroy'.
     bouton_fermer_aide.pack(pady=10)
 
     # Charger le texte d'aide
@@ -390,9 +390,8 @@ def charger_fichier_contexte():  # La référence est obligatoirment passée en 
 def basculer_aide():  # Fonction qui sert au raccourci clavier <F1> pour basculer : si on appuie une première fois il s'ouvre sinon il se ferme.
     global panneau_aide_actif  # Variable globale qui sert à vérifier si le panneau est ouvert ou non.
 
-    if panneau_aide_actif and panneau_aide_actif.winfo_exists():  # Si le panneau d'aide est déjà actif ferme-le
-        panneau_aide_actif.destroy()
-        panneau_aide_actif = None
+    if panneau_aide_actif is not None and panneau_aide_actif.winfo_exists():  # Si le panneau d'aide est déjà actif ferme-le
+        fermer_aide()  # Appelle la fonction de fermeture spécifique.
     else:
         afficher_aide()
 
@@ -405,6 +404,23 @@ def basculer_contexte():  # Fonction qui sert au raccourci clavier <F1> pour bas
         panneau_contexte_actif = None
     else:
         afficher_contexte()
+
+def fermer_aide():  # Fonction qui ferme proprement le panneau d'aide pour éviter les soucis d'affichage au changement de langue et éviter les erreurs du Tcl de Tkinter.
+    global panneau_aide_actif, panneau_aide, zone_texte_aide, bouton_fermer_aide
+
+    # Si le panneau existe encore, on le détruit
+    if panneau_aide_actif is not None and panneau_aide_actif.winfo_exists():
+        panneau_aide_actif.destroy()
+
+    # On remet toutes les références à None
+    panneau_aide_actif = None
+    panneau_aide = None
+    zone_texte_aide = None
+    bouton_fermer_aide = None
+
+    # On recalcule la taille de la fenêtre
+    fenetre.update_idletasks()
+    fenetre.geometry("")
 
 
 def convertir():

@@ -80,6 +80,7 @@ pyinstaller --onefile conv_num_gui.py
 - [🧭 Fiche 5 – Bouton actions Tkinter](./Documentation/Fiche_5_Mémo_bouton_actions_Tkinter_FR.md)
 - [🧭 Fiche 6 – Rappels des mises à jour de /main par /dev dans GitHUb](./Documentation/Fiche_6_git_convertisseur.md)
 - [🧭 Fiche 7 – Navigation et raccourcis clavier utiles dans VSCode](./Documentation/Fiche_7_Mémo_Navigation_VSCode_python.md)
+- [🧭 Fiche 8 – Problématique des widgets détruits dans Tkinter](./Documentation/Fiche_8_Mémo_widgets_detruits.md)
 
 ### 🇬🇧 Memo Sheets (English)
 - [🧭 Memo 1 – Tkinter Keyboard Shortcuts](./Documentation/Memo_1_EN_Tkinter_shortcuts.md)  
@@ -89,6 +90,7 @@ pyinstaller --onefile conv_num_gui.py
 - [🧭 Memo 5 – Tkinter Button actions](./Documentation/Memo_5_Tkinter_Button_Actions.md)
 - [🧭 Memo 6 – GitHub /main update from /dev](./Documentation\Memo_6_EN_git_convertisseur.md)
 - [🧭 Memo 7 – VSCode navigation and shortkeys](./Documentation\Memo_7_EN_Navigation_VSCode_python.md)
+- [🧭 Memo 8 – Destructed widgets problems in Tkinter](./Documentation/Memo_8_EN_Destructed_widgets_.md)
 
 ---
 

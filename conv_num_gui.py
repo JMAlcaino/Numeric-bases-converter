@@ -121,24 +121,28 @@ def construire_menus():
 
     # Menu Fichier
     menu_fichier = tk.Menu(menu_principal, tearoff=0)
-    menu_fichier.add_command(label=textes_langues["a_propos_titre"], command=afficher_a_propos)  # Ajout de l'affichage d'un raccourci clavier. Attention ce n'est que l'affichage voir la méthode plus bas pour l'activer.
-    menu_fichier.add_command(label=textes_langues["btn_quitter"], accelerator="CTRL+Q", command=fenetre.destroy)
+    menu_fichier.add_command(label=textes_langues["btn_convertir"], accelerator="Ctrl-R", command=convertir)
+    menu_fichier.add_command(label=textes_langues["btn_effacer"], accelerator="Ctrl-D", command=effacer)
+    menu_fichier.add_separator()
+    menu_fichier.add_command(label=textes_langues["btn_quitter"], accelerator="Ctrl-Q", command=fenetre.destroy)
     menu_principal.add_cascade(label=textes_langues["menu_fichier"], menu=menu_fichier)
 
     # Menu Aide
     menu_aide = tk.Menu(menu_principal, tearoff=0)
-    menu_aide.add_command(label=textes_langues["menu_aide"], command=afficher_aide)
-    menu_aide.add_command(label=textes_langues["menu_contexte"], command=afficher_contexte)
+    menu_aide.add_command(label=textes_langues["menu_aide"], accelerator="F1", command=afficher_aide)
+    menu_aide.add_command(label=textes_langues["menu_contexte"], accelerator="F2",command=afficher_contexte)
+    menu_aide.add_separator()  # Ajoute un séparateur avant l'à propos (esthétique).
+    menu_aide.add_command(label=textes_langues["a_propos_titre"], command=afficher_a_propos)  # Ajout de l'affichage d'un raccourci clavier. Attention ce n'est que l'affichage voir la méthode plus bas pour l'activer.
     menu_principal.add_cascade(label=textes_langues["menu_aide"], menu=menu_aide)
 
     # Menu Langue
     menu_langue = tk.Menu(menu_principal, tearoff=0)
-    menu_langue.add_command(label="Français", command=lambda: changer_langue("fr"))
-    menu_langue.add_command(label="English", command=lambda: changer_langue("en"))
-    menu_langue.add_command(label="Deutsch", command=lambda: changer_langue("de"))
-    menu_langue.add_command(label="Español", command=lambda: changer_langue("es"))
-    menu_langue.add_command(label="Italiano", command=lambda: changer_langue("it"))
-    menu_langue.add_command(label="Nederlands", command=lambda: changer_langue("nl"))
+    menu_langue.add_command(label="Français", accelerator="Alt-f", command=lambda: changer_langue("fr"))
+    menu_langue.add_command(label="English", accelerator="Alt-e", command=lambda: changer_langue("en"))
+    menu_langue.add_command(label="Deutsch", accelerator="Alt-d", command=lambda: changer_langue("de"))
+    menu_langue.add_command(label="Español", accelerator="Alt-s", command=lambda: changer_langue("es"))
+    menu_langue.add_command(label="Italiano", accelerator="Alt-i", command=lambda: changer_langue("it"))
+    menu_langue.add_command(label="Nederlands", accelerator="Alt-n", command=lambda: changer_langue("nl"))
     menu_principal.add_cascade(label=textes_langues["menu_langue"], menu=menu_langue)
 
     # Appliquer le menu à la fenêtre
@@ -381,6 +385,26 @@ def charger_fichier_contexte():  # La référence est obligatoirment passée en 
             zone_texte_contexte.config(state="disabled")
     except FileNotFoundError:
         zone_texte_contexte.insert(tk.END, "⚠️ Fichier d'aide introuvable.\n⚠️ File not found.")
+
+
+def basculer_aide():  # Fonction qui sert au raccourci clavier <F1> pour basculer : si on appuie une première fois il s'ouvre sinon il se ferme.
+    global panneau_aide_actif  # Variable globale qui sert à vérifier si le panneau est ouvert ou non.
+
+    if panneau_aide_actif and panneau_aide_actif.winfo_exists():  # Si le panneau d'aide est déjà actif ferme-le
+        panneau_aide_actif.destroy()
+        panneau_aide_actif = None
+    else:
+        afficher_aide()
+
+
+def basculer_contexte():  # Fonction qui sert au raccourci clavier <F1> pour basculer : si on appuie une première fois il s'ouvre sinon il se ferme.
+    global panneau_contexte_actif  # Variable globale qui sert à vérifier si le panneau est ouvert ou non.
+
+    if panneau_contexte_actif and panneau_contexte_actif.winfo_exists():  # Si le panneau du contexte est déjà actif ferme-le
+        panneau_contexte_actif.destroy()
+        panneau_contexte_actif = None
+    else:
+        afficher_contexte()
 
 
 def convertir():
@@ -664,4 +688,32 @@ fenetre.config(menu=menu_principal)
 fenetre.update_idletasks()  # Scrute la boucle d'affichage de la fenêtre principale.
 fenetre.geometry("")  # Calcule automatiquement la taille de la fenêtre pour s'ajuster aux éléments qu'elle contient.
 fenetre.minsize(fenetre.winfo_width(), fenetre.winfo_height())
+
+# Raccourcis clavier.
+  # Quitter
+fenetre.bind_all("<Control-q>", lambda event: fenetre.destroy)  # Le CTRL+q ou +Q ( ligne du dessous) ferme la fenêtre du programme.
+fenetre.bind_all("<Control-Q>", lambda event: fenetre.destroy)
+  # Convertir
+fenetre.bind_all("<Control-R>", lambda event: convertir())
+fenetre.bind_all("<Control-r>", lambda event: convertir())
+  # Effacer
+fenetre.bind_all("<Control-D>", lambda event: effacer())
+fenetre.bind_all("<Control-d>", lambda event: effacer())
+  # Aide/Contexte
+fenetre.bind_all("<F1>", lambda event: basculer_aide()) # Si on appuie sur F1 l'aide s'affiche, si on rappuie dessus elle se ferme. La fonction scrute la présence ou non du panneau grace à la variable globale prédéfinie.
+fenetre.bind_all("<F2>", lambda event: basculer_contexte())  # Idem que pour l'aide mais pour le panneau de contexte.
+  # Langues
+fenetre.bind_all("<Alt-f>", lambda event: changer_langue("fr"))  # Raccourci clavier pour changer les langues (minuscules et majuscules prise en compte).
+fenetre.bind_all("<Alt-F>", lambda event: changer_langue("fr"))
+fenetre.bind_all("<Alt-e>", lambda event: changer_langue("en"))
+fenetre.bind_all("<Alt-E>", lambda event: changer_langue("en"))
+fenetre.bind_all("<Alt-d>", lambda event: changer_langue("de"))
+fenetre.bind_all("<Alt-D>", lambda event: changer_langue("de"))
+fenetre.bind_all("<Alt-s>", lambda event: changer_langue("es"))
+fenetre.bind_all("<Alt-S>", lambda event: changer_langue("es"))
+fenetre.bind_all("<Alt-i>", lambda event: changer_langue("it"))
+fenetre.bind_all("<Alt-I>", lambda event: changer_langue("it"))
+fenetre.bind_all("<Alt-n>", lambda event: changer_langue("nl"))
+fenetre.bind_all("<Alt-N>", lambda event: changer_langue("nl"))
+
 fenetre.mainloop()

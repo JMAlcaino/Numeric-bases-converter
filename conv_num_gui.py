@@ -4,23 +4,25 @@
  Filename     : conv_num_gui.py                                                                              
  Description  : A GUI numeric bases converter
  Author       : Alcaïno Jean-Marc                                                                          
- Modification : 2025/10/27                                                                            
- Version      : V 4.2
+ Modification : 2025/11/16                                                                            
+ Version      : V 4.3-dev
 
  GitHub       :     https://github.com/JMAlcaino/Numeric-bases-converter
+                    https://github.com/JMAlcaino/Numeric-bases-converter/tree/dev
  Author GitHub :    https://github.com/JMAlcaino
 
 Ce petit logiciel a été conçu dans un but pédagogique, afin de mieux comprendre
 la représentation des nombres dans différents systèmes de base utilisés en informatique.
  
  Notes de versions :
- V 3.6   : Ajout des menus et affichage de l'aide et du contexte du logiciel.
- V 4.0   : Internationalisation du logiciel avec l'ajout de boutons et d'un menu pour changer la langue de l'interface.
-           Utilisation de fichiers de références linguistiques en .json afin de pouvoir modifier la langue de l'interface.
- V 4.1   : Mise en place de l'interface en allemand et en espagnol et des fichiers 'aide' et 'contexte'.
-           Traduction des fichiers .json en allemand et en espagnol également.
- V 4.1.1 : Corrections de différents bugs. Affichage de l'à propos corrigé.
- V 4.2   : Ajout des langues : ialien et néerlandais pour les menus et aides.
+ V 3.6      : Ajout des menus et affichage de l'aide et du contexte du logiciel.
+ V 4.0      : Internationalisation du logiciel avec l'ajout de boutons et d'un menu pour changer la langue de l'interface.
+             Utilisation de fichiers de références linguistiques en .json afin de pouvoir modifier la langue de l'interface.
+ V 4.1      : Mise en place de l'interface en allemand et en espagnol et des fichiers 'aide' et 'contexte'.
+              Traduction des fichiers .json en allemand et en espagnol également.
+ V 4.1.1    : Corrections de différents bugs. Affichage de l'à propos corrigé.
+ V 4.2      : Ajout des langues : ialien et néerlandais pour les menus et aides.
+ V 4.3-dev  : Correction des affichage de l'aide et du contexte. Gestion des versions et de leur affichage. Mise en place de la branche /dev sur GitHUb
 
 ############################################################################################################
  
@@ -32,22 +34,24 @@ import random
 import json  # Importe la librairie de gestion des fichiers .json qui contiennent les différentes traductions des langues de l'interface.
 from tkinter import PhotoImage  # Librairie qui gère les graphisme dans Tkinter utilisée pour afficher les petits drapeaux sur les boutons.
 from pathlib import Path
-import sys, os
 
-# --- Détermine le dossier du programme ---
-if getattr(sys, 'frozen', False):
-    BASE_DIR = Path(sys._MEIPASS)  # exécutable PyInstaller
-else:
-    BASE_DIR = Path(__file__).resolve().parent
-
-# --- Fixe le dossier de travail ---
-os.chdir(BASE_DIR)
 
 # Définitions des variables
+
+  # Variables globales servant à vérifier si le panneau d'aide et ses éléments sont bien ouverts afin de pouvoir le traduire en cas de changement de langue.
 panneau_aide_actif = None  # Variable globale servant à vérifier si un panneau d'aide est déjà ouvert afin d'éviter d'en ouvrir un autre à côté -> problèmes d'affichage.
+zone_texte_aide = None  # Variable globale servant à vérifier si un texte est déjà affiché dans le panneau d'aide afin de pouvoir le traduire en cas de changement de langue.
+panneau_aide  = None
+bouton_fermer_aide = None
+
+ # Variables globales servant à vérifier si le panneau de contexte et ses éléments sont bien ouverts afin de pouvoir le traduire en cas de changement de langue.
 panneau_contexte_actif = None  # Idem pour le panneau d'affichage du contexte.
+zone_texte_contexte = None  # Idem que pour l'aide mais pour le contexte.
+panneau_contexte = None
+bouton_fermer_contexte = None
+
 langue_actuelle = "fr"  #  Variable de choix de langue (par défaut : français ).
-VERSION = "4.2"  # Version actuelle du programme.
+VERSION = "V4.3-dev"  # variable qui contien la version du programme qui sera affiché à plusieurs endroits.
 
 
 
@@ -178,7 +182,11 @@ def mettre_a_jour_boutons_radio():
 
 
 def changer_langue(nouvelle_langue):  # Fonction qui change la langue de l'interface en appelant la fonction 'mettre_a_jour_interface'. L'argument 'nouvelle_langue' est donné par appui sur le bouton du drapeau correspondant.
+
+    # Variables globales utilisée pour les changements de langue. Pour l'aide et le contexte, vérification s'ils sont ouverts pour faire le changement.
     global langue_actuelle, textes_langues
+    global zone_texte_aide, panneau_aide, bouton_fermer_aide
+    global zone_texte_contexte, panneau_contexte, bouton_fermer_contexte
 
     # Sauvegarder d'abord la langue actuelle avant de la modifier
     ancienne_langue = langue_actuelle
@@ -203,6 +211,26 @@ def changer_langue(nouvelle_langue):  # Fonction qui change la langue de l'inter
     fenetre.geometry("")  # Calcule automatiquement la taille de la fenêtre pour s'ajuster aux éléments qu'elle contient.
     fenetre.minsize(fenetre.winfo_width(), fenetre.winfo_height())
 
+    # Recharger le texte et des éléments de l'aide dans la langue nouvelle langue.
+    if zone_texte_aide is not None:
+        charger_fichier_aide()
+
+    if panneau_aide is not None:
+        panneau_aide.config(text=textes_langues["titre_aide"])
+
+    if bouton_fermer_aide is not None :
+        bouton_fermer_aide.config(text=textes_langues["fermer"])
+
+    # Recharger le texte et des éléments du contexte dans la langue nouvelle langue.
+    if zone_texte_contexte is not None:
+        charger_fichier_contexte()
+
+    if panneau_contexte is not None:
+        panneau_contexte.config(text=textes_langues["titre_aide"])
+
+    if bouton_fermer_contexte is not None :
+        bouton_fermer_contexte.config(text=textes_langues["fermer"])
+        
 
 def afficher_a_propos():  # Ouvre une petite fenêtre indépendante appelée par le menu 'aide' 'A propos' - Couleur de fond au hasard parmi 4 possibilités.
     bg_couleurs = ['#99CCCC', '#FFC5A8', '#D3A8FF', '#FDACBE']
@@ -215,9 +243,9 @@ def afficher_a_propos():  # Ouvre une petite fenêtre indépendante appelée par
     hauteur = 200
 
     # Récupérer les dimensions de la fenêtre principale
-    x_principal = fenetre.winfo_rootx()  # Position x de la fenêtre principale  .winfo... donne l'information d'une fenêtre (dimension, position...).
-    y_principal = fenetre.winfo_rooty()  # Position y de la fenêtre principale.
-    w_principal = fenetre.winfo_width()  # Largeur de la fenêtre principale.
+    x_principal = fenetre.winfo_rootx()   # Position x de la fenêtre principale  .winfo... donne l'information d'une fenêtre (dimension, position...).
+    y_principal = fenetre.winfo_rooty()   # Position y de la fenêtre principale.
+    w_principal = fenetre.winfo_width()   # Largeur de la fenêtre principale.
     h_principal = fenetre.winfo_height()  # Hauteur de la fenêtre principale.
 
     # Calcul des coordonnées pour centrer la fentêtre 'popup'.
@@ -228,17 +256,22 @@ def afficher_a_propos():  # Ouvre une petite fenêtre indépendante appelée par
     popup_a_propos.geometry(f"{largeur}x{hauteur}+{x}+{y}")
 
     # Contenu de la fenêtre popup
+    copyright = textes_langues["a_propos_copyright"]  # Récupère le texte du 'a_propos_copyright' dans le fichier .json de la langue en cours.
+    texte_copyright = (f"Version{VERSION} {copyright}")  # Crée le texte du copyright à afficher dans le 'à propos' avec la version du programme.
     a_propos_label1 = tk.Label(popup_a_propos, text=textes_langues["a_propos_texte"], font=('arial', 10, 'bold'), fg='blue', bg=couleur)
-    a_propos_label2 = tk.Label(popup_a_propos, text=textes_langues["a_propos_copyright"], font=('arial', 10), bg=couleur, justify='center')
+    a_propos_label2 = tk.Label(popup_a_propos, text = texte_copyright, font=('arial', 10), bg=couleur, justify='center')  # Affiche le texte 'texte_copyright' précedemment définit.
     a_propos_bouton = tk.Button(popup_a_propos, text=textes_langues["fermer"], fg='green', command=popup_a_propos.destroy)
     a_propos_label1.pack(pady=10)
     a_propos_label2.pack(pady=5)
     a_propos_bouton.pack(pady=10)
 
+
 def afficher_aide():
     global panneau_aide_actif  # Utilise la variable globale pour la vérification.
+    global zone_texte_aide  # Cette variable globale définie précédemment sert à garantir le chargement du texte d'aide en cas de changement de langue "à la volée".
+    global panneau_aide, bouton_fermer_aide  # Idem pour le titre et le bouton fermer de la fenêtre d'aide.
 
-    # Vérifie si un panneau d'aide est déjà ouvert
+    # Vérifie si un panneau d'aide est déjà ouvert si oui, ne fait rien et retourne.
     if panneau_aide_actif and panneau_aide_actif.winfo_exists():
         return
     
@@ -264,21 +297,23 @@ def afficher_aide():
     zone_texte_aide.pack(side='left', fill='both', expand=True)
     scroll.pack(side='right', fill='y')
 
-    zone_texte_aide.bind("<MouseWheel>", lambda e: zone_texte_aide.yview_scroll(int(-1*(e.delta/120)), "units"))
+    zone_texte_aide.bind("<MouseWheel>", lambda e: zone_texte_aide.yview_scroll(int(-1*(e.delta/120)), "units"))  # Autorise le scroll avec la roulette de la souris.
 
     # Bouton de fermeture bien en dessous
-    btn_fermer = tk.Button(contenu_aide, text=textes_langues["fermer"], font=('arial', 9), fg='green', command=lambda: panneau_aide.destroy())  # Autorise le scroll avec la roulette de la souris.
-    btn_fermer.pack(pady=10)
-
+    bouton_fermer_aide = tk.Button(contenu_aide, text=textes_langues["fermer"], font=('arial', 9), fg='green', command=lambda: panneau_aide.destroy())  # Crèe le bouton qui ferme la fenêtre d'aide avec '.destroy'.
+    bouton_fermer_aide.pack(pady=10)
 
     # Charger le texte d'aide
-    charger_fichier_aide(zone_texte_aide)  # On passe la zone en argument à la fonction pour que le chargement du texte soit bien attibué au bon endroit.
+    charger_fichier_aide()  # Exécute la fonction pour charger le fichier du texte de l'aide (fichier .txt)
 
     # Affichage
     panneau_aide.pack(side='right', fill='y', padx=10, pady=10)
 
+
 def afficher_contexte():
     global panneau_contexte_actif  # Utilise la variable globla pour la vérification.
+    global zone_texte_contexte  # Cette variable globale définie précédemment sert à garantir le chargement du texte du contexte en cas de changement de langue "à la volée".
+    global panneau_contexte, bouton_fermer_contexte  # Idem pour le titre et le bouton fermer de la fenêtre d'aide.
 
     # Vérifie si un panneau de contexte est déjà ouvert.
     if panneau_contexte_actif and panneau_contexte_actif.winfo_exists():
@@ -306,35 +341,44 @@ def afficher_contexte():
     zone_texte_contexte.bind("<MouseWheel>", lambda e: zone_texte_contexte.yview_scroll(int(-1*(e.delta/120)), "units"))
 
     # Bouton de fermeture bien en dessous
-    btn_fermer = tk.Button(contenu_contexte, text=textes_langues["fermer"], font=('arial', 9), fg='green', command=lambda: panneau_contexte.destroy())
-    btn_fermer.pack(pady=10)
+    bouton_fermer_contexte = tk.Button(contenu_contexte, text=textes_langues["fermer"], font=('arial', 9), fg='green', command=lambda: panneau_contexte.destroy())
+    bouton_fermer_contexte.pack(pady=10)
 
 
     # Charger le texte d'aide
-    charger_fichier_contexte(zone_texte_contexte)  # On passe la zone en argument à la fonction pour que le chargement du texte soit bien attibué au bon endroit.
+    charger_fichier_contexte()  # On passe la zone en argument à la fonction pour que le chargement du texte soit bien attibué au bon endroit.
 
     # Affichage
     panneau_contexte.pack(side='right', fill='y', padx=10, pady=10)
 
 
-def charger_fichier_aide(zone_texte_aide):  # La référence est obligatoirment passée en argument pour que cela fonctionne normalement.
+def charger_fichier_aide():  # Charge le texte (.txt) de l'aide en focntion de la langue en cours.
+    global zone_texte_aide  # Cette variable globale définie précédemment sert à garantir le chargement du texte d'aide en cas de changement de langue "à la volée".
+
+    if zone_texte_aide is None:  # Si la zone de texte de l'aide n'est pas active alors ce n'est pas la peinre de charger le texte.
+        return
+    
     try:
         aide = (f"./Aides/aide_{langue_actuelle}.txt")  # Définit le nom ou le chemin du fichier 'Aide' en fonction de la langue actuelle.
         with open(aide, "r", encoding="utf-8") as f:  # Le fichier est ouvert en mode 'r' -> read et encodé en UTF-8 (UNICODE) pour tenir compte des accents en français.
-            contenu = f.read()  # Le contenu du fichier est lu et placé dans une variable afin d'être utilisé.
+            contenu = f.read()  # Le fichier est lu et placé dans une variable (locale) nommée 'contenu' afin d'être utilisé.
+            zone_texte_aide.config(state="normal")  # Met la zone de texte de l'aide dans le mode "normal" ce qui permet d'y faire des manipulations (effacer, écrire...).
             zone_texte_aide.delete("1.0", tk.END)  # La zone de texte d'aide est d'abord effacée de la 1ère à la dernière ligne.
             zone_texte_aide.insert(tk.END, contenu)  # Le contenu est inséré dans la zone de texte.
-    except FileNotFoundError:  # Lève une execption en l'absence du fichier.
+            zone_texte_aide.config(state="disabled")  # Met la zone de texte en mode inaccessible pour que le texte ne puisse pas être modifié par l'utilisatuer une fois que le changement de langue a été effectué.
+    except FileNotFoundError:  # Lève une exception en l'absence du fichier.
         zone_texte_aide.insert(tk.END, "⚠️ Fichier d'aide introuvable.\n⚠️ File not found.")
 
 
-def charger_fichier_contexte(zone_texte_contexte):  # La référence est obligatoirment passée en argument pour que cela fonctionne normalement.
+def charger_fichier_contexte():  # La référence est obligatoirment passée en argument pour que cela fonctionne normalement.
     try:
-        contexte = (f"./Contextes/contexte_{langue_actuelle}.txt")  # Définit le nom ou le chemin du fichier 'Contexte' en focntion de la langue actuelle.
+        contexte = (f"./Contextes/contexte_{langue_actuelle}.txt")  # Définit le nom ou le chemin du fichier 'Contexte' en fonction de la langue actuelle.
         with open(contexte, "r", encoding="utf-8") as f:
-            contenu = f.read()
+            contenu = f.read()  # Le fichier est lu et placé dans une variable (locale) nommée 'contenu' afin d'être utilisé.
+            zone_texte_contexte.config(state="normal")  # Voir explications dans la fonction 'charger_fichier_aide()'
             zone_texte_contexte.delete("1.0", tk.END)
             zone_texte_contexte.insert(tk.END, contenu)
+            zone_texte_contexte.config(state="disabled")
     except FileNotFoundError:
         zone_texte_contexte.insert(tk.END, "⚠️ Fichier d'aide introuvable.\n⚠️ File not found.")
 
@@ -387,7 +431,6 @@ def convertir():
         erreur_label.config(text=textes_langues["erreur_base"], fg="red")
 
 
-
 def effacer():  # Fonction qui efface tous les champs des résultats et la case d'entrée de la valeur à convertir.
     entree.delete(0, tk.END)
     erreur_label.config(text=textes_langues["message_effacer"], font=('arial', 10, 'bold'), fg='green', justify='center')
@@ -406,7 +449,6 @@ def bouton_copier(label):
         fenetre.clipboard_append(texte)
     else:
         erreur_label.config(text=textes_langues["copie_vide"], fg="red")
-
 
 
 def bouton_coller():  # Fonction qui traite l'appui sur le bouton 'coller' situé à gauche de la case d'entrée de la valeur afin d'y placer une valeur gardée dans le presse-papier.
@@ -439,7 +481,6 @@ def appliquer_format_binaire(*args):   # Fonction qui met à jour le label 'resu
     ajuster_label(resultat_binaire, texte)
   
 
-
 def appliquer_format_hexadecimal(*args):  # Fonction qui met à jour le label 'resultat_hexadecimal' en fonction du choix dans le menu déroulant - *args sert à ignorer les arguments demandés par le widget 'optionMenu'
     val = format_hexadecimal_var.get()
     texte = hexadecimal_brut_var.get()
@@ -462,6 +503,8 @@ def ajuster_label(label, texte):  # ajuste le label du résultat en fonction de 
     fenetre.update_idletasks()  # Scrute la boucle d'affichage de la fenêtre principale.
     fenetre.geometry("")  # Calcule automatiquement la taille de la fenêtre pour s'ajuster aux éléments qu'elle contient.
 
+
+
 # PROGRAMME PRINCIPAL
 #if __name__=="__main__":
 
@@ -471,7 +514,7 @@ textes_langues = charger_traductions("./Langues/lang_fr.json")  # Charge le fich
 # Fenêtre principale 
 fenetre = tk.Tk()
 titre_principal = (textes_langues["titre"])  # Prend la traduction dans la langue actuelle du titre de la fenêtre pour pouvoir afficher ce titre et la version courante.
-fenetre.title((f"{titre_principal} – v{VERSION}"))
+fenetre.title((f"{titre_principal} – {VERSION}"))
 
 # Charge les images des boutons de langue.
 img_fr = PhotoImage(file="./Drapeaux/fr.png")

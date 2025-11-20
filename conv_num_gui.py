@@ -4,8 +4,8 @@
  Filename     : conv_num_gui.py                                                                              
  Description  : A GUI numeric bases converter
  Author       : Alcaïno Jean-Marc                                                                          
- Modification : 2025/11/16                                                                            
- Version      : V 4.3-dev
+ Modification : 2025/11/20                                                                           
+ Version      : V 4.3.1
 
  GitHub       :     https://github.com/JMAlcaino/Numeric-bases-converter
                     https://github.com/JMAlcaino/Numeric-bases-converter/tree/dev
@@ -22,7 +22,8 @@ la représentation des nombres dans différents systèmes de base utilisés en i
               Traduction des fichiers .json en allemand et en espagnol également.
  V 4.1.1    : Corrections de différents bugs. Affichage de l'à propos corrigé.
  V 4.2      : Ajout des langues : ialien et néerlandais pour les menus et aides.
- V 4.3-dev  : Correction des affichage de l'aide et du contexte. Gestion des versions et de leur affichage. Mise en place de la branche /dev sur GitHUb
+ V 4.3.1    : Correction des affichage de l'aide et du contexte avec les traductions des texte lors du changement de langue à la volée.
+              Gestion des versions et de leur affichage. Mise en place de la branche /dev sur GitHUb
 
 ############################################################################################################
  
@@ -51,7 +52,7 @@ panneau_contexte = None
 bouton_fermer_contexte = None
 
 langue_actuelle = "fr"  #  Variable de choix de langue (par défaut : français ).
-VERSION = "V4.3-dev"  # variable qui contien la version du programme qui sera affiché à plusieurs endroits.
+VERSION = "V4.3.1"  # variable qui contien la version du programme qui sera affiché à plusieurs endroits.
 
 
 

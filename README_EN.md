@@ -2,11 +2,11 @@
 
 **Author:** Jean‑Marc (Jean)  
 **Assistant:** Pylo  
-**Last updated:** 2025‑10‑27 
+**Last updated:** 2025‑11‑20 
 **Language:** Python 3 + Tkinter  
 **License:** Open source – for personal and educational use
 
-**Version:** 4.2
+**Version:** 4.3.1
 
 
 ---
@@ -75,6 +75,8 @@ pyinstaller --onefile conv_num_gui.py
 - [🧭 Fiche 3 – Widgets essentiels & Internationalisation (i18n)](./Documentation/Fiche_3_memo_Tkinter_widgets_i18n.md)
 - [🧭 Fiche 4 – PyInstaller](./Documentation/Fiche_4_memo_PyInstaller.md)
 - [🧭 Fiche 5 – Boutons actions Tkinter](./Documentation/Fiche_5_Mémo_bouton_actions_Tkinter_FR.md)
+- [🧭 Fiche 6 – Rappels des mises à jour de /main par /dev dans GitHUb](./Documentation/Fiche_6_git_convertisseur.md)
+- [🧭 Fiche 7 – Navigation et raccourcis clavier utiles dans ](./Documentation/Fiche_7_Mémo_Navigation_VSCode_python.md)
 
 ### 🇬🇧 Memo Sheets (English)
 - [🧭 Memo 1 – Tkinter Keyboard Shortcuts](./Documentation/Memo_1_EN_Tkinter_shortcuts.md)  
@@ -82,6 +84,8 @@ pyinstaller --onefile conv_num_gui.py
 - [🧭 Memo 3 – Tkinter Widgets & Internationalization (i18n)](./Documentation/Memo_3_Tkinter_widgets_i18n.md)
 - [🧭 Memo 4 – PyInstaller](./Documentation/Memo_4_PyInstaller_EN.md)
 - [🧭 Memo 5 – Tkinter Button actions](./Documentation/Memo_5_Tkinter_Button_Actions.md)
+- [🧭 Memo 6 – GitHub /main update from /dev](./Documentation\Memo_6_EN_git_convertisseur.md)
+- [🧭 Memo 7 – GitHub /main update from /dev](./Documentation\Memo_7_EN_Navigation_VSCode_python.md)
 ---
 
 ## 🔜 Planned Improvements

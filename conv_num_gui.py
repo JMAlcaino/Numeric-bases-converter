@@ -5,7 +5,7 @@
  Description  : A GUI numeric bases converter
  Author       : Alcaïno Jean-Marc                                                                          
  Modification : 2025/11/20                                                                           
- Version      : V 4.3.1
+ Version      : V 4.3.2-dev
 
  GitHub       :     https://github.com/JMAlcaino/Numeric-bases-converter
                     https://github.com/JMAlcaino/Numeric-bases-converter/tree/dev
@@ -34,7 +34,6 @@ import tkinter as tk
 import random
 import json  # Importe la librairie de gestion des fichiers .json qui contiennent les différentes traductions des langues de l'interface.
 from tkinter import PhotoImage  # Librairie qui gère les graphisme dans Tkinter utilisée pour afficher les petits drapeaux sur les boutons.
-from pathlib import Path
 
 
 # Définitions des variables
@@ -52,7 +51,7 @@ panneau_contexte = None
 bouton_fermer_contexte = None
 
 langue_actuelle = "fr"  #  Variable de choix de langue (par défaut : français ).
-VERSION = "V4.3.1"  # variable qui contien la version du programme qui sera affiché à plusieurs endroits.
+VERSION = "V4.3.2-dev"  # variable qui contient la version du programme qui sera affiché à plusieurs endroits.
 
 
 
@@ -61,13 +60,14 @@ VERSION = "V4.3.1"  # variable qui contien la version du programme qui sera affi
 def charger_traductions(fichier):  # Fonction qui charge le fichier contenant les différents textes_langues dans la langue sélectionnée.
     try:
         with open(fichier, "r", encoding="utf-8") as f:
-                  return json.load(f)
+            return json.load(f)
     except FileNotFoundError:
         return {"titre": "Erreur : Fichier de langue introuvable"}
 
 
 def mettre_a_jour_interface():
-    fenetre.title(textes_langues["titre"])
+    titre_principal = (textes_langues["titre"])  # Prend la traduction dans la langue actuelle du titre de la fenêtre pour pouvoir afficher ce titre et la version courante.
+    fenetre.title((f"{titre_principal} – {VERSION}"))
     entree_labelframe.config(text=textes_langues["label_saisie"])
     resultats_labelframe.config(text=textes_langues["titre_resultats"])
     resultat_texte_binaire.config(text=textes_langues["texte_binaire"])
@@ -122,24 +122,28 @@ def construire_menus():
 
     # Menu Fichier
     menu_fichier = tk.Menu(menu_principal, tearoff=0)
-    menu_fichier.add_command(label=textes_langues["a_propos_titre"], command=afficher_a_propos)  # Ajout de l'affichage d'un raccourci clavier. Attention ce n'est que l'affichage voir la méthode plus bas pour l'activer.
-    menu_fichier.add_command(label=textes_langues["btn_quitter"], accelerator="CTRL+Q", command=fenetre.destroy)
+    menu_fichier.add_command(label=textes_langues["btn_convertir"], accelerator="Ctrl-R", command=convertir)
+    menu_fichier.add_command(label=textes_langues["btn_effacer"], accelerator="Ctrl-D", command=effacer)
+    menu_fichier.add_separator()
+    menu_fichier.add_command(label=textes_langues["btn_quitter"], accelerator="Ctrl-Q", command=fenetre.destroy)
     menu_principal.add_cascade(label=textes_langues["menu_fichier"], menu=menu_fichier)
 
     # Menu Aide
     menu_aide = tk.Menu(menu_principal, tearoff=0)
-    menu_aide.add_command(label=textes_langues["menu_aide"], command=afficher_aide)
-    menu_aide.add_command(label=textes_langues["menu_contexte"], command=afficher_contexte)
+    menu_aide.add_command(label=textes_langues["menu_aide"], accelerator="F1", command=afficher_aide)
+    menu_aide.add_command(label=textes_langues["menu_contexte"], accelerator="F2",command=afficher_contexte)
+    menu_aide.add_separator()  # Ajoute un séparateur avant l'à propos (esthétique).
+    menu_aide.add_command(label=textes_langues["a_propos_titre"], command=afficher_a_propos)  # Ajout de l'affichage d'un raccourci clavier. Attention ce n'est que l'affichage voir la méthode plus bas pour l'activer.
     menu_principal.add_cascade(label=textes_langues["menu_aide"], menu=menu_aide)
 
     # Menu Langue
     menu_langue = tk.Menu(menu_principal, tearoff=0)
-    menu_langue.add_command(label="Français", command=lambda: changer_langue("fr"))
-    menu_langue.add_command(label="English", command=lambda: changer_langue("en"))
-    menu_langue.add_command(label="Deutsch", command=lambda: changer_langue("de"))
-    menu_langue.add_command(label="Español", command=lambda: changer_langue("es"))
-    menu_langue.add_command(label="Italiano", command=lambda: changer_langue("it"))
-    menu_langue.add_command(label="Nederlands", command=lambda: changer_langue("nl"))
+    menu_langue.add_command(label="Français", accelerator="Alt-f", command=lambda: changer_langue("fr"))
+    menu_langue.add_command(label="English", accelerator="Alt-e", command=lambda: changer_langue("en"))
+    menu_langue.add_command(label="Deutsch", accelerator="Alt-d", command=lambda: changer_langue("de"))
+    menu_langue.add_command(label="Español", accelerator="Alt-s", command=lambda: changer_langue("es"))
+    menu_langue.add_command(label="Italiano", accelerator="Alt-i", command=lambda: changer_langue("it"))
+    menu_langue.add_command(label="Nederlands", accelerator="Alt-n", command=lambda: changer_langue("nl"))
     menu_principal.add_cascade(label=textes_langues["menu_langue"], menu=menu_langue)
 
     # Appliquer le menu à la fenêtre
@@ -210,9 +214,8 @@ def changer_langue(nouvelle_langue):  # Fonction qui change la langue de l'inter
     construire_menus()  # Appelle la fonction de construction des boutons pour les mettre dasn la langue choisie.
     fenetre.update_idletasks()  # Scrute la boucle d'affichage de la fenêtre principale.
     fenetre.geometry("")  # Calcule automatiquement la taille de la fenêtre pour s'ajuster aux éléments qu'elle contient.
-    fenetre.minsize(fenetre.winfo_width(), fenetre.winfo_height())
 
-    # Recharger le texte et des éléments de l'aide dans la langue nouvelle langue.
+    # Recharger le texte et des éléments de l'aide dans la langue nouvelle langue. Les variables doivent être à 'None' avant d'appeler les fonctions sinon on lève une erreur Tkinter.TclError. Voir Documentation : ./Documentation/Fiche_8_Mémo_widgets_detruits.md
     if zone_texte_aide is not None:
         charger_fichier_aide()
 
@@ -227,7 +230,7 @@ def changer_langue(nouvelle_langue):  # Fonction qui change la langue de l'inter
         charger_fichier_contexte()
 
     if panneau_contexte is not None:
-        panneau_contexte.config(text=textes_langues["titre_aide"])
+        panneau_contexte.config(text=textes_langues["titre_contexte"])
 
     if bouton_fermer_contexte is not None :
         bouton_fermer_contexte.config(text=textes_langues["fermer"])
@@ -258,7 +261,7 @@ def afficher_a_propos():  # Ouvre une petite fenêtre indépendante appelée par
 
     # Contenu de la fenêtre popup
     copyright = textes_langues["a_propos_copyright"]  # Récupère le texte du 'a_propos_copyright' dans le fichier .json de la langue en cours.
-    texte_copyright = (f"Version{VERSION} {copyright}")  # Crée le texte du copyright à afficher dans le 'à propos' avec la version du programme.
+    texte_copyright = (f"Version {VERSION} {copyright}")  # Crée le texte du copyright à afficher dans le 'à propos' avec la version du programme.
     a_propos_label1 = tk.Label(popup_a_propos, text=textes_langues["a_propos_texte"], font=('arial', 10, 'bold'), fg='blue', bg=couleur)
     a_propos_label2 = tk.Label(popup_a_propos, text = texte_copyright, font=('arial', 10), bg=couleur, justify='center')  # Affiche le texte 'texte_copyright' précedemment définit.
     a_propos_bouton = tk.Button(popup_a_propos, text=textes_langues["fermer"], fg='green', command=popup_a_propos.destroy)
@@ -301,7 +304,7 @@ def afficher_aide():
     zone_texte_aide.bind("<MouseWheel>", lambda e: zone_texte_aide.yview_scroll(int(-1*(e.delta/120)), "units"))  # Autorise le scroll avec la roulette de la souris.
 
     # Bouton de fermeture bien en dessous
-    bouton_fermer_aide = tk.Button(contenu_aide, text=textes_langues["fermer"], font=('arial', 9), fg='green', command=lambda: panneau_aide.destroy())  # Crèe le bouton qui ferme la fenêtre d'aide avec '.destroy'.
+    bouton_fermer_aide = tk.Button(contenu_aide, text=textes_langues["fermer"], font=('arial', 9), fg='green', command=fermer_aide)  # Crèe le bouton qui ferme la fenêtre d'aide avec '.destroy'.
     bouton_fermer_aide.pack(pady=10)
 
     # Charger le texte d'aide
@@ -382,6 +385,43 @@ def charger_fichier_contexte():  # La référence est obligatoirment passée en 
             zone_texte_contexte.config(state="disabled")
     except FileNotFoundError:
         zone_texte_contexte.insert(tk.END, "⚠️ Fichier d'aide introuvable.\n⚠️ File not found.")
+
+
+def basculer_aide():  # Fonction qui sert au raccourci clavier <F1> pour basculer : si on appuie une première fois il s'ouvre sinon il se ferme.
+    global panneau_aide_actif  # Variable globale qui sert à vérifier si le panneau est ouvert ou non.
+
+    if panneau_aide_actif is not None and panneau_aide_actif.winfo_exists():  # Si le panneau d'aide est déjà actif ferme-le
+        fermer_aide()  # Appelle la fonction de fermeture spécifique.
+    else:
+        afficher_aide()
+
+
+def basculer_contexte():  # Fonction qui sert au raccourci clavier <F1> pour basculer : si on appuie une première fois il s'ouvre sinon il se ferme.
+    global panneau_contexte_actif  # Variable globale qui sert à vérifier si le panneau est ouvert ou non.
+
+    if panneau_contexte_actif and panneau_contexte_actif.winfo_exists():  # Si le panneau du contexte est déjà actif ferme-le
+        panneau_contexte_actif.destroy()
+        panneau_contexte_actif = None
+    else:
+        afficher_contexte()
+
+
+def fermer_aide():  # Fonction qui ferme proprement le panneau d'aide pour éviter les soucis d'affichage au changement de langue et éviter les erreurs du Tcl de Tkinter.
+    global panneau_aide_actif, panneau_aide, zone_texte_aide, bouton_fermer_aide
+
+    # Si le panneau existe encore, on le détruit
+    if panneau_aide_actif is not None and panneau_aide_actif.winfo_exists():
+        panneau_aide_actif.destroy()
+
+    # On remet toutes les références à None
+    panneau_aide_actif = None
+    panneau_aide = None
+    zone_texte_aide = None
+    bouton_fermer_aide = None
+
+    # On recalcule la taille de la fenêtre
+    fenetre.update_idletasks()
+    fenetre.geometry("")
 
 
 def convertir():
@@ -479,7 +519,7 @@ def appliquer_format_binaire(*args):   # Fonction qui met à jour le label 'resu
     elif val == textes_langues["blocs_8"]:
         resultat_binaire.config(text=grouper_par_blocs(texte, 8))
        
-    ajuster_label(resultat_binaire, texte)
+    ajuster_label(resultat_binaire)  # Ajuste le label de résultat en fonction du nombre de caractères qu'il contient. Appelle la fonction 'ajuster_label'.
   
 
 def appliquer_format_hexadecimal(*args):  # Fonction qui met à jour le label 'resultat_hexadecimal' en fonction du choix dans le menu déroulant - *args sert à ignorer les arguments demandés par le widget 'optionMenu'
@@ -494,10 +534,10 @@ def appliquer_format_hexadecimal(*args):  # Fonction qui met à jour le label 'r
     elif val == textes_langues["blocs_8"]:
         resultat_hexadecimal.config(text=grouper_par_blocs(texte, 8))
         
-    ajuster_label(resultat_hexadecimal, texte)  # Ajuste le label de résultat en fonction du nombre de caractères qu'il contient. Appelle la fonction 'ajuster_label'.
+    ajuster_label(resultat_hexadecimal)  # Ajuste le label de résultat en fonction du nombre de caractères qu'il contient. Appelle la fonction 'ajuster_label'.
 
 
-def ajuster_label(label, texte):  # ajuste le label du résultat en fonction de la longueur de la chaîne qu'il contient.
+def ajuster_label(label):  # ajuste le label du résultat en fonction de la longueur de la chaîne qu'il contient.
     texte = label.cget("text").replace(" ", "")  # Récupère le texte réel qui se trouve dans le label avant l'ajustement de celui-ci et enlève les espaces inutiles qui perturbent l'affichage.
     nb_caracteres = len(texte)
     label.config(width=max(50, nb_caracteres))  # Le label garde au minimum 50 caractères et au maximum la longueur du texte.
@@ -507,6 +547,8 @@ def ajuster_label(label, texte):  # ajuste le label du résultat en fonction de 
 
 
 # PROGRAMME PRINCIPAL
+
+#Préparation pour la modularité du programme -->
 #if __name__=="__main__":
 
 #Variable qui va contenir tout le dictionnaire .json de la langue
@@ -607,7 +649,7 @@ bouton_copier_entier = tk.Button(resultats_labelframe, text="\U0001F4CB", comman
 resultat_texte_binaire = tk.Label(resultats_labelframe, text=textes_langues["texte_binaire"], fg="#A83600", anchor='w', justify='right')
 resultat_binaire = tk.Label(resultats_labelframe, fg="#A83600", bg="#FFC5A8", font=('arial', 10, 'bold'), anchor='w', justify='right', relief='groove', width=50)
 bouton_copier_binaire = tk.Button(resultats_labelframe, text="\U0001F4CB", command=lambda: bouton_copier(resultat_binaire))
-options_bin = [textes_langues["brut"], textes_langues["blocs_2"], textes_langues["blocs_4"], textes_langues["blocs_8"]]  # Options d'affichage pour le label 'resultat_binaire : format brut, en 2, 4 ou 8 bits.
+options_bin = [textes_langues["brut"], textes_langues["blocs_4"], textes_langues["blocs_8"]]  # Options d'affichage pour le label 'resultat_binaire : format brut, en 2, 4 ou 8 bits.
 menu_format_binaire = tk.OptionMenu(resultats_labelframe, format_binaire_var, *options_bin, command=appliquer_format_binaire)  # Création du menu déroulant pour le choix du format d'affichage.
 menu_format_binaire.config(font=('arial', 9))
 
@@ -663,4 +705,32 @@ fenetre.config(menu=menu_principal)
 fenetre.update_idletasks()  # Scrute la boucle d'affichage de la fenêtre principale.
 fenetre.geometry("")  # Calcule automatiquement la taille de la fenêtre pour s'ajuster aux éléments qu'elle contient.
 fenetre.minsize(fenetre.winfo_width(), fenetre.winfo_height())
+
+# Raccourcis clavier.
+  # Quitter
+fenetre.bind_all("<Control-q>", lambda event: fenetre.destroy)  # Le CTRL+q ou +Q ( ligne du dessous) ferme la fenêtre du programme.
+fenetre.bind_all("<Control-Q>", lambda event: fenetre.destroy)
+  # Convertir
+fenetre.bind_all("<Control-R>", lambda event: convertir())
+fenetre.bind_all("<Control-r>", lambda event: convertir())
+  # Effacer
+fenetre.bind_all("<Control-D>", lambda event: effacer())
+fenetre.bind_all("<Control-d>", lambda event: effacer())
+  # Aide/Contexte
+fenetre.bind_all("<F1>", lambda event: basculer_aide()) # Si on appuie sur F1 l'aide s'affiche, si on rappuie dessus elle se ferme. La fonction scrute la présence ou non du panneau grace à la variable globale prédéfinie.
+fenetre.bind_all("<F2>", lambda event: basculer_contexte())  # Idem que pour l'aide mais pour le panneau de contexte.
+  # Langues
+fenetre.bind_all("<Alt-f>", lambda event: changer_langue("fr"))  # Raccourci clavier pour changer les langues (minuscules et majuscules prise en compte).
+fenetre.bind_all("<Alt-F>", lambda event: changer_langue("fr"))
+fenetre.bind_all("<Alt-e>", lambda event: changer_langue("en"))
+fenetre.bind_all("<Alt-E>", lambda event: changer_langue("en"))
+fenetre.bind_all("<Alt-d>", lambda event: changer_langue("de"))
+fenetre.bind_all("<Alt-D>", lambda event: changer_langue("de"))
+fenetre.bind_all("<Alt-s>", lambda event: changer_langue("es"))
+fenetre.bind_all("<Alt-S>", lambda event: changer_langue("es"))
+fenetre.bind_all("<Alt-i>", lambda event: changer_langue("it"))
+fenetre.bind_all("<Alt-I>", lambda event: changer_langue("it"))
+fenetre.bind_all("<Alt-n>", lambda event: changer_langue("nl"))
+fenetre.bind_all("<Alt-N>", lambda event: changer_langue("nl"))
+
 fenetre.mainloop()

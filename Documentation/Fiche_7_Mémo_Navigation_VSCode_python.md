@@ -4,9 +4,9 @@ Ce mémo rassemble les raccourcis et outils de navigation **indispensables** dan
 
 ---
 
-# 🧭 1. Navigation dans le code
+#  1. Navigation dans le code
 
-## ▶️ Aller à la définition
+##  Aller à la définition
 **F12**
 
 Permet d’aller directement à l’endroit où une variable, fonction ou classe est définie.
@@ -18,7 +18,7 @@ Très utile pour :
 
 ---
 
-## ▶️ Rechercher toutes les références
+##  Rechercher toutes les références
 **Shift + F12**
 
 C’est l’outil le plus plus puissant pour comprendre un programme :
@@ -30,7 +30,7 @@ C’est l’outil le plus plus puissant pour comprendre un programme :
 
 ---
 
-## ▶️ Aller à un symbole
+##  Aller à un symbole
 **Ctrl + Shift + O**
 
 Affiche une liste :
@@ -43,7 +43,7 @@ Tu peux taper quelques lettres pour filtrer.
 
 ---
 
-## ▶️ Rechercher un fichier
+##  Rechercher un fichier
 **Ctrl + P**
 
 Permet d’ouvrir n’importe quel fichier du projet rapidement.
@@ -52,19 +52,19 @@ Très utile dans les projets structurés en dossiers (comme ton dossier /Documen
 
 ---
 
-## ▶️ Rechercher dans un fichier
+##  Rechercher dans un fichier
 **Ctrl + F**
 
 Recherche simple.
 
 ---
 
-## ▶️ Rechercher dans tout le projet
+##  Rechercher dans tout le projet
 **Ctrl + Shift + F**
 
 Affiche toutes les occurrences dans tous les fichiers du projet.
 
-Indispensable quand tu modifies :
+Indispensable quand il faut modifier :
 - un texte
 - une variable
 - un nom de fonction
@@ -72,25 +72,25 @@ Indispensable quand tu modifies :
 
 ---
 
-# 🔙 2. Navigation “comme un navigateur web”
+#  2. Navigation “comme un navigateur web”
 
 ## ▶️ Retour en arrière
 **Alt + ←**
 
-Reviens là où tu étais avant (comme un navigateur web).
+Reviens là où où était avant (comme un navigateur web).
 
-## ▶️ Avancer
+##  Avancer
 **Alt + →**
 
 Refait le chemin inverse.
 
-Super pratique quand tu explores une suite de fonctions.
+Super pratique quand on explore une suite de fonctions.
 
 ---
 
-# 🎯 3. Outils visuels de repérage
+#  3. Outils visuels de repérage
 
-Grâce à ta configuration améliorée :
+Grâce à la configuration améliorée :
 
 - la **ligne active** est surlignée  
 - le **numéro de ligne actif** est en couleur jaune  
@@ -104,49 +104,49 @@ Cela rend beaucoup plus simple :
 
 ---
 
-# 🔧 4. Astuces pratiques
+#  4. Astuces pratiques
 
-### 📌 Sélectionner rapidement une ligne
+###  Sélectionner rapidement une ligne
 Clique dans la marge gauche, ou utilise :
 ```
 Ctrl + L
 ```
 
-### 📌 Déplacer une ligne / un bloc
+###  Déplacer une ligne / un bloc
 ```
 Alt + ↑
 Alt + ↓
 ```
 
-### 📌 Copier une ligne rapidement
+###  Copier une ligne rapidement
 ```
 Shift + Alt + ↓
 ```
 
-### 📌 Formater le document (indentation propre)
+###  Formater le document (indentation propre)
 ```
 Shift + Alt + F
 ```
 
 ---
 
-# 🛠️ 5. Pour préparer le passage aux classes
+#  5. Pour préparer le passage aux classes
 
-Ces fonctions t’aideront énormément pour :
+Ces fonctions aident énormément pour :
 - repérer quelles fonctions doivent être regroupées
 - isoler les variables globales à transformer en attributs
 - comprendre les dépendances entre parties du code
 - restructurer progressivement ton convertisseur
 
-VS Code devient alors un **véritable outil d’analyse du code**.
+VSCode devient alors un **véritable outil d’analyse du code**.
 
 ---
 
-# ✨ Conclusion
+#  Conclusion
 
 Avec ces raccourcis et outils :
 
-- tu vas débugger plus vite  
+- ton va débugger plus vite  
 - mieux comprendre la structure du code  
 - éviter les erreurs lors des réorganisations  
 - et préparer un passage propre vers une architecture orientée objets  
@@ -154,4 +154,4 @@ Avec ces raccourcis et outils :
 Ce mémo est pensé pour accompagner l’évolution de ton projet.
 
 **Per Scientiam, ad Caelum ✈️**  
-Ton copilote Pylo
+

@@ -6,7 +6,7 @@
 **Language:** Python 3 + Tkinter  
 **License:** Open source – for personal and educational use
 
-**Version:** 4.3.1
+**Version:** 4.4
 
 
 ---
@@ -78,6 +78,7 @@ pyinstaller --onefile conv_num_gui.py
 - [🧭 Fiche 6 – Rappels des mises à jour de /main par /dev dans GitHUb](./Documentation/Fiche_6_git_convertisseur.md)
 - [🧭 Fiche 7 – Navigation et raccourcis clavier utiles dans VSCode](./Documentation/Fiche_7_Mémo_Navigation_VSCode_python.md)
 - [🧭 Fiche 8 – Problématique des widgets détruits dans Tkinter](./Documentation/Fiche_8_Mémo_widgets_detruits.md)
+- [🧭 Fiche 9 – Solution apportée au problème des menus à choix des formats](./Documentation/Fiche_9_Mémo_choix_formats_multilingues.md)
 
 ### 🇬🇧 Memo Sheets (English)
 - [🧭 Memo 1 – Tkinter Keyboard Shortcuts](./Documentation/Memo_1_EN_Tkinter_shortcuts.md)  
@@ -88,6 +89,7 @@ pyinstaller --onefile conv_num_gui.py
 - [🧭 Memo 6 – GitHub /main update from /dev](./Documentation\Memo_6_EN_git_convertisseur.md)
 - [🧭 Memo 7 – VSCode navigation and shortkeys](./Documentation\Memo_7_EN_Navigation_VSCode_python.md)
 - [🧭 Memo 8 – Destructed widgets problems in Tkinter](./Documentation/Memo_8_EN_Destructed_widgets_.md)
+- [🧭 Memo 9 – Solution for the option menus about formating résults](./Documentation/Memo_9_EN_multilingual_format_choices.md)
 ---
 
 ## 🔜 Planned Improvements

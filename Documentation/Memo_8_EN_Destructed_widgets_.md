@@ -1,6 +1,6 @@
 # Managing Destroyed Widgets in Tkinter
 
-## Technical Memo --- Numeric Bases Converter (Jean & Pylo)
+## Technical Memo --- Numeric Bases Converter
 
 When creating a Tkinter user interface, it is common for a widget
 (window, LabelFrame, Text, etc.) to be **destroyed** by the program ---
@@ -12,7 +12,7 @@ This is known as a *dangling reference*.
 
 ------------------------------------------------------------------------
 
-## 🚨 Typical Symptom
+##  Typical Symptom
 
 When the code does something like:
 
@@ -24,7 +24,7 @@ Tkinter raises an error:
     _tkinter.TclError: invalid command name ".!frame.!labelframe.!frame.!text"
 
 This means:\
-👉 *"The widget you are trying to modify does not exist anymore."*
+ *"The widget you are trying to modify does not exist anymore."*
 
 ------------------------------------------------------------------------
 
@@ -35,15 +35,15 @@ This means:\
     cleared**.
 
 So from Python's point of view:\
-➡️ the variable still exists\
-➡️ but from Tk's point of view:\
-➡️ the widget no longer exists
+ - the variable still exists\
+ - but from Tk's point of view:\
+ - the widget no longer exists
 
 It's like holding the address of a house that has been demolished...
 
 ------------------------------------------------------------------------
 
-## 🧠 The Clean Solution
+##  The Clean Solution
 
 Always follow **two mandatory steps** when removing a dynamic Tkinter
 widget:
@@ -74,7 +74,7 @@ Then:
 
 ------------------------------------------------------------------------
 
-## 🧩 Why This Matters for the Help / Context Panels
+##  Why This Matters for the Help / Context Panels
 
 In your program:
 
@@ -100,7 +100,7 @@ The proper approach is to use a dedicated `close_help()` function that:
 
 ------------------------------------------------------------------------
 
-## 📝 Key Points to Remember
+##  Key Points to Remember
 
 ✔ A Tkinter widget destroyed by `.destroy()` is **not** automatically
 cleared in Python\
@@ -114,4 +114,4 @@ before using a widget\
 This memo serves as a reminder for all Tkinter interfaces involving
 dynamic panels or windows.
 
-**Pylo**
+

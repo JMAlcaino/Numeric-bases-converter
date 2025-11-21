@@ -5,7 +5,7 @@
  Description  : A GUI numeric bases converter
  Author       : Alcaïno Jean-Marc                                                                          
  Modification : 2025/11/20                                                                           
- Version      : V 4.3.1
+ Version      : V 4.4
 
  GitHub       :     https://github.com/JMAlcaino/Numeric-bases-converter
                     https://github.com/JMAlcaino/Numeric-bases-converter/tree/dev
@@ -24,6 +24,10 @@ la représentation des nombres dans différents systèmes de base utilisés en i
  V 4.2      : Ajout des langues : ialien et néerlandais pour les menus et aides.
  V 4.3.1    : Correction des affichage de l'aide et du contexte avec les traductions des texte lors du changement de langue à la volée.
               Gestion des versions et de leur affichage. Mise en place de la branche /dev sur GitHUb
+ V 4.4      : Correction des problèmes d'affichage correct des menus à choix lors du formatage des résultats.
+              Correction des problèmes des formats de résultats binaires et hexadécimaux.
+              Révision des menus et ajout des raccourcis claviers.
+              
 
 ############################################################################################################
  
@@ -51,7 +55,7 @@ panneau_contexte = None
 bouton_fermer_contexte = None
 
 langue_actuelle = "fr"  #  Variable de choix de langue (par défaut : français ).
-VERSION = "V4.3.1"  # variable qui contient la version du programme qui sera affiché à plusieurs endroits.
+VERSION = "V 4.4"  # variable qui contient la version du programme qui sera affiché à plusieurs endroits.
 
 
 
@@ -66,8 +70,8 @@ def charger_traductions(fichier):  # Fonction qui charge le fichier contenant le
 
 
 def mettre_a_jour_interface():
-    titre_principal = (textes_langues["titre"])  # Prend la traduction dans la langue actuelle du titre de la fenêtre pour pouvoir afficher ce titre et la version courante.
-    fenetre.title((f"{titre_principal} – {VERSION}"))
+    titre_principal = (textes_langues["titre"])
+    fenetre.title(f"{titre_principal} – {VERSION}")
     entree_labelframe.config(text=textes_langues["label_saisie"])
     resultats_labelframe.config(text=textes_langues["titre_resultats"])
     resultat_texte_binaire.config(text=textes_langues["texte_binaire"])
@@ -79,7 +83,7 @@ def mettre_a_jour_interface():
     bouton_quitter.config(text=textes_langues["btn_quitter"])
     erreur_labelframe.config(text=textes_langues["titre_message"])
 
-    # Mise à jour du menu déroulant Binaire
+    # --- Mise à jour des options du menu Binaire ---
     options_binaire = [
         textes_langues["brut"],
         textes_langues["blocs_4"],
@@ -92,9 +96,8 @@ def mettre_a_jour_interface():
             label=option,
             command=lambda val=option: (format_binaire_var.set(val), appliquer_format_binaire())
         )
-    format_binaire_var.set(textes_langues["brut"])
 
-    # Mise à jour du menu déroulant Hexadécimal
+    # --- Mise à jour des options du menu Hexadécimal ---
     options_hexa = [
         textes_langues["brut"],
         textes_langues["blocs_2"],
@@ -104,11 +107,12 @@ def mettre_a_jour_interface():
     menu_hexa = menu_format_hexadecimal["menu"]
     menu_hexa.delete(0, "end")
     for option in options_hexa:
-     menu_hexa.add_command(
+        menu_hexa.add_command(
             label=option,
             command=lambda val=option: (format_hexadecimal_var.set(val), appliquer_format_hexadecimal())
         )
-    format_hexadecimal_var.set(textes_langues["brut"])
+
+    # On n’impose PAS ici le format (on laisse changer_langue gérer ça)
 
 
 def construire_menus():
@@ -121,6 +125,14 @@ def construire_menus():
     menu_principal = tk.Menu(fenetre)
 
     # Menu Fichier
+
+     # Gestion des évênements : Menus, souris, menus contextuels...
+     # Voir documentation : https://github.com/JMAlcaino/Numeric-bases-converter/blob/main/Documentation/Fiche_2_M%C3%A9mo_Tkinter_menus_souris.md
+     # Read documentation for more : https://github.com/JMAlcaino/Numeric-bases-converter/blob/main/Documentation/Memo_2_EN_Tkinter_menus_mouse.md
+     
+     # Ajout de l'affichage d'un raccourci clavier avec ma méthode 'accelerator'. Attention ce n'est que l'affichage de ce raccourci clavier. Le traitement se fait avec un .bind
+     # Voir la documentation : https://github.com/JMAlcaino/Numeric-bases-converter/blob/main/Documentation/Fiche_1_M%C3%A9mo_Tkinter_raccourcis.md
+     # See the documentation here : https://github.com/JMAlcaino/Numeric-bases-converter/blob/main/Documentation/Memo_1_EN_Tkinter_shortcuts.md
     menu_fichier = tk.Menu(menu_principal, tearoff=0)
     menu_fichier.add_command(label=textes_langues["btn_convertir"], accelerator="Ctrl-R", command=convertir)
     menu_fichier.add_command(label=textes_langues["btn_effacer"], accelerator="Ctrl-D", command=effacer)
@@ -133,7 +145,7 @@ def construire_menus():
     menu_aide.add_command(label=textes_langues["menu_aide"], accelerator="F1", command=afficher_aide)
     menu_aide.add_command(label=textes_langues["menu_contexte"], accelerator="F2",command=afficher_contexte)
     menu_aide.add_separator()  # Ajoute un séparateur avant l'à propos (esthétique).
-    menu_aide.add_command(label=textes_langues["a_propos_titre"], command=afficher_a_propos)  # Ajout de l'affichage d'un raccourci clavier. Attention ce n'est que l'affichage voir la méthode plus bas pour l'activer.
+    menu_aide.add_command(label=textes_langues["a_propos_titre"], accelerator="?", command=afficher_a_propos)  
     menu_principal.add_cascade(label=textes_langues["menu_aide"], menu=menu_aide)
 
     # Menu Langue
@@ -193,49 +205,71 @@ def changer_langue(nouvelle_langue):  # Fonction qui change la langue de l'inter
     global zone_texte_aide, panneau_aide, bouton_fermer_aide
     global zone_texte_contexte, panneau_contexte, bouton_fermer_contexte
 
-    # Sauvegarder d'abord la langue actuelle avant de la modifier
+    # Sauvegarder d'abord la langue actuelle et les textes actuels de format
     ancienne_langue = langue_actuelle
-    langue_actuelle = nouvelle_langue
+    ancienne_valeur_binaire = format_binaire_var.get()  # Variable servant à conserver l'intitulé du bouton de format binaire dans la langue actuelle.
+    ancienne_valeur_hexa = format_hexadecimal_var.get() # # Variable servant à conserver l'intitulé du bouton de format hexadécimal dans la langue actuelle.
+
+    # Charger les traductions de l'ancienne langue
+    anciennes_traductions = charger_traductions(f"./Langues/lang_{ancienne_langue}.json")
+
+    # Fonction utilitaire pour retrouver la clé de format
+    def trouver_cle_format(ancien_texte):
+        # On balaie uniquement les clés de formats connues
+        cles_formats = ["brut", "blocs_2", "blocs_4", "blocs_8"]
+        for cle in cles_formats:
+            if anciennes_traductions.get(cle) == ancien_texte:
+                return cle
+        return "brut"  # par défaut si on ne trouve pas
+
+    cle_format_binaire = trouver_cle_format(ancienne_valeur_binaire)  # Sert à mettre le bouton de mise en format du résultat binaire dans la bonne langue à l'aide de la fonction utilitaire.
+    cle_format_hexa = trouver_cle_format(ancienne_valeur_hexa)  # Sert à mettre le bouton de mise en format du résultat hexadécimal dans la bonne langue à l'aide de la fonction utilitaire.
+
+    # Changer la langue actuelle
+    langue_actuelle = nouvelle_langue  # Change la langue actuelle par la nouvelle sélectionnée soit par le drapeau, soit par le menu ou le raccourci clavier choisi.
 
     # Charger la nouvelle langue
     textes_langues = charger_traductions(f"./Langues/lang_{langue_actuelle}.json")
- 
-    # Re-traduction du message affiché dans erreur_label
+
+    # Re-traduction du message affiché dans erreur_label (ton code existant)
     texte_actuel = erreur_label.cget("text")
     anciennes_traductions = charger_traductions(f"./Langues/lang_{ancienne_langue}.json")
-
     for cle, texte in anciennes_traductions.items():
         if texte_actuel == texte and cle in textes_langues:
             erreur_label.config(text=textes_langues[cle])
             break
-        
+
+    # Mettre à jour l'interface (labels, menus, etc.)
     mettre_a_jour_interface()  # Appelle la fonction qui va modifier tous les labels et autres textes_langues de l'interface dans la langue choisie.
-    mettre_a_jour_boutons_radio() #Appelle la fonction de construction des boutons radio pour les mettre à jour selon la langue choisie.
-    construire_menus()  # Appelle la fonction de construction des boutons pour les mettre dasn la langue choisie.
+    mettre_a_jour_boutons_radio()  # Appelle la fonction de construction des boutons radio pour les mettre à jour selon la langue choisie.
+    construire_menus() # Appelle la fonction de construction des menus pour les mettre dasn la langue choisie. 
     fenetre.update_idletasks()  # Scrute la boucle d'affichage de la fenêtre principale.
     fenetre.geometry("")  # Calcule automatiquement la taille de la fenêtre pour s'ajuster aux éléments qu'elle contient.
 
-    # Recharger le texte et des éléments de l'aide dans la langue nouvelle langue. Les variables doivent être à 'None' avant d'appeler les fonctions sinon on lève une erreur Tkinter.TclError. Voir Documentation : ./Documentation/Fiche_8_Mémo_widgets_detruits.md
+    # Réappliquer les formats choisis, mais dans la nouvelle langue 
+    format_binaire_var.set(textes_langues[cle_format_binaire])
+    format_hexadecimal_var.set(textes_langues[cle_format_hexa])
+    appliquer_format_binaire()
+    appliquer_format_hexadecimal()
+
+    # Recharger le texte et des éléments de l'aide dans la langue nouvelle langue. Les variables doivent être à 'None' avant d'appeler les fonctions sinon on lève une erreur Tkinter.TclError. 
+    # Voir Documentation : https://github.com/JMAlcaino/Numeric-bases-converter/blob/main/Documentation/Fiche_8_M%C3%A9mo_widgets_detruits.md
+    # See Documentation  : https://github.com/JMAlcaino/Numeric-bases-converter/blob/main/Documentation/Memo_8_EN_Destructed_widgets_.md
     if zone_texte_aide is not None:
         charger_fichier_aide()
-
     if panneau_aide is not None:
         panneau_aide.config(text=textes_langues["titre_aide"])
-
-    if bouton_fermer_aide is not None :
+    if bouton_fermer_aide is not None:
         bouton_fermer_aide.config(text=textes_langues["fermer"])
 
-    # Recharger le texte et des éléments du contexte dans la langue nouvelle langue.
     if zone_texte_contexte is not None:
         charger_fichier_contexte()
-
     if panneau_contexte is not None:
         panneau_contexte.config(text=textes_langues["titre_contexte"])
-
-    if bouton_fermer_contexte is not None :
+    if bouton_fermer_contexte is not None:
         bouton_fermer_contexte.config(text=textes_langues["fermer"])
-        
 
+        
 def afficher_a_propos():  # Ouvre une petite fenêtre indépendante appelée par le menu 'aide' 'A propos' - Couleur de fond au hasard parmi 4 possibilités.
     bg_couleurs = ['#99CCCC', '#FFC5A8', '#D3A8FF', '#FDACBE']
     couleur = random.choice(bg_couleurs)
@@ -304,7 +338,7 @@ def afficher_aide():
     zone_texte_aide.bind("<MouseWheel>", lambda e: zone_texte_aide.yview_scroll(int(-1*(e.delta/120)), "units"))  # Autorise le scroll avec la roulette de la souris.
 
     # Bouton de fermeture bien en dessous
-    bouton_fermer_aide = tk.Button(contenu_aide, text=textes_langues["fermer"], font=('arial', 9), fg='green', command=fermer_aide)  # Crèe le bouton qui ferme la fenêtre d'aide avec '.destroy'.
+    bouton_fermer_aide = tk.Button(contenu_aide, text=textes_langues["fermer"], font=('arial', 9), fg='green', command=fermer_aide)  # Crèe le bouton qui ferme la fenêtre d'aide grace à la fonction 'fermer_aide()'.
     bouton_fermer_aide.pack(pady=10)
 
     # Charger le texte d'aide
@@ -345,7 +379,7 @@ def afficher_contexte():
     zone_texte_contexte.bind("<MouseWheel>", lambda e: zone_texte_contexte.yview_scroll(int(-1*(e.delta/120)), "units"))
 
     # Bouton de fermeture bien en dessous
-    bouton_fermer_contexte = tk.Button(contenu_contexte, text=textes_langues["fermer"], font=('arial', 9), fg='green', command=lambda: panneau_contexte.destroy())
+    bouton_fermer_contexte = tk.Button(contenu_contexte, text=textes_langues["fermer"], font=('arial', 9), fg='green', command=fermer_contexte)  # Création du bouton permettant d'appeler la fonction 'fermer_contexte()'
     bouton_fermer_contexte.pack(pady=10)
 
 
@@ -399,9 +433,8 @@ def basculer_aide():  # Fonction qui sert au raccourci clavier <F1> pour bascule
 def basculer_contexte():  # Fonction qui sert au raccourci clavier <F1> pour basculer : si on appuie une première fois il s'ouvre sinon il se ferme.
     global panneau_contexte_actif  # Variable globale qui sert à vérifier si le panneau est ouvert ou non.
 
-    if panneau_contexte_actif and panneau_contexte_actif.winfo_exists():  # Si le panneau du contexte est déjà actif ferme-le
-        panneau_contexte_actif.destroy()
-        panneau_contexte_actif = None
+    if panneau_contexte_actif and panneau_contexte_actif.winfo_exists():  # Si le panneau du contexte est déjà actif ferme-le via la fonction 'fermer_contexte()'
+        fermer_contexte()
     else:
         afficher_contexte()
 
@@ -424,8 +457,27 @@ def fermer_aide():  # Fonction qui ferme proprement le panneau d'aide pour évit
     fenetre.geometry("")
 
 
+def fermer_contexte(): # Fonction qui ferme proprement le panneau du contexte pour éviter les soucis d'affichage au changement de langue et éviter les erreurs du Tcl de Tkinter.
+    global panneau_contexte_actif, panneau_contexte, zone_texte_contexte, bouton_fermer_contexte
+
+    # Si le panneau existe encore, on le détruit
+    if panneau_contexte_actif is not None and panneau_contexte_actif.winfo_exists():
+        panneau_contexte_actif.destroy()
+
+    # On remet toutes les références à None
+    panneau_contexte_actif = None
+    panneau_contexte = None
+    zone_texte_contexte = None
+    bouton_fermer_contexte = None
+
+    # On recalcule la taille de la fenêtre
+    fenetre.update_idletasks()
+    fenetre.geometry("")
+
+
 def convertir():
     entree_valeur = entree.get().strip()
+    entree_valeur = entree_valeur.replace(" ", "")  # Enlève les espaces des valeurs rentrées ou collées depuis une case de résultat pour éviter un message d'erreur de conversion.
     base_saisie = base_var.get()
 
     if not entree_valeur:
@@ -454,11 +506,11 @@ def convertir():
         else:
             raise ValueError
 
-        # Affichage des résultats
+        # Affichage des résultats - L'indice [2:] sert à afficher que le nombre sans les préfixes des bases '0o' '0x' 0b' spécifiques au format des résultats de Python.
         resultat_entier.config(text=str(n))
-        resultat_octal.config(text=oct(n)[2:])
+        resultat_octal.config(text=oct(n)[2:]) 
         resultat_binaire.config(text=bin(n)[2:])
-        resultat_hexadecimal.config(text=hex(n)[2:].upper())
+        resultat_hexadecimal.config(text=hex(n)[2:].upper())  # Affiche le résultat avec les les 'lettres' de l'héxadécimal en majuscule (format habituel des nombres hexadécimaux en infomatique).
 
         binaire_brut_var.set(bin(n)[2:])
         hexadecimal_brut_var.set(hex(n)[2:].upper())
@@ -506,10 +558,10 @@ def grouper_par_blocs(texte, taille_bloc):  # Fonction qui gère la mise en bloc
     reste = len(texte) % taille_bloc
     if reste != 0:
         texte = '0' * (taille_bloc - reste) + texte  # Ajoute un ou plusieurs '0' en fonction du nombre de caractères restants à gauche (lecture logique  de bas niveau)
-    return ' '.join(texte[i:i+taille_bloc] for i in range(0, len(texte), taille_bloc))  # Retourne une chaîne de caractères séparés par un espace tous les 'x' caractères de droite à gauche. Le 'x' étant donné par la variable 'taille_bloc' en focntion du choix du menu déroulant contextuel.
+    return ' '.join(texte[i:i+taille_bloc] for i in range(0, len(texte), taille_bloc))  # Retourne une chaîne de caractères séparés par un espace tous les 'x' caractères de droite à gauche. Le 'x' étant donné par la variable 'taille_bloc' en fontion du choix du menu déroulant contextuel.
 
 
-def appliquer_format_binaire(*args):   # Fonction qui met à jour le label 'resultat_binaire' en fonction du choix dans le menu déroulant - *args sert à ignorer les arguments demandés par le widget 'optionMenu'
+def appliquer_format_binaire(*args):
     val = format_binaire_var.get()
     texte = binaire_brut_var.get()
     if val == textes_langues["brut"]:
@@ -518,11 +570,11 @@ def appliquer_format_binaire(*args):   # Fonction qui met à jour le label 'resu
         resultat_binaire.config(text=grouper_par_blocs(texte, 4))
     elif val == textes_langues["blocs_8"]:
         resultat_binaire.config(text=grouper_par_blocs(texte, 8))
-       
-    ajuster_label(resultat_binaire)  # Ajuste le label de résultat en fonction du nombre de caractères qu'il contient. Appelle la fonction 'ajuster_label'.
-  
 
-def appliquer_format_hexadecimal(*args):  # Fonction qui met à jour le label 'resultat_hexadecimal' en fonction du choix dans le menu déroulant - *args sert à ignorer les arguments demandés par le widget 'optionMenu'
+    ajuster_label(resultat_binaire)
+
+
+def appliquer_format_hexadecimal(*args):
     val = format_hexadecimal_var.get()
     texte = hexadecimal_brut_var.get()
     if val == textes_langues["brut"]:
@@ -533,8 +585,9 @@ def appliquer_format_hexadecimal(*args):  # Fonction qui met à jour le label 'r
         resultat_hexadecimal.config(text=grouper_par_blocs(texte, 4))
     elif val == textes_langues["blocs_8"]:
         resultat_hexadecimal.config(text=grouper_par_blocs(texte, 8))
-        
-    ajuster_label(resultat_hexadecimal)  # Ajuste le label de résultat en fonction du nombre de caractères qu'il contient. Appelle la fonction 'ajuster_label'.
+
+    ajuster_label(resultat_hexadecimal)
+
 
 
 def ajuster_label(label):  # ajuste le label du résultat en fonction de la longueur de la chaîne qu'il contient.
@@ -576,7 +629,7 @@ zone_drapeaux = tk.Frame(conteneur_global, width=100)  # Création de l'emplacem
 
 # -> Création des boutons et des commandes de changement de langue en fonction duquel est appuyé par l'utilisateur.
 bouton_francais = tk.Button(zone_drapeaux, image=img_fr, command=lambda: changer_langue("fr"))    # Affiche le bouton et exécute la fonction 'changer_langue' avec 'fr' en argument.
-bouton_anglais = tk.Button(zone_drapeaux, image=img_en, command=lambda: (changer_langue("en")))    # Drapeau pour changer l'interface en anglais.
+bouton_anglais = tk.Button(zone_drapeaux, image=img_en, command=lambda: changer_langue("en"))     # Drapeau pour changer l'interface en anglais.
 bouton_allemand = tk.Button(zone_drapeaux, image=img_de, command=lambda: changer_langue("de"))    # Drapeau pour changer l'interface en allemand.
 bouton_espagnol = tk.Button(zone_drapeaux, image=img_es, command=lambda: changer_langue("es"))    # Drapeau pour changer l'interface en espagnol.
 bouton_italien = tk.Button(zone_drapeaux, image=img_it, command=lambda: changer_langue("it"))     # Drapeau pour changer l'interface en italien.
@@ -596,14 +649,13 @@ contenu_principal = tk.Frame(conteneur_global)  # Crée une frame dans le conten
 contenu_principal.pack(side='left', fill='both', expand=True)
 
 # Variables en StringVar pour le choix du format d'affichage des label 'Binaire' et 'Hexadécimal'.
+#-> Valeurs "brutes" (sans mise en forme)
 binaire_brut_var = tk.StringVar()
 hexadecimal_brut_var = tk.StringVar()
 
-format_binaire_var = tk.StringVar()
-format_binaire_var.set(textes_langues["brut"])
-
-format_hexadecimal_var = tk.StringVar()
-format_hexadecimal_var.set(textes_langues["brut"])
+# -> Variables d'affichage des menus déroulants
+format_binaire_var = tk.StringVar(value=textes_langues["brut"])
+format_hexadecimal_var = tk.StringVar(value=textes_langues["brut"])
 
 # Appel initial des Menus de la fenêtre principale.
 construire_menus()
@@ -707,6 +759,9 @@ fenetre.geometry("")  # Calcule automatiquement la taille de la fenêtre pour s'
 fenetre.minsize(fenetre.winfo_width(), fenetre.winfo_height())
 
 # Raccourcis clavier.
+# Voir la documentation : https://github.com/JMAlcaino/Numeric-bases-converter/blob/main/Documentation/Fiche_1_M%C3%A9mo_Tkinter_raccourcis.md
+# See the documentation here : https://github.com/JMAlcaino/Numeric-bases-converter/blob/main/Documentation/Memo_1_EN_Tkinter_shortcuts.md
+
   # Quitter
 fenetre.bind_all("<Control-q>", lambda event: fenetre.destroy)  # Le CTRL+q ou +Q ( ligne du dessous) ferme la fenêtre du programme.
 fenetre.bind_all("<Control-Q>", lambda event: fenetre.destroy)
@@ -719,6 +774,7 @@ fenetre.bind_all("<Control-d>", lambda event: effacer())
   # Aide/Contexte
 fenetre.bind_all("<F1>", lambda event: basculer_aide()) # Si on appuie sur F1 l'aide s'affiche, si on rappuie dessus elle se ferme. La fonction scrute la présence ou non du panneau grace à la variable globale prédéfinie.
 fenetre.bind_all("<F2>", lambda event: basculer_contexte())  # Idem que pour l'aide mais pour le panneau de contexte.
+fenetre.bind_all("<?>", lambda event: afficher_a_propos())
   # Langues
 fenetre.bind_all("<Alt-f>", lambda event: changer_langue("fr"))  # Raccourci clavier pour changer les langues (minuscules et majuscules prise en compte).
 fenetre.bind_all("<Alt-F>", lambda event: changer_langue("fr"))

@@ -4,9 +4,9 @@ This memo gathers the essential VS Code navigation shortcuts and tools to help y
 
 ---
 
-# 🧭 1. Code Navigation
+#  1. Code Navigation
 
-## ▶️ Go to Definition
+##  Go to Definition
 **F12**
 
 Jump directly to the place where a variable, function, or class is defined.
@@ -18,7 +18,7 @@ Very useful for:
 
 ---
 
-## ▶️ Find All References
+##  Find All References
 **Shift + F12**
 
 One of the most powerful tools for understanding a program:
@@ -30,7 +30,7 @@ One of the most powerful tools for understanding a program:
 
 ---
 
-## ▶️ Go to Symbol
+##  Go to Symbol
 **Ctrl + Shift + O**
 
 Displays a list of:
@@ -43,7 +43,7 @@ You can type to filter.
 
 ---
 
-## ▶️ Quick Open File
+##  Quick Open File
 **Ctrl + P**
 
 Opens any file in the project quickly.
@@ -52,14 +52,14 @@ Very useful when your project has multiple folders (e.g., `/Documentation`, `/La
 
 ---
 
-## ▶️ Find in File
+##  Find in File
 **Ctrl + F**
 
 Simple search.
 
 ---
 
-## ▶️ Find in Entire Project
+##  Find in Entire Project
 **Ctrl + Shift + F**
 
 Displays all matches across all project files.
@@ -72,14 +72,14 @@ Essential when you modify:
 
 ---
 
-# 🔙 2. Navigation “Like a Web Browser”
+#  2. Navigation “Like a Web Browser”
 
-## ▶️ Go Back
+##  Go Back
 **Alt + ←**
 
 Returns where you were before (just like a browser).
 
-## ▶️ Go Forward
+##  Go Forward
 **Alt + →**
 
 Replays the navigation path.
@@ -88,7 +88,7 @@ Very handy when exploring multiple functions.
 
 ---
 
-# 🎯 3. Visual Tracking Tools
+#  3. Visual Tracking Tools
 
 With your improved configuration:
 
@@ -104,33 +104,33 @@ This makes it much easier to:
 
 ---
 
-# 🔧 4. Useful Editing Tricks
+#  4. Useful Editing Tricks
 
-### 📌 Select a whole line
+###  Select a whole line
 Click in the left margin, or use:
 ```
 Ctrl + L
 ```
 
-### 📌 Move a line or block
+###  Move a line or block
 ```
 Alt + ↑
 Alt + ↓
 ```
 
-### 📌 Duplicate a line
+###  Duplicate a line
 ```
 Shift + Alt + ↓
 ```
 
-### 📌 Format the document
+###  Format the document
 ```
 Shift + Alt + F
 ```
 
 ---
 
-# 🛠️ 5. Preparing the Move to Classes
+#  5. Preparing the Move to Classes
 
 These navigation tools help you:
 
@@ -143,7 +143,7 @@ VS Code becomes a **real code analysis tool**.
 
 ---
 
-# ✨ Conclusion
+#  Conclusion
 
 With these shortcuts and tools:
 
@@ -155,4 +155,4 @@ With these shortcuts and tools:
 This memo is designed to support the long-term evolution of your project.
 
 **Per Scientiam, ad Caelum ✈️**  
-Your copilote Pylo
+

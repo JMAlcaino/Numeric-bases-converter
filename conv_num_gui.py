@@ -215,7 +215,7 @@ def changer_langue(nouvelle_langue):  # Fonction qui change la langue de l'inter
     fenetre.update_idletasks()  # Scrute la boucle d'affichage de la fenêtre principale.
     fenetre.geometry("")  # Calcule automatiquement la taille de la fenêtre pour s'ajuster aux éléments qu'elle contient.
 
-    # Recharger le texte et des éléments de l'aide dans la langue nouvelle langue.
+    # Recharger le texte et des éléments de l'aide dans la langue nouvelle langue. Les variables doivent être à 'None' avant d'appeler les fonctions sinon on lève une erreur Tkinter.TclError. Voir Documentation : ./Documentation/Fiche_8_Mémo_widgets_detruits.md
     if zone_texte_aide is not None:
         charger_fichier_aide()
 
@@ -404,6 +404,7 @@ def basculer_contexte():  # Fonction qui sert au raccourci clavier <F1> pour bas
         panneau_contexte_actif = None
     else:
         afficher_contexte()
+
 
 def fermer_aide():  # Fonction qui ferme proprement le panneau d'aide pour éviter les soucis d'affichage au changement de langue et éviter les erreurs du Tcl de Tkinter.
     global panneau_aide_actif, panneau_aide, zone_texte_aide, bouton_fermer_aide

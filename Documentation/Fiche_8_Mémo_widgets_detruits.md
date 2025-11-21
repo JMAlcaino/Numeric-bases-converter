@@ -14,7 +14,7 @@ On dit alors que la variable contient un *dangling reference*.
 
 ------------------------------------------------------------------------
 
-## 🚨 Symptôme classique
+##  Symptôme classique
 
 Lorsqu'un code fait ceci :
 
@@ -27,7 +27,7 @@ Tkinter lève une erreur :
     _tkinter.TclError: invalid command name ".!frame.!labelframe.!frame.!text"
 
 Cela signifie :\
-👉 *"Le widget auquel tu fais référence n'existe plus dans
+ *"Le widget auquel tu fais référence n'existe plus dans
 l'interface."*
 
 ------------------------------------------------------------------------
@@ -39,15 +39,15 @@ l'interface."*
     automatiquement supprimée**.
 
 Donc, pour Python :\
-➡️ la variable existe encore\
-➡️ mais pour Tk :\
-➡️ le widget n'existe plus
+ - la variable existe encore\
+ -  mais pour Tk :\
+ -  le widget n'existe plus
 
 C'est comme tenir l'adresse d'une maison qui a été rasée...
 
 ------------------------------------------------------------------------
 
-## 🧠 La solution propre
+##  La solution propre
 
 Toujours deux étapes **obligatoires** quand on détruit un widget
 dynamique :
@@ -64,7 +64,7 @@ if widget is not None:
     # il existe encore côté Python → on peut travailler avec
 ```
 
-Mais si tu fais :
+Mais si on fait :
 
 ``` python
 widget = None
@@ -74,16 +74,16 @@ Alors :
 
 -   Python sait qu'il n'y a plus de widget
 -   Tkinter n'est plus appelé sur un widget détruit
--   Et tu n'as plus jamais d'erreur "invalid command name"
+-   Et il n'y plus jamais d'erreur "invalid command name"
 
 ------------------------------------------------------------------------
 
-## 🧩 Pourquoi c'est important pour les fenêtres Aide / Contexte
+##  Pourquoi c'est important pour les fenêtres Aide / Contexte
 
-Dans ton programme :
+Dans le programme :
 
--   tu ouvres un panneau d'aide
--   tu le fermes via `.destroy()`
+-   on ouvre un panneau d'aide
+-  on le ferme via `.destroy()`
 -   mais les variables `panneau_aide_actif`, `zone_texte_aide`, etc.\
     **gardaient encore l'ancienne référence**
 
@@ -103,7 +103,7 @@ D'où la nécessité d'une fonction dédiée `fermer_aide()` qui :\
 
 ------------------------------------------------------------------------
 
-## 📝 À retenir
+##  À retenir
 
 ✔ Un widget détruit par Tkinter n'est **pas** remis à `None`
 automatiquement\
@@ -114,7 +114,7 @@ utilisation\
 
 ------------------------------------------------------------------------
 
-Ce mémo est ton aide‑mémoire pour toutes les interfaces Tkinter
+Ce mémo est tonun aide‑mémoire pour toutes les interfaces Tkinter
 utilisant des fenêtres ou panneaux dynamiques.
 
-**Pylo**
+

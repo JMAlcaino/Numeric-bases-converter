@@ -215,7 +215,9 @@ def changer_langue(nouvelle_langue):  # Fonction qui change la langue de l'inter
     fenetre.update_idletasks()  # Scrute la boucle d'affichage de la fenêtre principale.
     fenetre.geometry("")  # Calcule automatiquement la taille de la fenêtre pour s'ajuster aux éléments qu'elle contient.
 
-    # Recharger le texte et des éléments de l'aide dans la langue nouvelle langue. Les variables doivent être à 'None' avant d'appeler les fonctions sinon on lève une erreur Tkinter.TclError. Voir Documentation : ./Documentation/Fiche_8_Mémo_widgets_detruits.md
+    # Recharger le texte et des éléments de l'aide dans la langue nouvelle langue. Les variables doivent être à 'None' avant d'appeler les fonctions sinon on lève une erreur Tkinter.TclError. 
+    # Voir Documentation : https://github.com/JMAlcaino/Numeric-bases-converter/blob/main/Documentation/Fiche_8_M%C3%A9mo_widgets_detruits.md
+    # See Documentation  : https://github.com/JMAlcaino/Numeric-bases-converter/blob/main/Documentation/Memo_8_EN_Destructed_widgets_.md
     if zone_texte_aide is not None:
         charger_fichier_aide()
 
@@ -304,7 +306,7 @@ def afficher_aide():
     zone_texte_aide.bind("<MouseWheel>", lambda e: zone_texte_aide.yview_scroll(int(-1*(e.delta/120)), "units"))  # Autorise le scroll avec la roulette de la souris.
 
     # Bouton de fermeture bien en dessous
-    bouton_fermer_aide = tk.Button(contenu_aide, text=textes_langues["fermer"], font=('arial', 9), fg='green', command=fermer_aide)  # Crèe le bouton qui ferme la fenêtre d'aide avec '.destroy'.
+    bouton_fermer_aide = tk.Button(contenu_aide, text=textes_langues["fermer"], font=('arial', 9), fg='green', command=fermer_aide)  # Crèe le bouton qui ferme la fenêtre d'aide grace à la fonction 'fermer_aide()'.
     bouton_fermer_aide.pack(pady=10)
 
     # Charger le texte d'aide
@@ -345,7 +347,7 @@ def afficher_contexte():
     zone_texte_contexte.bind("<MouseWheel>", lambda e: zone_texte_contexte.yview_scroll(int(-1*(e.delta/120)), "units"))
 
     # Bouton de fermeture bien en dessous
-    bouton_fermer_contexte = tk.Button(contenu_contexte, text=textes_langues["fermer"], font=('arial', 9), fg='green', command=lambda: panneau_contexte.destroy())
+    bouton_fermer_contexte = tk.Button(contenu_contexte, text=textes_langues["fermer"], font=('arial', 9), fg='green', command=fermer_contexte)  # Création du bouton permettant d'appeler la fonction 'fermer_contexte()'
     bouton_fermer_contexte.pack(pady=10)
 
 
@@ -399,9 +401,8 @@ def basculer_aide():  # Fonction qui sert au raccourci clavier <F1> pour bascule
 def basculer_contexte():  # Fonction qui sert au raccourci clavier <F1> pour basculer : si on appuie une première fois il s'ouvre sinon il se ferme.
     global panneau_contexte_actif  # Variable globale qui sert à vérifier si le panneau est ouvert ou non.
 
-    if panneau_contexte_actif and panneau_contexte_actif.winfo_exists():  # Si le panneau du contexte est déjà actif ferme-le
-        panneau_contexte_actif.destroy()
-        panneau_contexte_actif = None
+    if panneau_contexte_actif and panneau_contexte_actif.winfo_exists():  # Si le panneau du contexte est déjà actif ferme-le via la fonction 'fermer_contexte()'
+        fermer_contexte()
     else:
         afficher_contexte()
 
@@ -423,6 +424,22 @@ def fermer_aide():  # Fonction qui ferme proprement le panneau d'aide pour évit
     fenetre.update_idletasks()
     fenetre.geometry("")
 
+def fermer_contexte(): # Fonction qui ferme proprement le panneau du contexte pour éviter les soucis d'affichage au changement de langue et éviter les erreurs du Tcl de Tkinter.
+    global panneau_contexte_actif, panneau_contexte, zone_texte_contexte, bouton_fermer_contexte
+
+    # Si le panneau existe encore, on le détruit
+    if panneau_contexte_actif is not None and panneau_contexte_actif.winfo_exists():
+        panneau_contexte_actif.destroy()
+
+    # On remet toutes les références à None
+    panneau_contexte_actif = None
+    panneau_contexte = None
+    zone_texte_contexte = None
+    bouton_fermer_contexte = None
+
+    # On recalcule la taille de la fenêtre
+    fenetre.update_idletasks()
+    fenetre.geometry("")
 
 def convertir():
     entree_valeur = entree.get().strip()

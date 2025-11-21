@@ -1,12 +1,12 @@
-# 🧱 Memo Sheet — Creating an Executable with PyInstaller
+#  Memo Sheet — Creating an Executable with PyInstaller
 
-## 🧭 Purpose
+##  Purpose
 This document explains how to create a standalone executable of the **Numeric Bases Converter** application  
 using the **PyInstaller** library.
 
 ---
 
-## ⚙️ 1️⃣ Installing PyInstaller
+##  Installing PyInstaller
 
 First, install PyInstaller via pip:
 
@@ -21,7 +21,7 @@ pyinstaller --version
 
 ---
 
-## 🏗️ 2️⃣ Building a Simple Executable
+##  Building a Simple Executable
 
 In the folder containing your main file `conv_num_gui.py`, run:
 
@@ -29,12 +29,12 @@ In the folder containing your main file `conv_num_gui.py`, run:
 pyinstaller --onefile conv_num_gui.py
 ```
 
-👉 This command creates a `dist/` subfolder containing your single executable:  
+ This command creates a `dist/` subfolder containing your single executable:  
 `dist/conv_num_gui.exe` (or without extension on Linux/Mac).
 
 ---
 
-## 📦 3️⃣ Including Required Resources
+##  Including Required Resources
 
 To make your executable fully functional, you must **include all external resources** used by your program:
 
@@ -56,7 +56,7 @@ conv_num_gui.py
 pyinstaller --onefile --add-data "Langues:Langues" --add-data "Textes:Textes" --add-data "Documentation:Documentation" conv_num_gui.py
 ```
 
-👉 Syntax:
+ Syntax:
 ```
 --add-data "source;destination"  (Windows)
 --add-data "source:destination"  (Linux/Mac)
@@ -66,7 +66,7 @@ This tells PyInstaller to bundle these folders inside the final executable.
 
 ---
 
-## 📁 4️⃣ Recommended Folder Structure Before Compilation
+##  Recommended Folder Structure Before Compilation
 
 ```
 Numeric-bases-converter/
@@ -86,7 +86,7 @@ Numeric-bases-converter/
 
 ---
 
-## 🚀 5️⃣ Running the Compiled Program
+##  Running the Compiled Program
 
 After building, the executable can be found here:
 ```
@@ -98,7 +98,7 @@ However, it will use the embedded folders you specified during compilation.
 
 ---
 
-## 🧰 6️⃣ Useful Options
+##  Useful Options
 
 - 🔹 Add `--noconsole` to hide the terminal window (for Tkinter apps):
   ```bash
@@ -117,7 +117,7 @@ However, it will use the embedded folders you specified during compilation.
 
 ---
 
-## 🧩 7️⃣ Complete Example (Windows)
+##  Complete Example (Windows)
 
 ```bash
 pyinstaller --onefile --noconsole ^
@@ -135,7 +135,7 @@ conv_num_gui.py
 
 ---
 
-## ✅ 8️⃣ Post-Build Checklist
+##  Post-Build Checklist
 
 - Run `dist/conv_num_gui.exe` and check:
   - Translations work correctly  
@@ -151,5 +151,5 @@ conv_num_gui.py
 
 ---
 
-✍️ **Written by Jean-Marc (Jean) Alcaïno and Pylo Copilot**  
-🧠 Version: 1.0 — March 2025
+ **Written by Jean-Marc Alcaïno **  
+ Version: 1.0 — March 2025

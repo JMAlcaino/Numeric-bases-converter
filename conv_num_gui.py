@@ -5,7 +5,7 @@
  Description  : A GUI numeric bases converter
  Author       : Alcaïno Jean-Marc                                                                          
  Modification : 2025/11/20                                                                           
- Version      : V 4.3.2-dev
+ Version      : V 4.3.1
 
  GitHub       :     https://github.com/JMAlcaino/Numeric-bases-converter
                     https://github.com/JMAlcaino/Numeric-bases-converter/tree/dev
@@ -51,7 +51,7 @@ panneau_contexte = None
 bouton_fermer_contexte = None
 
 langue_actuelle = "fr"  #  Variable de choix de langue (par défaut : français ).
-VERSION = "V4.3.2-dev"  # variable qui contient la version du programme qui sera affiché à plusieurs endroits.
+VERSION = "V4.3.1"  # variable qui contient la version du programme qui sera affiché à plusieurs endroits.
 
 
 

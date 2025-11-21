@@ -66,8 +66,8 @@ def charger_traductions(fichier):  # Fonction qui charge le fichier contenant le
 
 
 def mettre_a_jour_interface():
-    titre_principal = (textes_langues["titre"])  # Prend la traduction dans la langue actuelle du titre de la fenêtre pour pouvoir afficher ce titre et la version courante.
-    fenetre.title((f"{titre_principal} – {VERSION}"))
+    titre_principal = (textes_langues["titre"])
+    fenetre.title(f"{titre_principal} – {VERSION}")
     entree_labelframe.config(text=textes_langues["label_saisie"])
     resultats_labelframe.config(text=textes_langues["titre_resultats"])
     resultat_texte_binaire.config(text=textes_langues["texte_binaire"])
@@ -79,36 +79,63 @@ def mettre_a_jour_interface():
     bouton_quitter.config(text=textes_langues["btn_quitter"])
     erreur_labelframe.config(text=textes_langues["titre_message"])
 
-    # Mise à jour du menu déroulant Binaire
-    options_binaire = [
-        textes_langues["brut"],
-        textes_langues["blocs_4"],
-        textes_langues["blocs_8"]
-    ]
+# ------------------------------------------------------------
+# SYSTÈME DE FORMATS MULTILINGUE
+# ------------------------------------------------------------
+# Les menus déroulants (binaire / hexadécimal) affichent des
+# textes dépendants de la langue (FR/EN). Pour éviter que le
+# changement de langue fasse perdre l'état du format sélectionné,
+# on sépare :
+#
+#   1) un "code interne" indépendant de la langue
+#      (ex: "brut", "blocs_4", "blocs_8")
+#
+#   2) un texte affiché pour l'utilisateur, traduit via
+#      textes_langues[code]
+#
+# Lors du changement de langue :
+#   - on recrée le menu avec les nouveaux textes traduits
+#   - on conserve le code interne actuel (format_binaire_code)
+#   - on remet le texte correspondant dans la StringVar du menu
+#   - on réapplique le format au résultat
+#
+# Ceci garantit : cohérence, bilingue correct, stabilité.
+# ------------------------------------------------------------
+
+    # ----- Menu déroulant Binaire -----
+    options_binaire_codes = ["brut", "blocs_4", "blocs_8"]
     menu_binaire = menu_format_binaire["menu"]
     menu_binaire.delete(0, "end")
-    for option in options_binaire:
-        menu_binaire.add_command(
-            label=option,
-            command=lambda val=option: (format_binaire_var.set(val), appliquer_format_binaire())
-        )
-    format_binaire_var.set(textes_langues["brut"])
 
-    # Mise à jour du menu déroulant Hexadécimal
-    options_hexa = [
-        textes_langues["brut"],
-        textes_langues["blocs_2"],
-        textes_langues["blocs_4"],
-        textes_langues["blocs_8"]
-    ]
+    for code in options_binaire_codes:
+        libelle = textes_langues[code]
+        menu_binaire.add_command(
+            label=libelle,
+            command=lambda c=code: on_choix_format_binaire(c)
+        )
+
+    # IMPORTANT : afficher le texte correspondant au code courant
+    format_binaire_var.set(textes_langues[format_binaire_code.get()])
+
+    # ----- Menu déroulant Hexadécimal -----
+    options_hexa_codes = ["brut", "blocs_2", "blocs_4", "blocs_8"]
     menu_hexa = menu_format_hexadecimal["menu"]
     menu_hexa.delete(0, "end")
-    for option in options_hexa:
-     menu_hexa.add_command(
-            label=option,
-            command=lambda val=option: (format_hexadecimal_var.set(val), appliquer_format_hexadecimal())
+
+    for code in options_hexa_codes:
+        libelle = textes_langues[code]
+        menu_hexa.add_command(
+            label=libelle,
+            command=lambda c=code: on_choix_format_hexadecimal(c)
         )
-    format_hexadecimal_var.set(textes_langues["brut"])
+
+    # IMPORTANT : afficher le texte correspondant au code courant
+    format_hexadecimal_var.set(textes_langues[format_hexadecimal_code.get()])
+
+    # Réappliquer les formats après changement de langue
+    appliquer_format_binaire()
+    appliquer_format_hexadecimal()
+
 
 
 def construire_menus():
@@ -424,6 +451,7 @@ def fermer_aide():  # Fonction qui ferme proprement le panneau d'aide pour évit
     fenetre.update_idletasks()
     fenetre.geometry("")
 
+
 def fermer_contexte(): # Fonction qui ferme proprement le panneau du contexte pour éviter les soucis d'affichage au changement de langue et éviter les erreurs du Tcl de Tkinter.
     global panneau_contexte_actif, panneau_contexte, zone_texte_contexte, bouton_fermer_contexte
 
@@ -441,8 +469,10 @@ def fermer_contexte(): # Fonction qui ferme proprement le panneau du contexte po
     fenetre.update_idletasks()
     fenetre.geometry("")
 
+
 def convertir():
     entree_valeur = entree.get().strip()
+    entree_valeur = entree_valeur.replace(" ", "")  # Enlève les espaces des valeurs rentrées ou collées depuis une case de résultat pour éviter un message d'erreur de conversion.
     base_saisie = base_var.get()
 
     if not entree_valeur:
@@ -471,11 +501,11 @@ def convertir():
         else:
             raise ValueError
 
-        # Affichage des résultats
+        # Affichage des résultats - L'indice [2:] sert à afficher que le nombre sans les préfixes des bases '0o' '0x' 0b' spécifiques au format des résultats de Python.
         resultat_entier.config(text=str(n))
-        resultat_octal.config(text=oct(n)[2:])
+        resultat_octal.config(text=oct(n)[2:]) 
         resultat_binaire.config(text=bin(n)[2:])
-        resultat_hexadecimal.config(text=hex(n)[2:].upper())
+        resultat_hexadecimal.config(text=hex(n)[2:].upper())  # Affiche le résultat avec les les 'lettres' de l'héxadécimal en majuscule (format habituel des nombres hexadécimaux en infomatique).
 
         binaire_brut_var.set(bin(n)[2:])
         hexadecimal_brut_var.set(hex(n)[2:].upper())
@@ -509,6 +539,18 @@ def bouton_copier(label):
         erreur_label.config(text=textes_langues["copie_vide"], fg="red")
 
 
+def on_choix_format_binaire(code):
+    format_binaire_code.set(code)                     # logique interne
+    format_binaire_var.set(textes_langues[code])      # texte visible
+    appliquer_format_binaire()
+
+
+def on_choix_format_hexadecimal(code):
+    format_hexadecimal_code.set(code)                 
+    format_hexadecimal_var.set(textes_langues[code])
+    appliquer_format_hexadecimal()
+
+
 def bouton_coller():  # Fonction qui traite l'appui sur le bouton 'coller' situé à gauche de la case d'entrée de la valeur afin d'y placer une valeur gardée dans le presse-papier.
     try:
         texte = fenetre.clipboard_get()  # Récupère ce qui se trouve dans le clipboard et place-le dans la variable 'texte'.
@@ -523,7 +565,7 @@ def grouper_par_blocs(texte, taille_bloc):  # Fonction qui gère la mise en bloc
     reste = len(texte) % taille_bloc
     if reste != 0:
         texte = '0' * (taille_bloc - reste) + texte  # Ajoute un ou plusieurs '0' en fonction du nombre de caractères restants à gauche (lecture logique  de bas niveau)
-    return ' '.join(texte[i:i+taille_bloc] for i in range(0, len(texte), taille_bloc))  # Retourne une chaîne de caractères séparés par un espace tous les 'x' caractères de droite à gauche. Le 'x' étant donné par la variable 'taille_bloc' en focntion du choix du menu déroulant contextuel.
+    return ' '.join(texte[i:i+taille_bloc] for i in range(0, len(texte), taille_bloc))  # Retourne une chaîne de caractères séparés par un espace tous les 'x' caractères de droite à gauche. Le 'x' étant donné par la variable 'taille_bloc' en fontion du choix du menu déroulant contextuel.
 
 
 def appliquer_format_binaire(*args):   # Fonction qui met à jour le label 'resultat_binaire' en fonction du choix dans le menu déroulant - *args sert à ignorer les arguments demandés par le widget 'optionMenu'
@@ -613,14 +655,17 @@ contenu_principal = tk.Frame(conteneur_global)  # Crée une frame dans le conten
 contenu_principal.pack(side='left', fill='both', expand=True)
 
 # Variables en StringVar pour le choix du format d'affichage des label 'Binaire' et 'Hexadécimal'.
+#-> Valeurs "brutes" (sans mise en forme)
 binaire_brut_var = tk.StringVar()
 hexadecimal_brut_var = tk.StringVar()
 
-format_binaire_var = tk.StringVar()
-format_binaire_var.set(textes_langues["brut"])
+# -> Variables d'affichage des menus déroulants
+format_binaire_var = tk.StringVar(value=textes_langues["brut"])
+format_hexadecimal_var = tk.StringVar(value=textes_langues["brut"])
 
-format_hexadecimal_var = tk.StringVar()
-format_hexadecimal_var.set(textes_langues["brut"])
+# -> Variables logiques (internes), indépendantes de la langue
+format_binaire_code = tk.StringVar(value="brut")        # "brut", "blocs_4", "blocs_8"
+format_hexadecimal_code = tk.StringVar(value="brut")    # "brut", "blocs_2", "blocs_4", "blocs_8"
 
 # Appel initial des Menus de la fenêtre principale.
 construire_menus()

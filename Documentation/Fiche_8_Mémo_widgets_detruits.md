@@ -1,6 +1,6 @@
 # Gestion des Widgets Détruits dans Tkinter
 
-## Mémo technique --- Convertisseur de bases (Jean & Pylo)
+## Mémo technique --- Convertisseur de bases
 
 Lorsque l'on programme une interface Tkinter, il arrive souvent qu'un
 widget (fenêtre, LabelFrame, Text, etc.) soit **détruit** par le
